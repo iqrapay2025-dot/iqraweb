@@ -4,6 +4,7 @@ import { IslamicPattern } from "./IslamicPattern";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { Footer } from "./Footer";
 import { motion } from "motion/react";
+import { TeamCarousel, TeamMember } from "./TeamCarousel";
 
 interface AboutPageProps {
   onNavigate?: (page: string) => void;
@@ -30,6 +31,51 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
       icon: Eye,
       title: "Community",
       description: "Building and empowering the global Muslim Ummah",
+    },
+  ];
+
+  const teamMembers: TeamMember[] = [
+    {
+      id: 1,
+      name: "Muhammad Jumah",
+      role: "Founder & CEO",
+      location: "Ibadan, Nigeria",
+      description: "Visionary student and entrepreneur passionate about merging faith, education, and technology. Currently studying Linguistics at the University of Ilorin.",
+    },
+    {
+      id: 2,
+      name: "Fatiah Badmus",
+      role: "Co-Founder",
+      location: "Osun, Nigeria",
+      description: "Muslimah • Writer • WHO-Certified Mental Health Coach. Founder of Soothopedia and Himaayah, merging faith and psychology to inspire healing and wholeness. Advocates mental wellness, healthy love, and purposeful living through her words.",
+    },
+    {
+      id: 3,
+      name: "Ibrahim Yusuf",
+      role: "Lead Developer",
+      location: "Abuja, Nigeria",
+      description: "Full-stack developer with expertise in fintech and educational platforms. Ensures our platform is secure, scalable, and user-friendly.",
+    },
+    {
+      id: 4,
+      name: "Fatima Hassan",
+      role: "Community Manager",
+      location: "Kano, Nigeria",
+      description: "Dedicated to building and nurturing our global Muslim community. Manages user engagement, support, and ambassador programs.",
+    },
+    {
+      id: 5,
+      name: "Bilal Ahmed",
+      role: "Shariah Advisor",
+      location: "Ilorin, Nigeria",
+      description: "Islamic scholar ensuring all platform operations align with Shariah principles. Provides guidance on halal earning mechanisms.",
+    },
+    {
+      id: 6,
+      name: "Zainab Malik",
+      role: "Marketing Lead",
+      location: "Port Harcourt, Nigeria",
+      description: "Digital marketing expert focused on spreading IqraPay's mission across the Muslim world through ethical marketing strategies.",
     },
   ];
 
@@ -230,6 +276,33 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
               is pointless and action without halal sustenance is unsustainable.
               IqraPay bridges all three.”
             </blockquote>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Team Section */}
+      <section className="px-4 sm:px-6 lg:px-8 py-20">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl sm:text-4xl mb-4">Meet Our Team</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              The dedicated individuals working to make Islamic education accessible and rewarding
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            <TeamCarousel teamMembers={teamMembers} />
           </motion.div>
         </div>
       </section>
