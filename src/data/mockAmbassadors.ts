@@ -20,7 +20,7 @@ export const mockAmbassadors: Ambassador[] = [
     id: '2',
     name: 'Tajudeen Rodiyah Al-Adaby',
     location: 'Makkah, Saudi Arabia',
-    title: 'Education Leader',
+    title: 'Educational Ambassador',
     joinedDate: '2025-10',
     referrals: 120,
   },
