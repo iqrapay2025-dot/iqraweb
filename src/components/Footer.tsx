@@ -1,5 +1,6 @@
 import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react";
 import { IslamicPattern } from "./IslamicPattern";
+import { useLanguage } from "../contexts/LanguageContext";
 import logoDark from "figma:asset/95c433e7c8d7b15a23b7736bc56fc1d657934d51.png";
 
 interface FooterProps {
@@ -7,15 +8,16 @@ interface FooterProps {
 }
 
 export function Footer({ onNavigate }: FooterProps) {
+  const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   const quickLinks = [
-    { name: "Home", page: "home" },
-    { name: "About", page: "about" },
-    { name: "How It Works", page: "how-it-works" },
-    { name: "Ambassadors", page: "ambassadors" },
-    { name: "Blog", page: "blog-list" },
-    { name: "Contact", page: "contact" },
+    { name: t('footer.home'), page: "home" },
+    { name: t('footer.about'), page: "about" },
+    { name: t('footer.howItWorks'), page: "how-it-works" },
+    { name: t('footer.ambassadors'), page: "ambassadors" },
+    { name: t('footer.blog'), page: "blog-list" },
+    { name: t('footer.contact'), page: "contact" },
   ];
 
   const socialLinks = [
@@ -37,16 +39,16 @@ export function Footer({ onNavigate }: FooterProps) {
               className="h-10 w-auto mb-4"
             />
             <p className="text-secondary-foreground/80 dark:text-foreground/80 mb-4">
-              Learn the Deen. Earn for the Dunyā.
+              {t('footer.tagline')}
             </p>
             <p className="text-sm text-secondary-foreground/60 dark:text-muted-foreground">
-              A halal Read-to-Earn platform empowering Muslims to grow in faith while earning halal rewards.
+              {t('footer.description')}
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="mb-4 text-accent dark:text-primary">Quick Links</h4>
+            <h4 className="mb-4 text-accent dark:text-primary">{t('footer.quickLinks')}</h4>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.page}>
@@ -75,7 +77,7 @@ export function Footer({ onNavigate }: FooterProps) {
 
           {/* Contact Info */}
           <div>
-            <h4 className="mb-4 text-accent dark:text-primary">Contact</h4>
+            <h4 className="mb-4 text-accent dark:text-primary">{t('footer.connect')}</h4>
             <ul className="space-y-3">
               <li className="flex items-start gap-2 text-secondary-foreground/80 dark:text-foreground/70">
                 <Mail className="w-5 h-5 mt-0.5 flex-shrink-0" />
@@ -98,7 +100,7 @@ export function Footer({ onNavigate }: FooterProps) {
 
           {/* Social & Newsletter */}
           <div>
-            <h4 className="mb-4 text-accent dark:text-primary">Connect With Us</h4>
+            <h4 className="mb-4 text-accent dark:text-primary">{t('footer.connect')}</h4>
             <div className="flex gap-3 mb-6">
               {socialLinks.map((social) => {
                 const Icon = social.icon;
@@ -115,7 +117,7 @@ export function Footer({ onNavigate }: FooterProps) {
               })}
             </div>
             <p className="text-sm text-secondary-foreground/60 dark:text-muted-foreground">
-              Follow us for updates on the platform and Islamic knowledge.
+              {t('footer.description')}
             </p>
           </div>
         </div>
@@ -124,7 +126,7 @@ export function Footer({ onNavigate }: FooterProps) {
         <div className="border-t border-secondary-foreground/20 dark:border-border pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-secondary-foreground/60 dark:text-muted-foreground">
-              © {currentYear} IqraPay. All rights reserved. Built with faith and dedication.
+              © {currentYear} IqraPay. {t('footer.rights')}
             </p>
             <div className="flex gap-6 text-sm">
               {onNavigate ? (
@@ -136,7 +138,7 @@ export function Footer({ onNavigate }: FooterProps) {
                     }}
                     className="text-secondary-foreground/60 dark:text-muted-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200"
                   >
-                    Privacy Policy
+                    {t('footer.privacyPolicy')}
                   </button>
                   <button
                     onClick={() => {
@@ -145,16 +147,16 @@ export function Footer({ onNavigate }: FooterProps) {
                     }}
                     className="text-secondary-foreground/60 dark:text-muted-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200"
                   >
-                    Terms of Service
+                    {t('footer.termsOfService')}
                   </button>
                 </>
               ) : (
                 <>
                   <a href="#privacy-policy" className="text-secondary-foreground/60 dark:text-muted-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200">
-                    Privacy Policy
+                    {t('footer.privacyPolicy')}
                   </a>
                   <a href="#terms-of-service" className="text-secondary-foreground/60 dark:text-muted-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200">
-                    Terms of Service
+                    {t('footer.termsOfService')}
                   </a>
                 </>
               )}

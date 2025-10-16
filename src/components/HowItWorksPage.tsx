@@ -4,54 +4,57 @@ import { Button } from "./ui/button";
 import { IslamicPattern } from "./IslamicPattern";
 import { Footer } from "./Footer";
 import { motion } from "motion/react";
+import { useLanguage } from "../contexts/LanguageContext";
 
 interface HowItWorksPageProps {
   onNavigate?: (page: string) => void;
 }
 
 export function HowItWorksPage({ onNavigate }: HowItWorksPageProps) {
+  const { t } = useLanguage();
+  
   const steps = [
     {
       icon: UserPlus,
-      title: "Sign Up & Verify",
-      description: "Create your free account and complete your profile. We verify all members to maintain a trusted community.",
-      details: ["Email verification", "Profile completion", "Community guidelines acceptance"],
+      title: t('howItWorks.step1Title'),
+      description: t('howItWorks.step1Desc'),
+      details: [t('howItWorks.step1Detail1'), t('howItWorks.step1Detail2'), t('howItWorks.step1Detail3')],
     },
     {
       icon: BookOpen,
-      title: "Choose Your Path",
-      description: "Select from Qur'an recitation, Tafsir study, Hadith learning, or Islamic history modules.",
-      details: ["Multiple learning tracks", "Personalized recommendations", "Progress tracking"],
+      title: t('howItWorks.step2Title'),
+      description: t('howItWorks.step2Desc'),
+      details: [t('howItWorks.step2Detail1'), t('howItWorks.step2Detail2'), t('howItWorks.step2Detail3')],
     },
     {
       icon: Award,
-      title: "Learn & Complete",
-      description: "Engage with high-quality content, complete lessons, and take verification quizzes to prove understanding.",
-      details: ["Video lessons", "Interactive quizzes", "Certification upon completion"],
+      title: t('howItWorks.step3Title'),
+      description: t('howItWorks.step3Desc'),
+      details: [t('howItWorks.step3Detail1'), t('howItWorks.step3Detail2'), t('howItWorks.step3Detail3')],
     },
     {
       icon: TrendingUp,
-      title: "Earn Rewards",
-      description: "Receive halal earnings credited to your wallet. Withdraw or donate to charitable causes.",
-      details: ["Instant credit", "Multiple withdrawal options", "Zakat integration"],
+      title: t('howItWorks.step4Title'),
+      description: t('howItWorks.step4Desc'),
+      details: [t('howItWorks.step4Detail1'), t('howItWorks.step4Detail2'), t('howItWorks.step4Detail3')],
     },
   ];
 
   const halalFeatures = [
     {
       icon: Shield,
-      title: "Shariah-Compliant",
-      description: "Reviewed and certified by qualified Islamic scholars",
+      title: t('howItWorks.halalTitle1'),
+      description: t('howItWorks.halalDesc1'),
     },
     {
       icon: CheckCircle2,
-      title: "Transparent Revenue",
-      description: "Clear disclosure of all revenue sources and distribution",
+      title: t('howItWorks.halalTitle2'),
+      description: t('howItWorks.halalDesc2'),
     },
     {
       icon: Award,
-      title: "Ethical Partnerships",
-      description: "Only work with verified halal businesses and institutions",
+      title: t('howItWorks.halalTitle3'),
+      description: t('howItWorks.halalDesc3'),
     },
   ];
 
@@ -66,9 +69,9 @@ export function HowItWorksPage({ onNavigate }: HowItWorksPageProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-4xl sm:text-5xl mb-6">How IqraPay Works</h1>
+            <h1 className="text-4xl sm:text-5xl mb-6">{t('howItWorks.title')}</h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              A simple, transparent process to start earning while learning
+              {t('howItWorks.subtitle')}
             </p>
           </motion.div>
         </div>
@@ -140,9 +143,9 @@ export function HowItWorksPage({ onNavigate }: HowItWorksPageProps) {
             <div className="inline-block px-4 py-2 bg-accent rounded-full mb-6">
               <span className="text-accent-foreground">✓ 100% Halal Certified</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl mb-4">Built on Islamic Principles</h2>
+            <h2 className="text-3xl sm:text-4xl mb-4">{t('howItWorks.halalSectionTitle')}</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Complete transparency and Shariah compliance in every aspect
+              {t('howItWorks.halalSectionDesc')}
             </p>
           </motion.div>
 
@@ -173,7 +176,7 @@ export function HowItWorksPage({ onNavigate }: HowItWorksPageProps) {
             viewport={{ once: true }}
           >
             <Card className="p-8 max-w-4xl mx-auto">
-              <h3 className="text-2xl mb-6 text-center">Revenue Transparency</h3>
+              <h3 className="text-2xl mb-6 text-center">{t('howItWorks.revenueTitle')}</h3>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-1" />
@@ -214,19 +217,23 @@ export function HowItWorksPage({ onNavigate }: HowItWorksPageProps) {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl sm:text-4xl mb-6">Ready to Get Started?</h2>
+            <h2 className="text-3xl sm:text-4xl mb-6">{t('howItWorks.ctaTitle')}</h2>
             <p className="text-xl text-muted-foreground mb-8">
-              Join the waitlist today and be among the first to experience IqraPay
+              {t('howItWorks.ctaDesc')}
             </p>
-             <Button 
-                  size="lg" 
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 transition-all hover:scale-105 hover:shadow-lg"
-                  asChild
-                >
-                  <a href="https://chat.whatsapp.com/Ej08ZEjAnlyAS7vE6uY7W8" target="_blank" rel="noopener noreferrer">
-                    Join Waitlist Now
-                  </a>
-                </Button>
+            <Button
+              size="lg"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 transition-all hover:scale-105 hover:shadow-lg"
+              asChild
+            >
+              <a
+                href="https://chat.whatsapp.com/Ej08ZEjAnlyAS7vE6uY7W8"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Join Waitlist Now
+              </a>
+            </Button>
           </motion.div>
         </div>
       </section>

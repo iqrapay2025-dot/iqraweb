@@ -15,21 +15,25 @@ import { Card } from '../ui/card';
 import { blogCategories } from '../../data/mockBlogPosts';
 import { useBlog } from '../../contexts/BlogContext';
 import { BlogPost } from '../../types/blog';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { UnsplashImagePicker } from './UnsplashImagePicker';
 
 interface AdminNewPostProps {
   onNavigate: (page: string) => void;
   existingPost?: {
+    id?: string; // 👈 add this
     title: string;
+    slug: string;
+    publishedAt: string;
     category: string;
     excerpt: string;
     content: string;
-    image: string;
+    image?: string;
     readTime: string;
   };
 }
+
 
 export function AdminNewPost({ onNavigate, existingPost }: AdminNewPostProps) {
   const { addPost, updatePost } = useBlog();

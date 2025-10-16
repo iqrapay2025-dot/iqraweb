@@ -5,32 +5,35 @@ import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { Footer } from "./Footer";
 import { motion } from "motion/react";
 import { TeamCarousel, TeamMember } from "./TeamCarousel";
+import { useLanguage } from "../contexts/LanguageContext";
 
 interface AboutPageProps {
   onNavigate?: (page: string) => void;
 }
 
 export function AboutPage({ onNavigate }: AboutPageProps) {
+  const { t } = useLanguage();
+  
   const values = [
     {
       icon: CheckCircle,
-      title: "Faith-First",
-      description: "Every decision is rooted in Islamic principles and ethics",
+      title: t('about.faithFirstTitle'),
+      description: t('about.faithFirstDesc'),
     },
     {
       icon: Sparkles,
-      title: "Transparency",
-      description: "Complete clarity in our halal earning mechanisms",
+      title: t('about.transparencyTitle'),
+      description: t('about.transparencyDesc'),
     },
     {
       icon: Target,
-      title: "Excellence",
-      description: "Commitment to quality in both content and platform",
+      title: t('about.excellenceTitle'),
+      description: t('about.excellenceDesc'),
     },
     {
       icon: Eye,
-      title: "Community",
-      description: "Building and empowering the global Muslim Ummah",
+      title: t('about.communityTitle'),
+      description: t('about.communityDesc'),
     },
   ];
 
@@ -91,10 +94,9 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <h1 className="text-4xl sm:text-5xl mb-6">Our Story</h1>
+            <h1 className="text-4xl sm:text-5xl mb-6">{t('about.title')}</h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Building a platform that honors the sacred pursuit of knowledge
-              while providing halal sustenance to the Ummah
+              {t('about.subtitle')}
             </p>
           </motion.div>
         </div>
@@ -126,29 +128,19 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
               viewport={{ once: true }}
               className="space-y-6"
             >
-              <h2 className="text-3xl sm:text-4xl">The Journey Begins</h2>
+              <h2 className="text-3xl sm:text-4xl">{t('about.journeyTitle')}</h2>
               <p className="text-muted-foreground">
-                IqraPay was born from a simple observation: Muslims around the
-                world want to deepen their knowledge of Islam, but many face
-                financial barriers to dedicating time to learning.
+                {t('about.journeyPara1')}
               </p>
               <p className="text-muted-foreground">
-                We asked ourselves: What if we could create a platform that
-                rewards the noble pursuit of Islamic knowledge? What if learning
-                the Qur'an and Sunnah could also provide halal sustenance?
+                {t('about.journeyPara2')}
               </p>
               <p className="text-muted-foreground">
-                That question led to IqraPay — a revolutionary platform that
-                combines faith-based education with ethical, transparent earning
-                opportunities. We've built this with scholars, educators, and
-                fintech experts to ensure everything aligns with Islamic
-                principles.
+                {t('about.journeyPara3')}
               </p>
               <div className="pt-4">
                 <div className="inline-block px-4 py-2 bg-accent rounded-lg">
-                  <span className="text-accent-foreground">
-                    Est. 2025 • Certified Halal
-                  </span>
+                  <span className="text-accent-foreground">Est. 2025 • Certified Halal</span>
                 </div>
               </div>
             </motion.div>
@@ -170,12 +162,9 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
                 <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mb-6">
                   <Eye className="h-8 w-8 text-primary-foreground" />
                 </div>
-                <h3 className="text-2xl mb-4">Our Vision</h3>
+                <h3 className="text-2xl mb-4">{t('about.visionTitle')}</h3>
                 <p className="text-muted-foreground">
-                  To become the world's leading platform for Islamic education,
-                  empowering every Muslim to access, learn, and benefit from the
-                  treasures of our faith while earning halal sustenance in the
-                  process.
+                  {t('about.visionDesc')}
                 </p>
               </Card>
             </motion.div>
@@ -190,12 +179,9 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
                 <div className="w-16 h-16 bg-secondary rounded-2xl flex items-center justify-center mb-6">
                   <Target className="h-8 w-8 text-secondary-foreground" />
                 </div>
-                <h3 className="text-2xl mb-4">Our Mission</h3>
+                <h3 className="text-2xl mb-4">{t('about.missionTitle')}</h3>
                 <p className="text-muted-foreground">
-                  To create a sustainable, transparent, and halal ecosystem
-                  where Muslims can deepen their knowledge of the Qur'an,
-                  Hadith, and Islamic sciences while receiving ethical rewards
-                  that support their worldly needs.
+                  {t('about.missionDesc')}
                 </p>
               </Card>
             </motion.div>
@@ -213,9 +199,9 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl sm:text-4xl mb-4">Our Core Values</h2>
+            <h2 className="text-3xl sm:text-4xl mb-4">{t('about.valuesTitle')}</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              The principles that guide everything we do
+              {t('about.valuesSubtitle')}
             </p>
           </motion.div>
 
@@ -233,9 +219,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
                     <value.icon className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-xl mb-3">{value.title}</h3>
-                  <p className="text-muted-foreground text-sm">
-                    {value.description}
-                  </p>
+                  <p className="text-muted-foreground text-sm">{value.description}</p>
                 </Card>
               </motion.div>
             ))}
@@ -256,25 +240,13 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
             <div className="w-24 h-24 bg-gradient-to-br from-primary to-secondary rounded-full mx-auto mb-6 flex items-center justify-center">
               <span className="text-3xl text-white">MJ</span>
             </div>
-            <h2 className="text-3xl mb-4">About the Founder</h2>
-            <h3 className="text-xl text-primary mb-4">Muhammad Jumah</h3>
+            <h2 className="text-3xl mb-4">{t('about.founderTitle')}</h2>
+            <h3 className="text-xl text-primary mb-4">{t('about.founderName')}</h3>
             <p className="text-muted-foreground max-w-2xl mx-auto mb-6">
-              IqraPay was founded by Muhammad Jumah, a visionary student and
-              entrepreneur committed to bridging the gap between faith,
-              education, and technology. As a Linguistics student at the
-              University of Ilorin, he continues to observe the challenges many
-              Muslims face in balancing the pursuit of knowledge with financial
-              stability. These ongoing experiences have inspired him to reflect
-              deeply on how learning, faith, and livelihood can coexist
-              harmoniously. Driven by a desire to make learning both rewarding
-              and sustainable, he established IqraPay — a halal “Read-to-Earn”
-              platform designed to empower Muslims to grow spiritually and
-              financially through meaningful learning.
+              {t('about.founderBio')}
             </p>
             <blockquote className="text-lg italic text-muted-foreground border-l-4 border-primary pl-6 py-2 max-w-2xl mx-auto">
-              “Knowledge without action
-              is pointless and action without halal sustenance is unsustainable.
-              IqraPay bridges all three.”
+              {t('about.founderQuote')}
             </blockquote>
           </motion.div>
         </div>
@@ -290,9 +262,9 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl sm:text-4xl mb-4">Meet Our Team</h2>
+            <h2 className="text-3xl sm:text-4xl mb-4">{t('about.teamTitle')}</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              The dedicated individuals working to make Islamic education accessible and rewarding
+              {t('about.teamSubtitle')}
             </p>
           </motion.div>
 

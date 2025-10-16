@@ -8,7 +8,8 @@ import { Label } from "./ui/label";
 import { IslamicPattern } from "./IslamicPattern";
 import { Footer } from "./Footer";
 import { motion } from "motion/react";
-import { toast } from "sonner@2.0.3";
+import { toast, Toaster } from "sonner";
+import { useLanguage } from "../contexts/LanguageContext";
 
 interface ContactPageProps {
   darkMode?: boolean;
@@ -16,6 +17,7 @@ interface ContactPageProps {
 }
 
 export function ContactPage({ darkMode = false, onNavigate }: ContactPageProps = {}) {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -27,19 +29,19 @@ export function ContactPage({ darkMode = false, onNavigate }: ContactPageProps =
   const contactInfo = [
     {
       icon: Mail,
-      title: "Email",
+      title: t('contact.emailLabel'),
       detail: "iqrapay2025@gmail.com",
       link: "mailto:iqrapay2025@gmail.com",
     },
     {
       icon: Phone,
-      title: "Phone",
+      title: t('contact.phoneLabel'),
       detail: "+234 815 595 6187",
       link: "tel:+2348155956187",
     },
     {
       icon: MapPin,
-      title: "Location",
+      title: t('contact.addressLabel'),
       detail: "Ibadan, Nigeria",
       link: null,
     },
@@ -69,8 +71,8 @@ export function ContactPage({ darkMode = false, onNavigate }: ContactPageProps =
       const result = await response.json();
 
       if (result.success) {
-        toast.success("Message sent successfully!", {
-          description: "We'll get back to you within 24 hours.",
+        toast.success(t('contact.successTitle'), {
+          description: t('contact.successMessage'),
         });
         // Reset form
         setFormData({
@@ -80,12 +82,12 @@ export function ContactPage({ darkMode = false, onNavigate }: ContactPageProps =
           message: "",
         });
       } else {
-        toast.error("Failed to send message", {
+        toast.error(t('common.error'), {
           description: "Please try again or email us directly.",
         });
       }
     } catch (error) {
-      toast.error("Failed to send message", {
+      toast.error(t('common.error'), {
         description: "Please try again or email us directly at iqrapay2025@gmail.com",
       });
     } finally {
@@ -111,9 +113,9 @@ export function ContactPage({ darkMode = false, onNavigate }: ContactPageProps =
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-4xl sm:text-5xl mb-6">Get in Touch</h1>
+            <h1 className="text-4xl sm:text-5xl mb-6">{t('contact.title')}</h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Have questions or feedback? We'd love to hear from you. Reach out and we'll respond as soon as possible.
+              {t('contact.subtitle')}
             </p>
           </motion.div>
         </div>
@@ -161,32 +163,32 @@ export function ContactPage({ darkMode = false, onNavigate }: ContactPageProps =
             <Card className="p-8">
               <div className="text-center mb-8">
                 <MessageCircle className="h-12 w-12 text-primary mx-auto mb-4" />
-                <h2 className="text-3xl mb-2">Send Us a Message</h2>
+                <h2 className="text-3xl mb-2">{t('contact.formTitle')}</h2>
                 <p className="text-muted-foreground">
-                  Fill out the form below and we'll get back to you within 24 hours
+                  {t('contact.subtitle')}
                 </p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="name">Full Name *</Label>
+                    <Label htmlFor="name">{t('contact.name')} *</Label>
                     <Input 
                       id="name"
                       name="name"
-                      placeholder="Enter your name" 
+                      placeholder={t('contact.name')} 
                       value={formData.name}
                       onChange={handleChange}
                       required
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email Address *</Label>
+                    <Label htmlFor="email">{t('contact.email')} *</Label>
                     <Input 
                       id="email"
                       name="email"
                       type="email" 
-                      placeholder="your@email.com" 
+                      placeholder={t('contact.emailPlaceholder')} 
                       value={formData.email}
                       onChange={handleChange}
                       required
@@ -195,11 +197,11 @@ export function ContactPage({ darkMode = false, onNavigate }: ContactPageProps =
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="subject">Subject *</Label>
+                  <Label htmlFor="subject">{t('contact.subject')} *</Label>
                   <Input 
                     id="subject"
                     name="subject"
-                    placeholder="How can we help you?" 
+                    placeholder={t('contact.subject')} 
                     value={formData.subject}
                     onChange={handleChange}
                     required
@@ -207,11 +209,11 @@ export function ContactPage({ darkMode = false, onNavigate }: ContactPageProps =
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="message">Message *</Label>
+                  <Label htmlFor="message">{t('contact.message')} *</Label>
                   <Textarea 
                     id="message"
                     name="message"
-                    placeholder="Tell us more about your inquiry..." 
+                    placeholder={t('contact.message')} 
                     rows={6}
                     value={formData.message}
                     onChange={handleChange}
@@ -226,17 +228,16 @@ export function ContactPage({ darkMode = false, onNavigate }: ContactPageProps =
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
-                    <>Sending...</>
+                    <>{t('contact.sending')}</>
                   ) : (
                     <>
-                      Send Message <Send className="h-4 w-4 ml-2" />
+                      {t('contact.send')} <Send className="h-4 w-4 ml-2" />
                     </>
                   )}
                 </Button>
 
                 <p className="text-xs text-center text-muted-foreground">
                   Thank You for reaching out!
-
                 </p>
               </form>
             </Card>

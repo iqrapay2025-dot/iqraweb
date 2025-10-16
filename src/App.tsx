@@ -20,6 +20,7 @@ import { AdminNewPost } from "./components/admin/AdminNewPost";
 import { AdminSettings } from "./components/admin/AdminSettings";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { BlogProvider, useBlog } from "./contexts/BlogContext";
+import { LanguageProvider } from "./contexts/LanguageContext";
 import { Toaster } from "./components/ui/sonner";
 import { IqraPayLoader } from "./components/IqraPayLoader";
 
@@ -207,10 +208,12 @@ function AppContent() {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <BlogProvider>
-        <AppContent />
-      </BlogProvider>
-    </AuthProvider>
+    <LanguageProvider>
+      <AuthProvider>
+        <BlogProvider>
+          <AppContent />
+        </BlogProvider>
+      </AuthProvider>
+    </LanguageProvider>
   );
 }

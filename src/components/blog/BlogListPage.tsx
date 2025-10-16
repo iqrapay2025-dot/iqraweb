@@ -6,6 +6,7 @@ import { IslamicPattern } from '../IslamicPattern';
 import { NewsletterSubscribe } from '../NewsletterSubscribe';
 import { blogCategories } from '../../data/mockBlogPosts';
 import { useBlog } from '../../contexts/BlogContext';
+import { useLanguage } from '../../contexts/LanguageContext';
 import { Input } from '../ui/input';
 import { Badge } from '../ui/badge';
 
@@ -18,6 +19,7 @@ export function BlogListPage({ onNavigate, onNavigateToPost }: BlogListPageProps
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const { posts } = useBlog();
+  const { t } = useLanguage();
 
   // Filter only published posts
   const publishedPosts = posts.filter(post => post.status === 'published');
@@ -39,10 +41,10 @@ export function BlogListPage({ onNavigate, onNavigateToPost }: BlogListPageProps
         <section className="relative pt-32 pb-20 px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl mb-6">
-              Knowledge & Insights
+              {t('blog.title')}
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
-              Explore our latest articles on Islamic knowledge, platform updates, and community stories
+              {t('blog.subtitle')}
             </p>
             
             {/* Search Bar */}
@@ -50,7 +52,7 @@ export function BlogListPage({ onNavigate, onNavigateToPost }: BlogListPageProps
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
               <Input
                 type="text"
-                placeholder="Search articles..."
+                placeholder={t('blog.searchPlaceholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-12 h-14 rounded-xl border-2 focus:border-primary"
@@ -93,7 +95,7 @@ export function BlogListPage({ onNavigate, onNavigateToPost }: BlogListPageProps
             ) : (
               <div className="text-center py-20">
                 <p className="text-xl text-muted-foreground">
-                  No articles found matching your criteria
+                  {t('blog.noResults')}
                 </p>
               </div>
             )}

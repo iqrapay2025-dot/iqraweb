@@ -1,6 +1,8 @@
 import { Menu, X, Moon, Sun } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import { LanguageSelector } from "./LanguageSelector";
+import { useLanguage } from "../contexts/LanguageContext";
 import logoLight from "figma:asset/39ba4a0dd03e9a935003109f9573af3b0b10ff85.png";
 import logoDark from "figma:asset/95c433e7c8d7b15a23b7736bc56fc1d657934d51.png";
 
@@ -15,6 +17,7 @@ export function Navigation({ currentPage, onNavigate, darkMode, toggleDarkMode }
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [logoTapCount, setLogoTapCount] = useState(0);
   const [logoTapTimer, setLogoTapTimer] = useState<NodeJS.Timeout | null>(null);
+  const { t } = useLanguage();
 
   // Triple tap on logo to access admin (mobile friendly)
   const handleLogoTap = () => {
@@ -41,12 +44,12 @@ export function Navigation({ currentPage, onNavigate, darkMode, toggleDarkMode }
   };
 
   const navItems = [
-    { name: "Home", id: "home" },
-    { name: "About", id: "about" },
-    { name: "How It Works", id: "how-it-works" },
-    { name: "Ambassadors", id: "ambassadors" },
-    { name: "Blog", id: "blog-list" },
-    { name: "Contact", id: "contact" },
+    { name: t('nav.home'), id: "home" },
+    { name: t('nav.about'), id: "about" },
+    { name: t('nav.howItWorks'), id: "how-it-works" },
+    { name: t('nav.ambassadors'), id: "ambassadors" },
+    { name: t('nav.blog'), id: "blog-list" },
+    { name: t('nav.contact'), id: "contact" },
   ];
 
   return (
@@ -93,8 +96,10 @@ export function Navigation({ currentPage, onNavigate, darkMode, toggleDarkMode }
             ))}
           </div>
 
-          {/* Dark Mode Toggle & Mobile Menu Button */}
+          {/* Language Selector, Dark Mode Toggle & Mobile Menu Button */}
           <div className="flex items-center gap-2">
+            <LanguageSelector />
+            
             <Button
               variant="ghost"
               size="icon"

@@ -6,29 +6,32 @@ import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { Footer } from "./Footer";
 import { TestimonialCarousel } from "./TestimonialCarousel";
 import { motion } from "motion/react";
+import { useLanguage } from "../contexts/LanguageContext";
 
 interface HomePageProps {
   onNavigate?: (page: string) => void;
 }
 
 export function HomePage({ onNavigate }: HomePageProps) {
+  const { t } = useLanguage();
+
   const steps = [
     {
       icon: BookOpen,
-      title: "Read",
-      description: "Engage with the Qur'an and beneficial Islamic knowledge daily",
+      title: t('home.readTitle'),
+      description: t('home.readDesc'),
       color: "bg-primary",
     },
     {
       icon: TrendingUp,
-      title: "Earn",
-      description: "Get rewarded with halal earnings for your consistent learning",
+      title: t('home.earnTitle'),
+      description: t('home.earnDesc'),
       color: "bg-secondary",
     },
     {
       icon: Users,
-      title: "Grow",
-      description: "Build your faith and wealth while strengthening the Ummah",
+      title: t('home.growTitle'),
+      description: t('home.growDesc'),
       color: "bg-primary",
     },
   ];
@@ -36,10 +39,10 @@ export function HomePage({ onNavigate }: HomePageProps) {
 
 
   const stats = [
-    { value: "300+", label: "Active Community Members" },
-    { value: "50+", label: "X(Twitter) Social Followers" },
-    { value: "100%", label: "Halal Certified" },
-    { value: "100+", label: "Instagram Social Followers" },
+    { value: "300+", label: t('Active Community Members') },
+    { value: "50+", label: t('X(Twitter) Social Followers') },
+    { value: "100%", label: t('home.halalCertified') },
+    { value: "100+", label: t('Instagram Social Followers') },
   ];
 
   return (
@@ -58,12 +61,10 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 <span className="text-accent-foreground">🕌 Faith-Driven • Tech-Forward</span>
               </div>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl mb-6">
-                Learn the Deen.
-                <br />
-                <span className="text-primary">Earn for the Dunyā.</span>
+                {t('home.tagline')}
               </h1>
               <p className="text-xl text-muted-foreground mb-8 max-w-xl">
-                IqraPay is a halal Read-to-Earn platform empowering Muslims to earn rewards while learning the Qur'an and beneficial knowledge.
+                {t('home.heroDescription')}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button 
@@ -72,7 +73,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                   asChild
                 >
                   <a href="https://chat.whatsapp.com/Ej08ZEjAnlyAS7vE6uY7W8" target="_blank" rel="noopener noreferrer">
-                    Join Waitlist
+                    {t('home.getStarted')}
                   </a>
                 </Button>
                 <Button 
@@ -81,7 +82,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                   className="border-primary text-primary hover:bg-primary/10 transition-all hover:scale-105 hover:shadow-md"
                   onClick={() => onNavigate && onNavigate('about')}
                 >
-                  Learn More
+                  {t('home.learnMore')}
                 </Button>
               </div>
             </motion.div>
@@ -105,7 +106,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                   <Award className="h-8 w-8" />
                   <div>
                     <div className="text-2xl">100%</div>
-                    <div className="text-sm opacity-90">Halal Certified</div>
+                    <div className="text-sm opacity-90">{t('home.halalCertified')}</div>
                   </div>
                 </div>
               </div>
@@ -118,9 +119,9 @@ export function HomePage({ onNavigate }: HomePageProps) {
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl mb-4">How IqraPay Works</h2>
+            <h2 className="text-3xl sm:text-4xl mb-4">{t('home.stepsTitle')}</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Three simple steps to start your journey of faith and growth
+              {t('howItWorks.subtitle')}
             </p>
           </div>
 
@@ -179,9 +180,9 @@ export function HomePage({ onNavigate }: HomePageProps) {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl sm:text-4xl mb-4">Trusted by the Ummah</h2>
+            <h2 className="text-3xl sm:text-4xl mb-4">{t('home.testimonialsTitle')}</h2>
             <p className="text-xl text-muted-foreground">
-              Hear from our global community of learners
+              {t('home.testimonialsTitle')}
             </p>
           </motion.div>
 
@@ -207,9 +208,9 @@ export function HomePage({ onNavigate }: HomePageProps) {
             viewport={{ once: true }}
           >
             <Heart className="h-16 w-16 mx-auto mb-6" />
-            <h2 className="text-3xl sm:text-4xl mb-6">Ready to Begin Your Journey?</h2>
+            <h2 className="text-3xl sm:text-4xl mb-6">{t('home.ctaTitle')}</h2>
             <p className="text-xl mb-8 opacity-90">
-              Join thousands of Muslims earning halal rewards while deepening their knowledge of Islam.
+              {t('home.ctaDescription')}
             </p>
             <Button 
               size="lg" 
@@ -217,7 +218,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
               asChild
             >
               <a href="https://chat.whatsapp.com/Ej08ZEjAnlyAS7vE6uY7W8" target="_blank" rel="noopener noreferrer">
-                Join the Waitlist
+                {t('home.joinNow')}
               </a>
             </Button>
           </motion.div>

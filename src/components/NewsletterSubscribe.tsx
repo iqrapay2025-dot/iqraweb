@@ -3,10 +3,12 @@ import { Mail, Send, CheckCircle } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Card } from "./ui/card";
+import { useLanguage } from "../contexts/LanguageContext";
 import { motion } from "motion/react";
-import { toast } from "sonner@2.0.3";
+import { toast } from "sonner";
 
 export function NewsletterSubscribe() {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     email: "",
     subject: "New Newsletter Subscription - IqraPay",
@@ -33,8 +35,8 @@ export function NewsletterSubscribe() {
       const result = await response.json();
 
       if (result.success) {
-        toast.success("Successfully subscribed!", {
-          description: "You'll receive updates about IqraPay and Islamic knowledge.",
+        toast.success(t('newsletter.successTitle'), {
+          description: t('newsletter.successMessage'),
           icon: <CheckCircle className="h-5 w-5" />,
         });
         setFormData({
@@ -42,12 +44,12 @@ export function NewsletterSubscribe() {
           subject: "New Newsletter Subscription - IqraPay",
         });
       } else {
-        toast.error("Subscription failed", {
+        toast.error(t('common.error'), {
           description: "Please try again or contact us directly.",
         });
       }
     } catch (error) {
-      toast.error("Subscription failed", {
+      toast.error(t('common.error'), {
         description: "Please try again later.",
       });
     } finally {
@@ -74,11 +76,10 @@ export function NewsletterSubscribe() {
           <Card className="p-8 md:p-12 text-center bg-background/80 backdrop-blur-sm border-2">
             <Mail className="h-12 w-12 text-primary mx-auto mb-4" />
             <h2 className="text-3xl md:text-4xl mb-4">
-              Stay Updated with IqraPay
+              {t('newsletter.title')}
             </h2>
             <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Subscribe to our newsletter for the latest updates on Islamic knowledge, 
-              platform features, and exclusive content delivered to your inbox.
+              {t('newsletter.description')}
             </p>
             
             <form onSubmit={handleSubmit} className="max-w-md mx-auto">
@@ -87,7 +88,7 @@ export function NewsletterSubscribe() {
                   <Input
                     type="email"
                     name="email"
-                    placeholder="Enter your email address"
+                    placeholder={t('newsletter.placeholder')}
                     value={formData.email}
                     onChange={handleChange}
                     required
@@ -101,20 +102,30 @@ export function NewsletterSubscribe() {
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
-                    <>Subscribing...</>
+                    <>{t('newsletter.subscribing')}</>
                   ) : (
                     <>
-                      Subscribe <Send className="h-4 w-4 ml-2" />
+                      {t('newsletter.subscribe')} <Send className="h-4 w-4 ml-2" />
                     </>
                   )}
                 </Button>
               </div>
               
               <p className="text-xs text-muted-foreground mt-4">
-                We respect your privacy. Unsubscribe anytime.
+                {t('newsletter.privacy')}
               </p>
               
-             
+              <p className="text-xs text-muted-foreground mt-2">
+                To enable email delivery, replace YOUR_ACCESS_KEY_HERE in the code with your Web3Forms access key.{" "}
+                <a 
+                  href="https://web3forms.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  Get your free key here
+                </a>
+              </p>
             </form>
           </Card>
         </motion.div>

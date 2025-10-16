@@ -6,6 +6,7 @@ import { Footer } from "./Footer";
 import { motion } from "motion/react";
 import { AmbassadorCarousel } from "./AmbassadorCarousel";
 import { mockAmbassadors } from "../data/mockAmbassadors";
+import { useLanguage } from "../contexts/LanguageContext";
 import ambassadorImage from "figma:asset/95bf0964463b9370401c4f83c40caaa6f395ec74.png";
 
 interface AmbassadorsPageProps {
@@ -13,45 +14,47 @@ interface AmbassadorsPageProps {
 }
 
 export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
+  const { t } = useLanguage();
+  
   const benefits = [
     {
       icon: Gift,
-      title: "Exclusive Rewards",
-      description: "Earn competitive commissions for every referral and special bonuses for top performers",
+      title: t('ambassadors.benefit1Title'),
+      description: t('ambassadors.benefit1Desc'),
     },
     {
       icon: TrendingUp,
-      title: "Passive Income",
-      description: "Build a sustainable income stream by growing the IqraPay community",
+      title: t('ambassadors.benefit2Title'),
+      description: t('ambassadors.benefit2Desc'),
     },
     {
       icon: Award,
-      title: "Recognition",
-      description: "Featured on our platform with ambassador badges and public acknowledgment",
+      title: t('ambassadors.benefit3Title'),
+      description: t('ambassadors.benefit3Desc'),
     },
     {
       icon: Globe,
-      title: "Global Network",
-      description: "Connect with ambassadors worldwide and build meaningful relationships",
+      title: t('ambassadors.benefit4Title'),
+      description: t('ambassadors.benefit4Desc'),
     },
     {
       icon: Star,
-      title: "Early Access",
-      description: "First to try new features and provide feedback that shapes the platform",
+      title: t('ambassadors.benefit5Title'),
+      description: t('ambassadors.benefit5Desc'),
     },
     {
       icon: Zap,
-      title: "Marketing Support",
-      description: "Professional materials, training, and resources to help you succeed",
+      title: t('ambassadors.benefit6Title'),
+      description: t('ambassadors.benefit6Desc'),
     },
   ];
 
   const requirements = [
-    "Active member of the Muslim community",
-    "Strong social media presence or community influence",
-    "Passionate about Islamic education and halal earning",
-    "Committed to representing IqraPay values",
-    "Minimum 18 years of age",
+    t('ambassadors.req1'),
+    t('ambassadors.req2'),
+    t('ambassadors.req3'),
+    t('ambassadors.req4'),
+    t('ambassadors.req5'),
   ];
 
   return (
@@ -70,16 +73,14 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
               <span className="text-accent-foreground">🌟 Join Our Mission</span>
             </div>
             <h1 className="text-4xl sm:text-5xl mb-6">
-              Become an IqraPay
-              <br />
-              <span className="text-primary">Ambassador</span>
+              {t('ambassadors.title')}
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-              Help spread beneficial knowledge and earn rewards by sharing IqraPay with your community. Be part of a global movement empowering Muslims through education.
+              {t('ambassadors.subtitle')}
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8">
-                Apply Now
+                {t('ambassadors.applyNow')}
               </Button>
               
             </div>
@@ -97,15 +98,15 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl sm:text-4xl mb-6">What is the Ambassador Program?</h2>
+              <h2 className="text-3xl sm:text-4xl mb-6">{t('ambassadors.whatIsTitle')}</h2>
               <p className="text-muted-foreground mb-4">
-                The IqraPay Ambassador Program is designed for passionate Muslims who want to make a difference in their communities while earning halal income.
+                {t('ambassadors.whatIsPara1')}
               </p>
               <p className="text-muted-foreground mb-4">
-                As an ambassador, you'll be the bridge between IqraPay and potential learners, sharing our mission of combining Islamic education with ethical earning opportunities.
+                {t('ambassadors.whatIsPara2')}
               </p>
               <p className="text-muted-foreground mb-6">
-                Whether you're an influencer, community leader, student, or simply someone who believes in our vision, we welcome you to join this blessed journey.
+                {t('ambassadors.whatIsPara3')}
               </p>
               <div className="flex items-center gap-4 p-4 bg-primary/5 rounded-lg border border-primary/20">
                 <Heart className="h-8 w-8 text-primary flex-shrink-0" />
@@ -180,9 +181,9 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl sm:text-4xl mb-4">Ambassador Benefits</h2>
+            <h2 className="text-3xl sm:text-4xl mb-4">{t('ambassadors.benefitsTitle')}</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Everything you need to succeed and thrive as an IqraPay ambassador
+              {t('ambassadors.benefitsSubtitle')}
             </p>
           </motion.div>
 
@@ -218,9 +219,9 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl sm:text-4xl mb-4">Meet Our Ambassadors</h2>
+            <h2 className="text-3xl sm:text-4xl mb-4">{t('ambassadors.meetTitle')}</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Inspiring individuals from around the world who are making a difference in their communities
+              {t('ambassadors.meetSubtitle')}
             </p>
           </motion.div>
 
@@ -245,9 +246,9 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl sm:text-4xl mb-4">Who Can Apply?</h2>
+            <h2 className="text-3xl sm:text-4xl mb-4">{t('ambassadors.whoCanApply')}</h2>
             <p className="text-xl text-muted-foreground">
-              We're looking for dedicated individuals who share our values
+              {t('ambassadors.whoCanApplySubtitle')}
             </p>
           </motion.div>
 
@@ -258,7 +259,7 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
             viewport={{ once: true }}
           >
             <Card className="p-8">
-              <h3 className="text-2xl mb-6">Requirements</h3>
+              <h3 className="text-2xl mb-6">{t('ambassadors.requirementsTitle')}</h3>
               <div className="space-y-4">
                 {requirements.map((requirement, index) => (
                   <div key={index} className="flex items-start gap-3">
@@ -285,20 +286,20 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
             viewport={{ once: true }}
           >
             <Users className="h-16 w-16 mx-auto mb-6" />
-            <h2 className="text-3xl sm:text-4xl mb-6">Ready to Make an Impact?</h2>
+            <h2 className="text-3xl sm:text-4xl mb-6">{t('ambassadors.ctaTitle')}</h2>
             <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-              Join our global team of ambassadors and help spread knowledge while earning halal rewards. Your journey starts here.
+              {t('ambassadors.ctaDesc')}
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Button size="lg" className="bg-white text-secondary hover:bg-white/90 px-8">
-                Apply to Become an Ambassador
+                {t('ambassadors.applyNow')}
               </Button>
               <Button 
                 size="lg" 
                 variant="outline" 
                 className="border-white text-primary hover:bg-white/10"
               >
-                Download Info Pack
+                {t('ambassadors.downloadInfo')}
               </Button>
             </div>
             <p className="text-sm mt-6 opacity-75">

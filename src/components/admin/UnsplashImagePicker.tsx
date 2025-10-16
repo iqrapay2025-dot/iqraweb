@@ -3,7 +3,7 @@ import { Search, ImageIcon, CheckCircle2 } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Card } from '../ui/card';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
 
 interface UnsplashImagePickerProps {
   onSelectImage: (url: string) => void;
@@ -51,6 +51,9 @@ export function UnsplashImagePicker({ onSelectImage, currentImage }: UnsplashIma
       <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Find Islamic-Themed Images</DialogTitle>
+          <DialogDescription>
+            Browse and select Shariah-compliant images from Unsplash for your blog post.
+          </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-6">
