@@ -50,7 +50,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
       name: "Fatiah Badmus",
       role: "Co-Founder",
       location: "Osun, Nigeria",
-      description: "Muslimah • Writer • WHO-Certified Mental Health Coach. Founder of Soothopedia and Himaayah, merging faith and psychology to inspire healing and wholeness. Advocates mental wellness, healthy love, and purposeful living through her words.",
+      description: "Muslimah • Writer • WHO-Certified Mental Health Coach. Founder of Soothopedia, merging faith and psychology to inspire healing and wholeness. Advocates mental wellness, healthy love, and purposeful living through her words.",
     },
     {
       id: 3,
