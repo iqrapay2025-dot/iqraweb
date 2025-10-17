@@ -2,7 +2,7 @@ import { FileText, Eye, TrendingUp, Users, Database, Trash2 } from 'lucide-react
 import { Card } from '../ui/card';
 import { Button } from '../ui/button';
 import { useBlog } from '../../contexts/BlogContext';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 interface AdminDashboardProps {
   onNavigate: (page: string) => void;

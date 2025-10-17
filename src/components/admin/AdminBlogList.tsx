@@ -22,7 +22,7 @@ import {
   AlertDialogTitle,
 } from '../ui/alert-dialog';
 import { useBlog } from '../../contexts/BlogContext';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 interface AdminBlogListProps {
   onNavigate: (page: string) => void;

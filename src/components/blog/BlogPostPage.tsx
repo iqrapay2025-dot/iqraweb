@@ -5,7 +5,7 @@ import { BlogPost } from '../../types/blog';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 interface BlogPostPageProps {
   post: BlogPost;
@@ -169,9 +169,7 @@ export function BlogPostPage({ post, onNavigate, onBack }: BlogPostPageProps) {
             </div>
 
             {/* Article Content */}
-            <div className="prose prose-lg max-w-none">
-              {renderContent(post.content)}
-            </div>
+            <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: post.content }}></div>
 
             {/* Call to Action */}
             <div className="mt-12 p-8 bg-muted rounded-xl text-center">

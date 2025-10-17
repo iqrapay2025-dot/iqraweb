@@ -25,7 +25,11 @@ import { Toaster } from "./components/ui/sonner";
 import { IqraPayLoader } from "./components/IqraPayLoader";
 
 function AppContent() {
-  const [currentPage, setCurrentPage] = useState("home");
+  const [currentPage, setCurrentPage] = useState(() => {
+    // Initialize from URL hash or default to home
+    const hash = window.location.hash.slice(1) || 'home';
+    return hash;
+  });
   const [darkMode, setDarkMode] = useState(false);
   const [currentBlogSlug, setCurrentBlogSlug] = useState<string | null>(null);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
@@ -49,12 +53,32 @@ function AppContent() {
     }
   }, [darkMode]);
 
+  // Handle browser back/forward buttons
+  useEffect(() => {
+    const handlePopState = () => {
+      const hash = window.location.hash.slice(1) || 'home';
+      
+      // Check if it's a blog post URL (format: blog-post/slug)
+      if (hash.startsWith('blog-post/')) {
+        const slug = hash.split('/')[1];
+        setCurrentPage('blog-post');
+        setCurrentBlogSlug(slug);
+      } else {
+        setCurrentPage(hash);
+        setCurrentBlogSlug(null);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   // Hidden keyboard shortcut to access admin: Ctrl+Shift+A
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.ctrlKey && e.shiftKey && e.key === 'A') {
         e.preventDefault();
-        setCurrentPage('admin-login');
+        handleNavigate('admin-login');
       }
     };
 
@@ -67,24 +91,32 @@ function AppContent() {
   };
 
   const handleNavigate = (page: string) => {
+    // Update browser history
+    window.history.pushState({ page }, '', `#${page}`);
     setCurrentPage(page);
     setCurrentBlogSlug(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleNavigateToBlogPost = (slug: string) => {
+    // Update browser history with blog post slug
+    window.history.pushState({ page: 'blog-post', slug }, '', `#blog-post/${slug}`);
     setCurrentBlogSlug(slug);
     setCurrentPage('blog-post');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleBackToBlog = () => {
+    // Update browser history
+    window.history.pushState({ page: 'blog-list' }, '', '#blog-list');
     setCurrentBlogSlug(null);
     setCurrentPage('blog-list');
   };
 
   const handleLogout = () => {
     logout();
+    // Update browser history
+    window.history.pushState({ page: 'home' }, '', '#home');
     setCurrentPage('home');
   };
 
