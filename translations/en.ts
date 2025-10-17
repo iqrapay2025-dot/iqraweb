@@ -235,10 +235,10 @@ export const en = {
     ctaTitle: "Ready to Make an Impact?",
     ctaDesc:
       "Join our global team of ambassadors and help spread knowledge while earning halal rewards. Your journey starts here.",
-    applyNow: "Apply to Become an Ambassador",
+    applyNow: "Apply to Become a Campus Ambassador",
     downloadInfo: "Download Info Pack",
 
-    becomeTitle: "Become an Ambassador",
+    becomeTitle: "Become a Campus Ambassador",
     becomeDesc:
       "Help us grow the IqraPay community while earning extra rewards",
 

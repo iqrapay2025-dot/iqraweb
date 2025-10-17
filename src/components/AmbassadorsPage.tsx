@@ -79,9 +79,11 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
               {t('ambassadors.subtitle')}
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8">
+              <a href="https://bit.ly/IqraPayCampusAmbassador–ApplicationForm">
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8">
                 {t('ambassadors.applyNow')}
               </Button>
+              </a>
               
             </div>
           </motion.div>
@@ -291,9 +293,10 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
               {t('ambassadors.ctaDesc')}
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
-              <Button size="lg" className="bg-white text-secondary hover:bg-white/90 px-8">
+              <a href="https://bit.ly/IqraPayCampusAmbassador–ApplicationForm">
+                <Button size="lg" className="bg-white text-secondary hover:bg-white/90 px-8">
                 {t('ambassadors.applyNow')}
-              </Button>
+              </Button></a>
               <Button 
                 size="lg" 
                 variant="outline" 
