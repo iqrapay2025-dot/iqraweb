@@ -23,6 +23,9 @@ import { BlogProvider, useBlog } from "./contexts/BlogContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { Toaster } from "./components/ui/sonner";
 import { IqraPayLoader } from "./components/IqraPayLoader";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from "./components/ui/sheet";
+import { Button } from "./components/ui/button";
+import { Menu } from "lucide-react";
 
 function AppContent() {
   const [currentPage, setCurrentPage] = useState(() => {
@@ -33,6 +36,7 @@ function AppContent() {
   const [darkMode, setDarkMode] = useState(false);
   const [currentBlogSlug, setCurrentBlogSlug] = useState<string | null>(null);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { isAuthenticated, logout } = useAuth();
   const { posts } = useBlog();
 
@@ -95,6 +99,7 @@ function AppContent() {
     window.history.pushState({ page }, '', `#${page}`);
     setCurrentPage(page);
     setCurrentBlogSlug(null);
+    setMobileMenuOpen(false); // Close mobile menu when navigating
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -141,37 +146,73 @@ function AppContent() {
       }
 
       return (
-        <div className="flex min-h-screen">
-          <AdminSidebar
-            currentPage={currentPage}
-            onNavigate={handleNavigate}
-            onLogout={handleLogout}
-          />
-          <div className="flex-1 overflow-auto">
-            {(() => {
-              switch (currentPage) {
-                case 'admin-dashboard':
-                  return <AdminDashboard onNavigate={handleNavigate} />;
-                case 'admin-blog':
-                  return <AdminBlogList onNavigate={handleNavigate} onEditPost={handleEditPost} />;
-                case 'admin-new-post':
-                  return <AdminNewPost onNavigate={handleNavigate} />;
-                case 'admin-edit-post':
-                  const postToEdit = posts.find(p => p.slug === currentBlogSlug);
-                  return postToEdit ? (
-                    <AdminNewPost 
+        <div className="flex min-h-screen bg-background">
+          {/* Desktop Sidebar - Hidden on mobile */}
+          <div className="hidden lg:block">
+            <AdminSidebar
+              currentPage={currentPage}
+              onNavigate={handleNavigate}
+              onLogout={handleLogout}
+            />
+          </div>
+
+          {/* Mobile Header with Menu Button */}
+          <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-card border-b border-border">
+            <div className="flex items-center justify-between p-4">
+              <div className="flex items-center gap-3">
+                <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+                  <SheetTrigger asChild>
+                    <Button variant="ghost" size="icon" className="lg:hidden">
+                      <Menu className="h-5 w-5" />
+                    </Button>
+                  </SheetTrigger>
+                  <SheetContent side="left" className="p-0 w-[280px] sm:w-[320px]">
+                    <SheetTitle className="sr-only">Admin Navigation Menu</SheetTitle>
+                    <SheetDescription className="sr-only">
+                      Navigate through admin panel pages including Dashboard, Blog Posts, Settings, and more.
+                    </SheetDescription>
+                    <AdminSidebar
+                      currentPage={currentPage}
                       onNavigate={handleNavigate}
-                      existingPost={postToEdit}
+                      onLogout={handleLogout}
+                      onClose={() => setMobileMenuOpen(false)}
                     />
-                  ) : (
-                    <AdminNewPost onNavigate={handleNavigate} />
-                  );
-                case 'admin-settings':
-                  return <AdminSettings />;
-                default:
-                  return <AdminDashboard onNavigate={handleNavigate} />;
-              }
-            })()}
+                  </SheetContent>
+                </Sheet>
+                <h1 className="text-lg font-medium">Admin Portal</h1>
+              </div>
+            </div>
+          </div>
+
+          {/* Main Content Area */}
+          <div className="flex-1 overflow-auto lg:overflow-visible">
+            {/* Add top padding on mobile to account for fixed header */}
+            <div className="lg:pt-0 pt-[57px]">
+              {(() => {
+                switch (currentPage) {
+                  case 'admin-dashboard':
+                    return <AdminDashboard onNavigate={handleNavigate} />;
+                  case 'admin-blog':
+                    return <AdminBlogList onNavigate={handleNavigate} onEditPost={handleEditPost} />;
+                  case 'admin-new-post':
+                    return <AdminNewPost onNavigate={handleNavigate} />;
+                  case 'admin-edit-post':
+                    const postToEdit = posts.find(p => p.slug === currentBlogSlug);
+                    return postToEdit ? (
+                      <AdminNewPost 
+                        onNavigate={handleNavigate}
+                        existingPost={postToEdit}
+                      />
+                    ) : (
+                      <AdminNewPost onNavigate={handleNavigate} />
+                    );
+                  case 'admin-settings':
+                    return <AdminSettings />;
+                  default:
+                    return <AdminDashboard onNavigate={handleNavigate} />;
+                }
+              })()}
+            </div>
           </div>
         </div>
       );

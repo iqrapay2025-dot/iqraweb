@@ -55,18 +55,18 @@ export function AdminBlogList({ onNavigate, onEditPost }: AdminBlogListProps) {
   };
 
   return (
-    <div className="p-8">
+    <div className="p-4 sm:p-6 lg:p-8">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-6 sm:mb-8">
         <div>
-          <h1 className="text-3xl mb-2">All Posts</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-2xl sm:text-3xl mb-1 sm:mb-2">All Posts</h1>
+          <p className="text-sm sm:text-base text-muted-foreground">
             Manage all your blog posts
           </p>
         </div>
         <Button
           onClick={() => onNavigate('admin-new-post')}
-          className="bg-primary text-primary-foreground hover:bg-primary/90"
+          className="bg-primary text-primary-foreground hover:bg-primary/90 w-full sm:w-auto"
         >
           <Plus className="h-4 w-4 mr-2" />
           New Post
@@ -74,21 +74,21 @@ export function AdminBlogList({ onNavigate, onEditPost }: AdminBlogListProps) {
       </div>
 
       {/* Search */}
-      <div className="mb-6">
-        <div className="relative max-w-md">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+      <div className="mb-4 sm:mb-6">
+        <div className="relative w-full sm:max-w-md">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
           <Input
             type="text"
             placeholder="Search posts..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10"
+            className="pl-9 sm:pl-10 text-sm sm:text-base"
           />
         </div>
       </div>
 
-      {/* Posts Table */}
-      <div className="border border-border rounded-lg overflow-hidden">
+      {/* Posts Table - Desktop */}
+      <div className="hidden lg:block border border-border rounded-lg overflow-hidden">
         <Table>
           <TableHeader>
             <TableRow>
@@ -167,10 +167,85 @@ export function AdminBlogList({ onNavigate, onEditPost }: AdminBlogListProps) {
         </Table>
       </div>
 
+      {/* Posts Cards - Mobile & Tablet */}
+      <div className="lg:hidden space-y-4">
+        {filteredPosts.map((post) => (
+          <div
+            key={post.id}
+            className="border border-border rounded-lg p-4 bg-card hover:bg-accent/50 transition-colors"
+          >
+            <div className="flex gap-3">
+              {/* Post Image */}
+              <img
+                src={post.image}
+                alt={post.title}
+                className="h-20 w-20 sm:h-24 sm:w-24 rounded object-cover shrink-0"
+              />
+              
+              {/* Post Details */}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-start justify-between gap-2 mb-2">
+                  <h3 className="line-clamp-2 break-words">{post.title}</h3>
+                  <Badge
+                    className={
+                      post.status === 'published'
+                        ? 'bg-green-100 text-green-700 hover:bg-green-100 shrink-0'
+                        : 'bg-yellow-100 text-yellow-700 hover:bg-yellow-100 shrink-0'
+                    }
+                  >
+                    {post.status}
+                  </Badge>
+                </div>
+                
+                <div className="flex flex-wrap gap-2 text-xs sm:text-sm text-muted-foreground mb-3">
+                  <Badge variant="outline" className="text-xs">{post.category}</Badge>
+                  <span>•</span>
+                  <span>{post.readTime}</span>
+                  <span>•</span>
+                  <span>
+                    {new Date(post.publishedAt).toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      year: 'numeric',
+                    })}
+                  </span>
+                </div>
+                
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => onEditPost(post.slug)}
+                    className="flex-1 sm:flex-initial"
+                  >
+                    <Edit className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1.5" />
+                    Edit
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleDelete(post.id)}
+                    className="flex-1 sm:flex-initial text-destructive hover:text-destructive"
+                  >
+                    <Trash2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1.5" />
+                    Delete
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
       {/* Empty State */}
       {filteredPosts.length === 0 && (
-        <div className="text-center py-12">
-          <p className="text-muted-foreground">No posts found</p>
+        <div className="text-center py-8 sm:py-12 border border-border rounded-lg bg-muted/30">
+          <p className="text-sm sm:text-base text-muted-foreground">No posts found</p>
+          {searchQuery && (
+            <p className="text-xs sm:text-sm text-muted-foreground mt-2">
+              Try adjusting your search query
+            </p>
+          )}
         </div>
       )}
 

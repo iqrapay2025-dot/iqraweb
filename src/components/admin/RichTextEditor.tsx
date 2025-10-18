@@ -208,18 +208,18 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your blog
   return (
     <div className="border rounded-lg overflow-hidden bg-white dark:bg-gray-900">
       {/* Toolbar */}
-      <div className="border-b bg-gray-50 dark:bg-gray-800 p-2 flex flex-wrap gap-1 items-center">
+      <div className="border-b bg-gray-50 dark:bg-gray-800 p-1.5 sm:p-2 flex flex-wrap gap-1 items-center">
         {/* Text Formatting */}
-        <div className="flex gap-1 border-r pr-2 mr-2">
+        <div className="flex gap-1 sm:border-r sm:pr-2 sm:mr-2">
           <Button
             type="button"
             variant="ghost"
             size="sm"
             onClick={() => executeCommand('bold')}
             title="Bold (Ctrl+B)"
-            className="h-8 w-8 p-0"
+            className="h-7 w-7 sm:h-8 sm:w-8 p-0"
           >
-            <Bold className="h-4 w-4" />
+            <Bold className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </Button>
           <Button
             type="button"
@@ -227,9 +227,9 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your blog
             size="sm"
             onClick={() => executeCommand('italic')}
             title="Italic (Ctrl+I)"
-            className="h-8 w-8 p-0"
+            className="h-7 w-7 sm:h-8 sm:w-8 p-0"
           >
-            <Italic className="h-4 w-4" />
+            <Italic className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </Button>
           <Button
             type="button"
@@ -237,17 +237,17 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your blog
             size="sm"
             onClick={() => executeCommand('underline')}
             title="Underline (Ctrl+U)"
-            className="h-8 w-8 p-0"
+            className="h-7 w-7 sm:h-8 sm:w-8 p-0"
           >
-            <Underline className="h-4 w-4" />
+            <Underline className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </Button>
         </div>
 
-        {/* Font Size */}
-        <div className="flex items-center gap-2 border-r pr-2 mr-2">
+        {/* Font Size - Hidden on mobile, shown on larger screens */}
+        <div className="hidden md:flex items-center gap-2 border-r pr-2 mr-2">
           <Type className="h-4 w-4 text-muted-foreground" />
           <Select value={selectedFontSize} onValueChange={handleFontSizeChange}>
-            <SelectTrigger className="h-8 w-[120px]">
+            <SelectTrigger className="h-8 w-[100px] lg:w-[120px]">
               <SelectValue placeholder="Font Size" />
             </SelectTrigger>
             <SelectContent>
@@ -260,10 +260,10 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your blog
           </Select>
         </div>
 
-        {/* Font Family */}
-        <div className="flex items-center gap-2 border-r pr-2 mr-2">
+        {/* Font Family - Hidden on mobile, shown on larger screens */}
+        <div className="hidden lg:flex items-center gap-2 border-r pr-2 mr-2">
           <Select value={selectedFontFamily} onValueChange={handleFontFamilyChange}>
-            <SelectTrigger className="h-8 w-[140px]">
+            <SelectTrigger className="h-8 w-[120px] xl:w-[140px]">
               <SelectValue placeholder="Font" />
             </SelectTrigger>
             <SelectContent>
@@ -276,17 +276,17 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your blog
           </Select>
         </div>
 
-        {/* Alignment */}
-        <div className="flex gap-1 border-r pr-2 mr-2">
+        {/* Alignment - Visible on all screens */}
+        <div className="flex gap-1 sm:border-r sm:pr-2 sm:mr-2">
           <Button
             type="button"
             variant="ghost"
             size="sm"
             onClick={() => executeCommand('justifyLeft')}
             title="Align Left"
-            className="h-8 w-8 p-0"
+            className="h-7 w-7 sm:h-8 sm:w-8 p-0"
           >
-            <AlignLeft className="h-4 w-4" />
+            <AlignLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </Button>
           <Button
             type="button"
@@ -294,9 +294,9 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your blog
             size="sm"
             onClick={() => executeCommand('justifyCenter')}
             title="Align Center"
-            className="h-8 w-8 p-0"
+            className="h-7 w-7 sm:h-8 sm:w-8 p-0"
           >
-            <AlignCenter className="h-4 w-4" />
+            <AlignCenter className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </Button>
           <Button
             type="button"
@@ -304,23 +304,23 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your blog
             size="sm"
             onClick={() => executeCommand('justifyRight')}
             title="Align Right"
-            className="h-8 w-8 p-0"
+            className="h-7 w-7 sm:h-8 sm:w-8 p-0"
           >
-            <AlignRight className="h-4 w-4" />
+            <AlignRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </Button>
         </div>
 
-        {/* Lists */}
-        <div className="flex gap-1 border-r pr-2 mr-2">
+        {/* Lists - Visible on all screens */}
+        <div className="flex gap-1 sm:border-r sm:pr-2 sm:mr-2">
           <Button
             type="button"
             variant="ghost"
             size="sm"
             onClick={() => executeCommand('insertUnorderedList')}
             title="Bullet List"
-            className="h-8 w-8 p-0"
+            className="h-7 w-7 sm:h-8 sm:w-8 p-0"
           >
-            <List className="h-4 w-4" />
+            <List className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </Button>
           <Button
             type="button"
@@ -328,23 +328,23 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your blog
             size="sm"
             onClick={() => executeCommand('insertOrderedList')}
             title="Numbered List"
-            className="h-8 w-8 p-0"
+            className="h-7 w-7 sm:h-8 sm:w-8 p-0"
           >
-            <ListOrdered className="h-4 w-4" />
+            <ListOrdered className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </Button>
         </div>
 
-        {/* Block Formats */}
-        <div className="flex gap-1 border-r pr-2 mr-2">
+        {/* Block Formats - Hidden on small mobile */}
+        <div className="hidden xs:flex gap-1 sm:border-r sm:pr-2 sm:mr-2">
           <Button
             type="button"
             variant="ghost"
             size="sm"
             onClick={() => formatBlock('blockquote')}
             title="Quote"
-            className="h-8 w-8 p-0"
+            className="h-7 w-7 sm:h-8 sm:w-8 p-0"
           >
-            <Quote className="h-4 w-4" />
+            <Quote className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </Button>
           <Button
             type="button"
@@ -352,23 +352,23 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your blog
             size="sm"
             onClick={() => formatBlock('pre')}
             title="Code Block"
-            className="h-8 w-8 p-0"
+            className="h-7 w-7 sm:h-8 sm:w-8 p-0"
           >
-            <Code className="h-4 w-4" />
+            <Code className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </Button>
         </div>
 
-        {/* Links & Images */}
-        <div className="flex gap-1 border-r pr-2 mr-2">
+        {/* Links & Images - Visible on all screens */}
+        <div className="flex gap-1 sm:border-r sm:pr-2 sm:mr-2">
           <Button
             type="button"
             variant="ghost"
             size="sm"
             onClick={insertLink}
             title="Insert Link"
-            className="h-8 w-8 p-0"
+            className="h-7 w-7 sm:h-8 sm:w-8 p-0"
           >
-            <Link className="h-4 w-4" />
+            <Link className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </Button>
           <Button
             type="button"
@@ -376,9 +376,9 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your blog
             size="sm"
             onClick={() => fileInputRef.current?.click()}
             title="Upload Image"
-            className="h-8 w-8 p-0"
+            className="h-7 w-7 sm:h-8 sm:w-8 p-0"
           >
-            <ImageIcon className="h-4 w-4" />
+            <ImageIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </Button>
           <input
             ref={fileInputRef}
@@ -389,7 +389,7 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your blog
           />
         </div>
 
-        {/* Undo/Redo - NOW WITH WORKING BUTTONS! */}
+        {/* Undo/Redo - Visible on all screens */}
         <div className="flex gap-1">
           <Button
             type="button"
@@ -398,9 +398,9 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your blog
             onClick={handleUndo}
             disabled={!canUndo}
             title="Undo"
-            className="h-8 w-8 p-0"
+            className="h-7 w-7 sm:h-8 sm:w-8 p-0"
           >
-            <Undo className={`h-4 w-4 ${!canUndo ? 'opacity-50' : ''}`} />
+            <Undo className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${!canUndo ? 'opacity-50' : ''}`} />
           </Button>
           <Button
             type="button"
@@ -409,9 +409,9 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your blog
             onClick={handleRedo}
             disabled={!canRedo}
             title="Redo"
-            className="h-8 w-8 p-0"
+            className="h-7 w-7 sm:h-8 sm:w-8 p-0"
           >
-            <Redo className={`h-4 w-4 ${!canRedo ? 'opacity-50' : ''}`} />
+            <Redo className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${!canRedo ? 'opacity-50' : ''}`} />
           </Button>
         </div>
       </div>
@@ -421,7 +421,7 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your blog
         ref={editorRef}
         contentEditable
         onInput={handleInput}
-        className="min-h-[400px] p-4 focus:outline-none prose prose-sm max-w-none dark:prose-invert"
+        className="min-h-[250px] sm:min-h-[350px] lg:min-h-[400px] p-3 sm:p-4 focus:outline-none prose prose-sm max-w-none dark:prose-invert"
         style={{ 
           fontFamily: selectedFontFamily,
           fontSize: selectedFontSize,
@@ -432,8 +432,9 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your blog
       />
 
       {/* Helper Text */}
-      <div className="border-t bg-gray-50 dark:bg-gray-800 px-4 py-2 text-xs text-muted-foreground">
-        <p>💡 <strong>Tip:</strong> Click the image icon to upload images (max 2MB). Use Undo/Redo buttons for mobile or keyboard shortcuts (Ctrl+Z/Ctrl+Y).</p>
+      <div className="border-t bg-gray-50 dark:bg-gray-800 px-3 sm:px-4 py-2 text-xs text-muted-foreground">
+        <p className="hidden sm:block">💡 <strong>Tip:</strong> Click the image icon to upload images (max 2MB). Use Undo/Redo buttons for mobile or keyboard shortcuts (Ctrl+Z/Ctrl+Y).</p>
+        <p className="sm:hidden">💡 Tap image icon to upload (max 2MB). Use Undo/Redo buttons.</p>
       </div>
     </div>
   );

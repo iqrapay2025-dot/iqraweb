@@ -415,39 +415,43 @@ export function AdminNewPost({ onNavigate, existingPost }: AdminNewPostProps) {
   };
 
   return (
-    <div className="p-8">
+    <div className="p-4 sm:p-6 lg:p-8">
       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
-        <div className="flex items-center gap-4">
+      <div className="flex flex-col gap-4 mb-6 sm:mb-8">
+        {/* Back button and title */}
+        <div className="flex items-start gap-3">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => onNavigate('admin-blog')}
+            className="shrink-0 mt-1"
           >
             <ArrowLeft className="h-5 w-5" />
           </Button>
-          <div>
-            <h1 className="text-3xl mb-1">
+          <div className="flex-1 min-w-0">
+            <h1 className="text-2xl sm:text-3xl mb-1 break-words">
               {existingPost ? 'Edit Post' : 'Create New Post'}
             </h1>
-            <div className="flex items-center gap-3">
-              <p className="text-muted-foreground">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+              <p className="text-sm sm:text-base text-muted-foreground">
                 {existingPost ? 'Update your blog post' : 'Write and publish a new article'}
               </p>
               {lastAutoSave && (
                 <div className="flex items-center gap-1 text-xs text-muted-foreground">
                   <Clock className="h-3 w-3" />
-                  <span>Auto-saved {new Date(lastAutoSave).toLocaleTimeString()}</span>
+                  <span className="whitespace-nowrap">Auto-saved {new Date(lastAutoSave).toLocaleTimeString()}</span>
                 </div>
               )}
             </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        {/* Action buttons */}
+        <div className="flex flex-wrap items-center gap-2">
           <Button
             variant="outline"
             onClick={() => setIsPreview(!isPreview)}
+            className="flex-1 sm:flex-initial"
           >
             <Eye className="h-4 w-4 mr-2" />
             {isPreview ? 'Edit' : 'Preview'}
@@ -455,13 +459,15 @@ export function AdminNewPost({ onNavigate, existingPost }: AdminNewPostProps) {
           <Button
             variant="outline"
             onClick={handleSaveDraft}
+            className="flex-1 sm:flex-initial"
           >
             <Save className="h-4 w-4 mr-2" />
-            Save Draft
+            <span className="hidden sm:inline">Save Draft</span>
+            <span className="sm:hidden">Draft</span>
           </Button>
           <Button
             onClick={handlePublish}
-            className="bg-primary text-primary-foreground hover:bg-primary/90"
+            className="flex-1 sm:flex-initial bg-primary text-primary-foreground hover:bg-primary/90"
           >
             Publish
           </Button>
@@ -471,43 +477,43 @@ export function AdminNewPost({ onNavigate, existingPost }: AdminNewPostProps) {
       {isPreview ? (
         /* Preview Mode */
         <div className="max-w-4xl mx-auto">
-          <Card className="p-8">
+          <Card className="p-4 sm:p-6 lg:p-8">
             {imageUrl && (
-              <div className="mb-8">
+              <div className="mb-6 sm:mb-8">
                 <ImageWithFallback
                   src={imageUrl}
                   alt={title}
-                  className="w-full h-64 object-cover rounded-lg"
+                  className="w-full h-48 sm:h-64 object-cover rounded-lg"
                 />
               </div>
             )}
-            <h1 className="text-4xl mb-4">{title || 'Untitled Post'}</h1>
-            <p className="text-muted-foreground mb-8">{excerpt}</p>
-            <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: content || '<p class="text-muted-foreground">No content yet...</p>' }}></div>
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl mb-4 break-words">{title || 'Untitled Post'}</h1>
+            <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8">{excerpt}</p>
+            <div className="prose prose-sm sm:prose-base lg:prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: content || '<p class="text-muted-foreground">No content yet...</p>' }}></div>
           </Card>
         </div>
       ) : (
         /* Edit Mode */
         <div className="max-w-4xl mx-auto">
-          <Card className="p-8">
-            <form className="space-y-6">
+          <Card className="p-4 sm:p-6 lg:p-8">
+            <form className="space-y-4 sm:space-y-6">
               {/* Title */}
               <div className="space-y-2">
-                <Label htmlFor="title">Title *</Label>
+                <Label htmlFor="title" className="text-sm sm:text-base">Title *</Label>
                 <Input
                   id="title"
                   type="text"
                   placeholder="Enter post title..."
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="text-2xl"
+                  className="text-lg sm:text-xl lg:text-2xl"
                 />
               </div>
 
               {/* Category and Read Time */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div className="space-y-2">
-                  <Label htmlFor="category">Category *</Label>
+                  <Label htmlFor="category" className="text-sm sm:text-base">Category *</Label>
                   <Select value={category} onValueChange={setCategory}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select category" />
@@ -523,7 +529,7 @@ export function AdminNewPost({ onNavigate, existingPost }: AdminNewPostProps) {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="readTime">Read Time</Label>
+                  <Label htmlFor="readTime" className="text-sm sm:text-base">Read Time</Label>
                   <Input
                     id="readTime"
                     type="text"
@@ -536,18 +542,19 @@ export function AdminNewPost({ onNavigate, existingPost }: AdminNewPostProps) {
 
               {/* Featured Image URL */}
               <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="imageUrl">Featured Image</Label>
-                  <div className="flex gap-2">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                  <Label htmlFor="imageUrl" className="text-sm sm:text-base">Featured Image</Label>
+                  <div className="flex flex-wrap gap-2">
                     <Button
                       type="button"
                       size="sm"
                       variant="default"
                       onClick={() => featuredImageInputRef.current?.click()}
-                      className="text-xs h-7"
+                      className="text-xs h-8 flex-1 sm:flex-initial"
                     >
                       <Upload className="h-3 w-3 mr-1" />
-                      Upload Image
+                      <span className="hidden xs:inline">Upload Image</span>
+                      <span className="xs:hidden">Upload</span>
                     </Button>
                     <UnsplashImagePicker
                       onSelectImage={(url) => {
@@ -562,10 +569,11 @@ export function AdminNewPost({ onNavigate, existingPost }: AdminNewPostProps) {
                       size="sm"
                       variant="ghost"
                       onClick={() => suggestIslamicImage('quran book islamic')}
-                      className="text-xs h-7"
+                      className="text-xs h-8 flex-1 sm:flex-initial"
                     >
                       <ImageIcon className="h-3 w-3 mr-1" />
-                      Quick Default
+                      <span className="hidden xs:inline">Quick Default</span>
+                      <span className="xs:hidden">Default</span>
                     </Button>
                   </div>
                 </div>
@@ -630,7 +638,7 @@ export function AdminNewPost({ onNavigate, existingPost }: AdminNewPostProps) {
                     <img
                       src={imageUrl}
                       alt="Preview"
-                      className="h-40 w-full object-cover rounded-lg border-2 border-border"
+                      className="h-32 sm:h-40 w-full object-cover rounded-lg border-2 border-border"
                       onLoad={handleImageLoad}
                       onError={handleImageError}
                     />
@@ -645,13 +653,14 @@ export function AdminNewPost({ onNavigate, existingPost }: AdminNewPostProps) {
 
               {/* Excerpt */}
               <div className="space-y-2">
-                <Label htmlFor="excerpt">Excerpt *</Label>
+                <Label htmlFor="excerpt" className="text-sm sm:text-base">Excerpt *</Label>
                 <Textarea
                   id="excerpt"
                   placeholder="Brief description of the post..."
                   value={excerpt}
                   onChange={(e) => setExcerpt(e.target.value)}
                   rows={3}
+                  className="text-sm sm:text-base"
                 />
                 <p className="text-xs text-muted-foreground">
                   {excerpt.length}/200 characters
@@ -660,17 +669,17 @@ export function AdminNewPost({ onNavigate, existingPost }: AdminNewPostProps) {
 
               {/* Content - Rich Text Editor */}
               <div className="space-y-2">
-                <Label htmlFor="content">Content *</Label>
+                <Label htmlFor="content" className="text-sm sm:text-base">Content *</Label>
                 <RichTextEditor
                   value={content}
                   onChange={setContent}
                   placeholder="Start writing your blog post content here..."
                 />
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                   <p className="text-xs text-muted-foreground">
                     Use the toolbar to format your text with bold, italic, headings, lists, and more
                   </p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-muted-foreground whitespace-nowrap">
                     {content.replace(/<[^>]*>/g, '').split(' ').filter(w => w).length} words
                   </p>
                 </div>
