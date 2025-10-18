@@ -32,7 +32,7 @@ interface AdminNewPostProps {
     image?: string;
     readTime: string;
     publishedAt?: string;
-    status?: "draft" | "published";
+    status?: 'draft' | 'published';
   };
 }
 
@@ -52,6 +52,7 @@ export function AdminNewPost({ onNavigate, existingPost }: AdminNewPostProps) {
   const [content, setContent] = useState(existingPost?.content || '');
   const [imageUrl, setImageUrl] = useState(existingPost?.image || '');
   const [readTime, setReadTime] = useState(existingPost?.readTime || '5 min read');
+  const [currentStatus, setCurrentStatus] = useState<'draft' | 'published'>(existingPost?.status || 'draft'); // Track current status
   const [isPreview, setIsPreview] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
@@ -60,6 +61,7 @@ export function AdminNewPost({ onNavigate, existingPost }: AdminNewPostProps) {
   const featuredImageInputRef = useRef<HTMLInputElement>(null);
   const autoSaveTimerRef = useRef<NodeJS.Timeout | null>(null);
   const lastAutoSaveTimeRef = useRef<number>(0); // Track timestamp of last auto-save
+  const isPublishingRef = useRef<boolean>(false); // Track if we're actively publishing/saving to prevent race conditions
 
   // Load auto-saved draft on mount
   useEffect(() => {
@@ -92,15 +94,21 @@ export function AdminNewPost({ onNavigate, existingPost }: AdminNewPostProps) {
       return;
     }
     
+    // Don't auto-save if we're actively publishing or saving
+    if (isPublishingRef.current) {
+      console.log('⏸️ Skipping autosave - publish/save in progress');
+      return;
+    }
+    
     // Only auto-save if there's meaningful content
     if (title || content || excerpt) {
       // Create auto-save draft post
       const draftTitle = title || '[Auto-Save] Untitled Post';
       const finalTitle = title.startsWith('[Auto-Save]') ? title : `[Auto-Save] ${draftTitle}`;
       
-      // Preserve the original status if editing an existing published post
-      // Otherwise, default to 'draft' for new posts
-      const autoSaveStatus = existingPost?.status === 'published' ? 'published' : 'draft';
+      // Use the current status state instead of existingPost.status
+      // This ensures we preserve the status even after publishing
+      const autoSaveStatus = currentStatus;
       
       const autoSavePost: BlogPost = {
         id: autoSaveDraftId || existingPost?.id || `autosave_${Date.now()}`,
@@ -119,22 +127,26 @@ export function AdminNewPost({ onNavigate, existingPost }: AdminNewPostProps) {
         status: autoSaveStatus,
       };
 
+      console.log('💾 Auto-saving with status:', autoSaveStatus, '- currentStatus:', currentStatus);
+
       if (autoSaveDraftId || existingPost?.id) {
         // Update existing auto-save draft
         updatePost(autoSavePost.id, autoSavePost);
+        console.log('✅ Auto-save updated existing post:', autoSavePost.id, 'status:', autoSavePost.status);
         toast.success('Draft auto-saved', { duration: 2000 });
       } else {
         // Create new auto-save draft
         addPost(autoSavePost);
         setAutoSaveDraftId(autoSavePost.id);
         localStorage.setItem(AUTO_SAVE_KEY, autoSavePost.id);
+        console.log('✅ Auto-save created new post:', autoSavePost.id, 'status:', autoSavePost.status);
         toast.success('Draft auto-saved', { duration: 2000 });
       }
       
       setLastAutoSave(new Date());
       lastAutoSaveTimeRef.current = Date.now(); // Record timestamp of this save
     }
-  }, [title, content, excerpt, category, imageUrl, readTime, autoSaveDraftId, existingPost, addPost, updatePost, shouldAutoSave]);
+  }, [title, content, excerpt, category, imageUrl, readTime, autoSaveDraftId, existingPost, addPost, updatePost, shouldAutoSave, currentStatus]);
 
   // Auto-save effect with interval
   useEffect(() => {
@@ -253,6 +265,9 @@ export function AdminNewPost({ onNavigate, existingPost }: AdminNewPostProps) {
       return;
     }
 
+    // Set publishing flag immediately to block any in-progress autosave
+    isPublishingRef.current = true;
+
     // Stop auto-save FIRST to prevent interference
     setShouldAutoSave(false);
     if (autoSaveTimerRef.current) {
@@ -280,11 +295,18 @@ export function AdminNewPost({ onNavigate, existingPost }: AdminNewPostProps) {
       status: 'draft',
     };
 
+    // Update the current status state
+    setCurrentStatus('draft');
+
+    console.log('📝 Saving draft:', newPost.id, 'with status:', newPost.status);
+
     if (existingPost || autoSaveDraftId) {
       updatePost(newPost.id, newPost);
+      console.log('✅ Draft updated');
       toast.success('Draft updated successfully');
     } else {
       addPost(newPost);
+      console.log('✅ New draft saved');
       toast.success('Post saved as draft');
     }
     
@@ -292,7 +314,11 @@ export function AdminNewPost({ onNavigate, existingPost }: AdminNewPostProps) {
     localStorage.removeItem(AUTO_SAVE_KEY);
     setAutoSaveDraftId(null);
     
-    onNavigate('admin-blog');
+    // Add a small delay to ensure the state update completes before navigation
+    setTimeout(() => {
+      isPublishingRef.current = false;
+      onNavigate('admin-blog');
+    }, 100);
   };
 
   const handlePublish = () => {
@@ -300,6 +326,9 @@ export function AdminNewPost({ onNavigate, existingPost }: AdminNewPostProps) {
       toast.error('Please fill in all required fields');
       return;
     }
+
+    // Set publishing flag immediately to block any in-progress autosave
+    isPublishingRef.current = true;
 
     // Stop auto-save FIRST to prevent any interference
     setShouldAutoSave(false);
@@ -328,11 +357,18 @@ export function AdminNewPost({ onNavigate, existingPost }: AdminNewPostProps) {
       status: 'published',
     };
 
+    // Update the current status state to 'published'
+    setCurrentStatus('published');
+
+    console.log('📝 Publishing post:', newPost.id, 'with status:', newPost.status);
+
     if (existingPost || autoSaveDraftId) {
       updatePost(newPost.id, newPost);
+      console.log('✅ Post updated with published status');
       toast.success('Post updated and published successfully!');
     } else {
       addPost(newPost);
+      console.log('✅ New post added with published status');
       toast.success('Post published successfully!');
     }
     
@@ -340,7 +376,11 @@ export function AdminNewPost({ onNavigate, existingPost }: AdminNewPostProps) {
     localStorage.removeItem(AUTO_SAVE_KEY);
     setAutoSaveDraftId(null);
     
-    onNavigate('admin-blog');
+    // Add a small delay to ensure the state update completes before navigation
+    setTimeout(() => {
+      isPublishingRef.current = false;
+      onNavigate('admin-blog');
+    }, 100);
   };
 
   const renderPreview = (text: string) => {
