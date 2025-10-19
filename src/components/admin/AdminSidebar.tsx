@@ -1,7 +1,6 @@
 import { LayoutDashboard, FileText, PlusCircle, Settings, LogOut } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useAuth } from '../../contexts/AuthContext';
-import logoLight from "figma:asset/39ba4a0dd03e9a935003109f9573af3b0b10ff85.png";
 
 interface AdminSidebarProps {
   currentPage: string;
@@ -40,12 +39,12 @@ export function AdminSidebar({ currentPage, onNavigate, onLogout, onClose }: Adm
     <aside className="w-full lg:w-64 bg-card border-r border-border h-full lg:h-screen lg:sticky lg:top-0 flex flex-col">
       {/* Logo */}
       <div className="p-4 sm:p-6 border-b border-border">
-        <img
-          src={logoLight}
-          alt="IqraPay"
-          className="h-7 sm:h-8 w-auto cursor-pointer"
+        <h1 
+          className="text-xl sm:text-2xl font-bold text-primary cursor-pointer"
           onClick={() => handleNavigation('home')}
-        />
+        >
+          IqraPay
+        </h1>
         <p className="text-xs sm:text-sm text-muted-foreground mt-2">Admin Portal</p>
       </div>
 
