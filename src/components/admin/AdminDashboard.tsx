@@ -85,10 +85,14 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
             <Card key={index} className="p-4 sm:p-6">
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-xs sm:text-sm text-muted-foreground mb-1">{stat.label}</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground mb-1">
+                    {stat.label}
+                  </p>
                   <p className="text-2xl sm:text-3xl">{stat.value}</p>
                 </div>
-                <div className={`${stat.bgColor} ${stat.color} p-2 sm:p-3 rounded-lg`}>
+                <div
+                  className={`${stat.bgColor} ${stat.color} p-2 sm:p-3 rounded-lg`}
+                >
                   <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
                 </div>
               </div>
@@ -102,7 +106,7 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
         <div className="flex items-center justify-between mb-4 sm:mb-6">
           <h2 className="text-xl sm:text-2xl">Recent Posts</h2>
           <button
-            onClick={() => onNavigate('admin-blog')}
+            onClick={() => onNavigate("admin-blog")}
             className="text-sm sm:text-base text-primary hover:underline"
           >
             View All
@@ -114,7 +118,7 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
             <div
               key={post.id}
               className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3 sm:p-4 rounded-lg border border-border hover:bg-muted cursor-pointer transition-colors"
-              onClick={() => onNavigate('admin-blog')}
+              onClick={() => onNavigate("admin-blog")}
             >
               <div className="flex items-start sm:items-center gap-3 sm:gap-4 flex-1 min-w-0">
                 <img
@@ -123,20 +127,24 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
                   className="h-14 w-14 sm:h-16 sm:w-16 rounded-lg object-cover shrink-0"
                 />
                 <div className="flex-1 min-w-0">
-                  <h3 className="mb-1 line-clamp-2 sm:line-clamp-1 text-sm sm:text-base break-words">{post.title}</h3>
+                  <h3 className="mb-1 line-clamp-2 sm:line-clamp-1 text-sm sm:text-base break-words">
+                    {post.title}
+                  </h3>
                   <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
                     <span>{post.category}</span>
                     <span className="hidden sm:inline">•</span>
-                    <span>{new Date(post.publishedAt).toLocaleDateString()}</span>
+                    <span>
+                      {new Date(post.publishedAt).toLocaleDateString()}
+                    </span>
                   </div>
                 </div>
               </div>
               <div className="self-start sm:self-auto">
                 <span
-                  className={`inline-block px-2.5 sm:px-3 py-1 rounded-full text-xs ${
-                    post.status === 'published'
-                      ? 'bg-green-100 text-green-700'
-                      : 'bg-yellow-100 text-yellow-700'
+                  className={`flex px-2.5 sm:px-3 py-1 rounded-full text-xs ${
+                    post.status === "published"
+                      ? "bg-green-100 text-green-700"
+                      : "bg-yellow-100 text-yellow-700"
                   }`}
                 >
                   {post.status}
@@ -151,7 +159,7 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
       <div className="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
         <Card
           className="p-4 sm:p-6 cursor-pointer hover:border-primary transition-colors"
-          onClick={() => onNavigate('admin-new-post')}
+          onClick={() => onNavigate("admin-new-post")}
         >
           <div className="flex items-center gap-3 sm:gap-4">
             <div className="bg-primary/10 text-primary p-3 sm:p-4 rounded-lg shrink-0">
@@ -168,7 +176,7 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
 
         <Card
           className="p-4 sm:p-6 cursor-pointer hover:border-primary transition-colors"
-          onClick={() => onNavigate('admin-blog')}
+          onClick={() => onNavigate("admin-blog")}
         >
           <div className="flex items-center gap-3 sm:gap-4">
             <div className="bg-primary/10 text-primary p-3 sm:p-4 rounded-lg shrink-0">
@@ -191,22 +199,37 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
           <h3 className="text-base sm:text-lg">Storage Debug Panel</h3>
         </div>
         <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">
-          Use these tools to check if blog posts are being saved correctly to your browser's localStorage.
+          Use these tools to check if blog posts are being saved correctly to
+          your browser's localStorage.
         </p>
-        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-          <Button onClick={checkLocalStorage} variant="outline" size="sm" className="w-full sm:w-auto">
+        <div className="flex w-full flex-col sm:flex-row gap-2 sm:gap-3">
+          <Button
+            onClick={checkLocalStorage}
+            variant="outline"
+            size="sm"
+            style={{ width: "50%" }}
+            className="w-full sm:w-auto sm:flex-1"
+          >
             <Database className="h-4 w-4 mr-2" />
             Check localStorage
           </Button>
-          <Button onClick={clearLocalStorage} variant="destructive" size="sm" className="w-full sm:w-auto">
+          <Button
+            onClick={clearLocalStorage}
+            variant="destructive"
+            size="sm"
+            style={{ width: "50%" }}
+            className="w-full sm:w-auto sm:flex-1"
+          >
             <Trash2 className="h-4 w-4 mr-2" />
             Clear localStorage
           </Button>
         </div>
         <div className="mt-3 sm:mt-4 p-2.5 sm:p-3 bg-background rounded-lg border border-border">
           <p className="text-xs text-muted-foreground">
-            💡 <strong>Note:</strong> In some preview environments, localStorage may be sandboxed or cleared on refresh. 
-            For production hosting, this will work reliably. Open your browser's DevTools Console to see localStorage logs.
+            💡 <strong>Note:</strong> In some preview environments, localStorage
+            may be sandboxed or cleared on refresh. For production hosting, this
+            will work reliably. Open your browser's DevTools Console to see
+            localStorage logs.
           </p>
         </div>
       </Card>
