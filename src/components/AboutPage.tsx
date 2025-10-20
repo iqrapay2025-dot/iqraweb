@@ -80,6 +80,13 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
       location: "Port Harcourt, Nigeria",
       description: "Digital marketing expert focused on spreading IqraPay's mission across the Muslim world through ethical marketing strategies.",
     },
+    {
+      id: 7,
+      name: "Sule Jamiu Fātimah",
+      role: "Design Lead",
+      location: "Port Harcourt, Nigeria",
+      description: "Meet Oyiza (Sule Jamiu Fātimah) A passionate graphic designer in training and the creative mind behind Estrella Creative Hub . She also enjoys digital Arabic calligraphy as a hobby.Currently studying Optometry at the University of Ilorin and Islamic studies at Ma'had Ibn Rajab , Oyiza finds peace in great design, creativity, books, and poetry — all fueled by her love for learning languages ​​and exploring new horizons.",
+    },
   ];
 
   return (
