@@ -1,4 +1,13 @@
-import { Users, Gift, TrendingUp, Award, Heart, Globe, Star, Zap } from "lucide-react";
+import {
+  Users,
+  Gift,
+  TrendingUp,
+  Award,
+  Heart,
+  Globe,
+  Star,
+  Zap,
+} from "lucide-react";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { IslamicPattern } from "./IslamicPattern";
@@ -15,46 +24,46 @@ interface AmbassadorsPageProps {
 
 export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
   const { t } = useLanguage();
-  
+
   const benefits = [
     {
       icon: Gift,
-      title: t('ambassadors.benefit1Title'),
-      description: t('ambassadors.benefit1Desc'),
+      title: t("ambassadors.benefit1Title"),
+      description: t("ambassadors.benefit1Desc"),
     },
     {
       icon: TrendingUp,
-      title: t('ambassadors.benefit2Title'),
-      description: t('ambassadors.benefit2Desc'),
+      title: t("ambassadors.benefit2Title"),
+      description: t("ambassadors.benefit2Desc"),
     },
     {
       icon: Award,
-      title: t('ambassadors.benefit3Title'),
-      description: t('ambassadors.benefit3Desc'),
+      title: t("ambassadors.benefit3Title"),
+      description: t("ambassadors.benefit3Desc"),
     },
     {
       icon: Globe,
-      title: t('ambassadors.benefit4Title'),
-      description: t('ambassadors.benefit4Desc'),
+      title: t("ambassadors.benefit4Title"),
+      description: t("ambassadors.benefit4Desc"),
     },
     {
       icon: Star,
-      title: t('ambassadors.benefit5Title'),
-      description: t('ambassadors.benefit5Desc'),
+      title: t("ambassadors.benefit5Title"),
+      description: t("ambassadors.benefit5Desc"),
     },
     {
       icon: Zap,
-      title: t('ambassadors.benefit6Title'),
-      description: t('ambassadors.benefit6Desc'),
+      title: t("ambassadors.benefit6Title"),
+      description: t("ambassadors.benefit6Desc"),
     },
   ];
 
   const requirements = [
-    t('ambassadors.req1'),
-    t('ambassadors.req2'),
-    t('ambassadors.req3'),
-    t('ambassadors.req4'),
-    t('ambassadors.req5'),
+    t("ambassadors.req1"),
+    t("ambassadors.req2"),
+    t("ambassadors.req3"),
+    t("ambassadors.req4"),
+    t("ambassadors.req5"),
   ];
 
   return (
@@ -70,21 +79,25 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
             className="text-center"
           >
             <div className="inline-block px-4 py-2 bg-accent rounded-full mb-6">
-              <span className="text-accent-foreground">🌟 Join Our Mission</span>
+              <span className="text-accent-foreground">
+                🌟 Join Our Mission
+              </span>
             </div>
             <h1 className="text-4xl sm:text-5xl mb-6">
-              {t('ambassadors.title')}
+              {t("ambassadors.title")}
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-              {t('ambassadors.subtitle')}
+              {t("ambassadors.subtitle")}
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <a href="https://bit.ly/IqraPayCampusAmbassador–ApplicationForm">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8">
-                {t('ambassadors.applyNow')}
-              </Button>
+                <Button
+                  size="lg"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground px-8"
+                >
+                  {t("ambassadors.applyNow")}
+                </Button>
               </a>
-              
             </div>
           </motion.div>
         </div>
@@ -100,20 +113,24 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl sm:text-4xl mb-6">{t('ambassadors.whatIsTitle')}</h2>
+              <h2 className="text-3xl sm:text-4xl mb-6">
+                {t("ambassadors.whatIsTitle")}
+              </h2>
               <p className="text-muted-foreground mb-4">
-                {t('ambassadors.whatIsPara1')}
+                {t("ambassadors.whatIsPara1")}
               </p>
               <p className="text-muted-foreground mb-4">
-                {t('ambassadors.whatIsPara2')}
+                {t("ambassadors.whatIsPara2")}
               </p>
               <p className="text-muted-foreground mb-6">
-                {t('ambassadors.whatIsPara3')}
+                {t("ambassadors.whatIsPara3")}
               </p>
               <div className="flex items-center gap-4 p-4 bg-primary/5 rounded-lg border border-primary/20">
                 <Heart className="h-8 w-8 text-primary flex-shrink-0" />
                 <p className="text-sm">
-                  Every person you bring to IqraPay is a soul you've helped on their journey of knowledge. That's a reward that goes beyond this world.
+                  Every person you bring to IqraPay is a soul you've helped on
+                  their journey of knowledge. That's a reward that goes beyond
+                  this world.
                 </p>
               </div>
             </motion.div>
@@ -133,7 +150,9 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute bottom-6 left-6 text-white">
                   <h3 className="text-2xl mb-2">Inspire & Earn</h3>
-                  <p className="text-sm opacity-90">Become a voice for Islamic education</p>
+                  <p className="text-sm opacity-90">
+                    Become a voice for Islamic education
+                  </p>
                 </div>
               </div>
               <Card className="p-8 bg-gradient-to-br from-primary/5 to-secondary/5">
@@ -145,7 +164,9 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
                     </div>
                     <div>
                       <h4 className="mb-1">Growing Community</h4>
-                      <p className="text-sm text-muted-foreground">Join 500+ ambassadors worldwide</p>
+                      <p className="text-sm text-muted-foreground">
+                        Join 500+ ambassadors worldwide
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -154,7 +175,9 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
                     </div>
                     <div>
                       <h4 className="mb-1">Generous Commissions</h4>
-                      <p className="text-sm text-muted-foreground">Earn up to 30% per referral</p>
+                      <p className="text-sm text-muted-foreground">
+                        Earn up to 30% per referral
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -163,7 +186,9 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
                     </div>
                     <div>
                       <h4 className="mb-1">Monthly Bonuses</h4>
-                      <p className="text-sm text-muted-foreground">Extra rewards for top performers</p>
+                      <p className="text-sm text-muted-foreground">
+                        Extra rewards for top performers
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -183,9 +208,11 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl sm:text-4xl mb-4">{t('ambassadors.benefitsTitle')}</h2>
+            <h2 className="text-3xl sm:text-4xl mb-4">
+              {t("ambassadors.benefitsTitle")}
+            </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              {t('ambassadors.benefitsSubtitle')}
+              {t("ambassadors.benefitsSubtitle")}
             </p>
           </motion.div>
 
@@ -221,9 +248,11 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl sm:text-4xl mb-4">{t('ambassadors.meetTitle')}</h2>
+            <h2 className="text-3xl sm:text-4xl mb-4">
+              {t("ambassadors.meetTitle")}
+            </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              {t('ambassadors.meetSubtitle')}
+              {t("ambassadors.meetSubtitle")}
             </p>
           </motion.div>
 
@@ -248,9 +277,11 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl sm:text-4xl mb-4">{t('ambassadors.whoCanApply')}</h2>
+            <h2 className="text-3xl sm:text-4xl mb-4">
+              {t("ambassadors.whoCanApply")}
+            </h2>
             <p className="text-xl text-muted-foreground">
-              {t('ambassadors.whoCanApplySubtitle')}
+              {t("ambassadors.whoCanApplySubtitle")}
             </p>
           </motion.div>
 
@@ -261,12 +292,16 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
             viewport={{ once: true }}
           >
             <Card className="p-8">
-              <h3 className="text-2xl mb-6">{t('ambassadors.requirementsTitle')}</h3>
+              <h3 className="text-2xl mb-6">
+                {t("ambassadors.requirementsTitle")}
+              </h3>
               <div className="space-y-4">
                 {requirements.map((requirement, index) => (
                   <div key={index} className="flex items-start gap-3">
                     <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <span className="text-primary-foreground text-sm">{index + 1}</span>
+                      <span className="text-primary-foreground text-sm">
+                        {index + 1}
+                      </span>
                     </div>
                     <p className="text-muted-foreground">{requirement}</p>
                   </div>
@@ -288,21 +323,33 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
             viewport={{ once: true }}
           >
             <Users className="h-16 w-16 mx-auto mb-6" />
-            <h2 className="text-3xl sm:text-4xl mb-6">{t('ambassadors.ctaTitle')}</h2>
+            <h2 className="text-3xl sm:text-4xl mb-6">
+              {t("ambassadors.ctaTitle")}
+            </h2>
             <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-              {t('ambassadors.ctaDesc')}
+              {t("ambassadors.ctaDesc")}
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <a href="https://bit.ly/IqraPayCampusAmbassador–ApplicationForm">
-                <Button size="lg" className="bg-white text-secondary hover:bg-white/90 px-8">
-                {t('ambassadors.applyNow')}
-              </Button></a>
-              <Button 
-                size="lg" 
-                variant="outline" 
+                <Button
+                  size="lg"
+                  className="bg-white text-secondary hover:bg-white/90 px-8"
+                >
+                  {t("ambassadors.applyNow")}
+                </Button>
+              </a>
+              <Button
+                size="lg"
+                variant="outline"
                 className="border-white text-primary hover:bg-white/10"
+                asChild
               >
-                {t('ambassadors.downloadInfo')}
+                <a
+                  href="src/documents/IqraPay Campus Ambassadorship Program.pdf"
+                  download="Ambassador-Info.pdf"
+                >
+                  {t("ambassadors.downloadInfo")}
+                </a>
               </Button>
             </div>
             <p className="text-sm mt-6 opacity-75">
