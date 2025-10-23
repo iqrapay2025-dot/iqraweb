@@ -35,11 +35,41 @@ export function BlogProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
-      console.log('💾 Saved', posts.length, 'posts to localStorage');
+      console.log('�� Saved', posts.length, 'posts to localStorage');
     } catch (error) {
       console.error('❌ Error saving posts to localStorage:', error);
     }
   }, [posts]);
+
+  // Sync posts across multiple tabs using storage event
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      // Only react to changes to our specific key
+      if (e.key === STORAGE_KEY) {
+        try {
+          if (e.newValue) {
+            const updatedPosts = JSON.parse(e.newValue);
+            console.log('🔄 localStorage updated in another tab, syncing...', updatedPosts.length, 'posts');
+            setPosts(updatedPosts);
+          } else {
+            // If newValue is null, localStorage was cleared in another tab
+            console.log('🗑️ localStorage cleared in another tab, reloading mock posts');
+            setPosts(mockBlogPosts);
+          }
+        } catch (error) {
+          console.error('❌ Error syncing posts from another tab:', error);
+        }
+      }
+    };
+
+    // Listen for storage changes (only fires for OTHER tabs/windows)
+    window.addEventListener('storage', handleStorageChange);
+
+    // Cleanup listener on unmount
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
 
   const addPost = (post: BlogPost) => {
     setPosts((prevPosts) => [post, ...prevPosts]);
