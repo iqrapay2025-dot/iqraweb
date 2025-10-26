@@ -64,7 +64,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
     },
     {
       id: 4,
-      name: "Fasai Zaynab Adeola",
+      name: "Fasasi Zaynab Adeola",
       role: "Chief Operations Officer (COO)",
       location: "Oyo, Nigeria",
       description:
