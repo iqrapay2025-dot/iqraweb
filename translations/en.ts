@@ -99,7 +99,7 @@ export const en = {
     founderMessage:
       "As-salamu alaykum! IqraPay was born from a simple yet powerful vision: to make Islamic knowledge accessible while providing halal earning opportunities for Muslims worldwide. In a world filled with distractions, we wanted to create a platform that incentivizes what matters most - our connection with Allah through His Book. Alhamdulillah, what started as a dream has grown into a thriving community of thousands of learners across the globe. Join us in this blessed journey!",
 
-    teamTitle: "Meet Our Team",
+    teamTitle: "Meet Our Core Team",
     teamSubtitle:
       "The dedicated individuals working to make Islamic education accessible and rewarding",
 
