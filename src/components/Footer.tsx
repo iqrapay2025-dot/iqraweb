@@ -81,8 +81,8 @@ export function Footer({ onNavigate }: FooterProps) {
             <ul className="space-y-3">
               <li className="flex items-start gap-2 text-secondary-foreground/80 dark:text-foreground/70">
                 <Mail className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                <a href="mailto:iqrapay2025@gmail.com" className="hover:text-accent dark:hover:text-primary transition-colors duration-200">
-                  iqrapay2025@gmail.com
+                <a href="mailto:info@iqrapay.com.ng" className="hover:text-accent dark:hover:text-primary transition-colors duration-200">
+                  info@iqrapay.com.ng
                 </a>
               </li>
               <li className="flex items-start gap-2 text-secondary-foreground/80 dark:text-foreground/70">

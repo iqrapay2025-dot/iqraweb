@@ -177,8 +177,8 @@ export function PrivacyPolicyPage({ onNavigate }: PrivacyPolicyPageProps) {
               </ul>
               <p className="text-muted-foreground">
                 To exercise any of these rights, please contact us at{" "}
-                <a href="mailto:iqrapay2025@gmail.com" className="text-primary hover:underline">
-                  iqrapay2025@gmail.com
+                <a href="mailto:info@iqrapay.com.ng" className="text-primary hover:underline">
+                  info@iqrapay.com.ng
                 </a>
               </p>
             </section>
@@ -253,7 +253,7 @@ export function PrivacyPolicyPage({ onNavigate }: PrivacyPolicyPageProps) {
               </p>
               <div className="bg-muted/50 p-4 rounded-lg">
                 <p className="text-foreground mb-2"><strong>IqraPay</strong></p>
-                <p className="text-muted-foreground">Email: <a href="mailto:iqrapay2025@gmail.com" className="text-primary hover:underline">iqrapay2025@gmail.com</a></p>
+                <p className="text-muted-foreground">Email: <a href="mailto:info@iqrapay.com.ng" className="text-primary hover:underline">info@iqrapay.com.ng</a></p>
                 <p className="text-muted-foreground">Phone: <a href="tel:+2348155956187" className="text-primary hover:underline">+234 815 595 6187</a></p>
                 <p className="text-muted-foreground">Location: Ibadan, Nigeria</p>
               </div>

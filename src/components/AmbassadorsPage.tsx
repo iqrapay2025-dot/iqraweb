@@ -353,7 +353,7 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
               </Button>
             </div>
             <p className="text-sm mt-6 opacity-75">
-              Have questions? Contact us at iqrapay2025@gmail.com
+              Have questions? Contact us at info@iqrapay.com.ng
             </p>
           </motion.div>
         </div>

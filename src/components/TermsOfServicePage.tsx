@@ -291,8 +291,8 @@ export function TermsOfServicePage({ onNavigate }: TermsOfServicePageProps) {
               <h3 className="text-xl text-foreground mb-3">11.1 Termination by User</h3>
               <p className="text-muted-foreground mb-4">
                 You may terminate your account at any time by contacting us at{" "}
-                <a href="mailto:iqrapay2025@gmail.com" className="text-primary hover:underline">
-                  iqrapay2025@gmail.com
+                <a href="mailto:info@iqrapay.com.ng" className="text-primary hover:underline">
+                  info@iqrapay.com.ng
                 </a>. 
                 Upon termination, you will forfeit access to the Platform and any unredeemed rewards below the minimum 
                 withdrawal threshold.
@@ -392,7 +392,7 @@ export function TermsOfServicePage({ onNavigate }: TermsOfServicePageProps) {
               <div className="bg-muted/50 p-4 rounded-lg">
                 <p className="text-foreground mb-2"><strong>IqraPay</strong></p>
                 <p className="text-muted-foreground">Founder: Muhammad Jumah</p>
-                <p className="text-muted-foreground">Email: <a href="mailto:iqrapay2025@gmail.com" className="text-primary hover:underline">iqrapay2025@gmail.com</a></p>
+                <p className="text-muted-foreground">Email: <a href="mailto:info@iqrapay.com.ng" className="text-primary hover:underline">info@iqrapay.com.ng</a></p>
                 <p className="text-muted-foreground">Phone: <a href="tel:+2348155956187" className="text-primary hover:underline">+234 815 595 6187</a></p>
                 <p className="text-muted-foreground">Location: Ibadan, Nigeria</p>
               </div>

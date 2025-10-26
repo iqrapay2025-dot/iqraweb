@@ -13,27 +13,27 @@ interface AboutPageProps {
 
 export function AboutPage({ onNavigate }: AboutPageProps) {
   const { t } = useLanguage();
-  
+
   const values = [
     {
       icon: CheckCircle,
-      title: t('about.faithFirstTitle'),
-      description: t('about.faithFirstDesc'),
+      title: t("about.faithFirstTitle"),
+      description: t("about.faithFirstDesc"),
     },
     {
       icon: Sparkles,
-      title: t('about.transparencyTitle'),
-      description: t('about.transparencyDesc'),
+      title: t("about.transparencyTitle"),
+      description: t("about.transparencyDesc"),
     },
     {
       icon: Target,
-      title: t('about.excellenceTitle'),
-      description: t('about.excellenceDesc'),
+      title: t("about.excellenceTitle"),
+      description: t("about.excellenceDesc"),
     },
     {
       icon: Eye,
-      title: t('about.communityTitle'),
-      description: t('about.communityDesc'),
+      title: t("about.communityTitle"),
+      description: t("about.communityDesc"),
     },
   ];
 
@@ -43,49 +43,56 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
       name: "Muhammad Jumah",
       role: "Founder & CEO",
       location: "Ibadan, Nigeria",
-      description: "Visionary student and entrepreneur passionate about merging faith, education, and technology. Currently studying Linguistics at the University of Ilorin.",
+      description:
+        "Visionary student and entrepreneur passionate about merging faith, education, and technology. Currently studying Linguistics at the University of Ilorin.",
     },
     {
       id: 2,
       name: "Fatiah Badmus",
       role: "Co-Founder",
       location: "Osun, Nigeria",
-      description: "Muslimah • Writer • WHO-Certified Mental Health Coach. Founder of Soothopedia, merging faith and psychology to inspire healing and wholeness. Advocates mental wellness, healthy love, and purposeful living through her words.",
+      description:
+        "Muslimah • Writer • WHO-Certified Mental Health Coach. Founder of Soothopedia, merging faith and psychology to inspire healing and wholeness. Advocates mental wellness, healthy love, and purposeful living through her words.",
     },
     {
       id: 3,
       name: "Ibrahim Yusuf",
       role: "Chief Technology Officer (CTO)",
       location: "Abuja, Nigeria",
-      description: "Full-stack developer with expertise in fintech and educational platforms. Ensures our platform is secure, scalable, and user-friendly.",
+      description:
+        "Full-stack developer with expertise in fintech and educational platforms. Ensures our platform is secure, scalable, and user-friendly.",
     },
     {
       id: 4,
-      name: "Fatima Hassan",
+      name: "Fasai Zaynab Adeola",
       role: "Chief Operations Officer (COO)",
-      location: "Kano, Nigeria",
-      description: "Dedicated to building and nurturing our global Muslim community. Manages user engagement, support, and ambassador programs.",
+      location: "Oyo, Nigeria",
+      description:
+        "My name is Fasasi Zaynab Adeola, a proud graduate of Adult Education Studies from the University of Ilorin. People fondly call me Al-Mubtasimah, a name that mirrors my ever-present smile and optimistic outlook on life. I’m a writer, poet, designer, and problem solver with a deep love for creativity in all its forms. Whether it is weaving words into heartfelt poetry, designing something visually delightful, or finding solutions to everyday challenges, I thrive in spaces where imagination meets impact. Beyond my creative side, I’m also an entrepreneur. I own a growing pastry brand called Royal Relish, where I pour my love for cooking and baking into every treat. I believe food is an art, and every bite should tell a story of warmth and passion. I hail from the beautiful town of Iseyin in Oyo State, a place that has shaped my simplicity, resilience, and deep appreciation for culture and community. At my core, I’m a lover of words, flavors, and ideas. I believe creativity isn’t just a skill, it’s a lifestyle. And for anyone chasing purpose or passion, here’s my favorite reminder: 'Khayr Bi idhnillah",
     },
     {
       id: 5,
       name: "Bilal Ahmed",
       role: "Chief Shariah Officer (CSO)",
       location: "Ilorin, Nigeria",
-      description: "Islamic scholar ensuring all platform operations align with Shariah principles. Provides guidance on halal earning mechanisms.",
+      description:
+        "Islamic scholar ensuring all platform operations align with Shariah principles. Provides guidance on halal earning mechanisms.",
     },
     {
       id: 6,
       name: "Zainab Malik",
       role: "Chief Marketing Officer (CMO)",
       location: "Port Harcourt, Nigeria",
-      description: "Digital marketing expert focused on spreading IqraPay's mission across the Muslim world through ethical marketing strategies.",
+      description:
+        "Digital marketing expert focused on spreading IqraPay's mission across the Muslim world through ethical marketing strategies.",
     },
     {
       id: 7,
       name: "Sule Jamiu Fātimah",
       role: "Design Lead",
       location: "Port Harcourt, Nigeria",
-      description: "Meet Oyiza (Sule Jamiu Fātimah) A passionate graphic designer in training and the creative mind behind Estrella Creative Hub . She also enjoys digital Arabic calligraphy as a hobby.Currently studying Optometry at the University of Ilorin and Islamic studies at Ma'had Ibn Rajab , Oyiza finds peace in great design, creativity, books, and poetry — all fueled by her love for learning languages ​​and exploring new horizons.",
+      description:
+        "Meet Oyiza (Sule Jamiu Fātimah) A passionate graphic designer in training and the creative mind behind Estrella Creative Hub . She also enjoys digital Arabic calligraphy as a hobby.Currently studying Optometry at the University of Ilorin and Islamic studies at Ma'had Ibn Rajab , Oyiza finds peace in great design, creativity, books, and poetry — all fueled by her love for learning languages ​​and exploring new horizons.",
     },
   ];
 
@@ -101,9 +108,9 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <h1 className="text-4xl sm:text-5xl mb-6">{t('about.title')}</h1>
+            <h1 className="text-4xl sm:text-5xl mb-6">{t("about.title")}</h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              {t('about.subtitle')}
+              {t("about.subtitle")}
             </p>
           </motion.div>
         </div>
@@ -135,19 +142,17 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
               viewport={{ once: true }}
               className="space-y-6"
             >
-              <h2 className="text-3xl sm:text-4xl">{t('about.journeyTitle')}</h2>
-              <p className="text-muted-foreground">
-                {t('about.journeyPara1')}
-              </p>
-              <p className="text-muted-foreground">
-                {t('about.journeyPara2')}
-              </p>
-              <p className="text-muted-foreground">
-                {t('about.journeyPara3')}
-              </p>
+              <h2 className="text-3xl sm:text-4xl">
+                {t("about.journeyTitle")}
+              </h2>
+              <p className="text-muted-foreground">{t("about.journeyPara1")}</p>
+              <p className="text-muted-foreground">{t("about.journeyPara2")}</p>
+              <p className="text-muted-foreground">{t("about.journeyPara3")}</p>
               <div className="pt-4">
                 <div className="inline-block px-4 py-2 bg-accent rounded-lg">
-                  <span className="text-accent-foreground">Est. 2025 • Certified Halal</span>
+                  <span className="text-accent-foreground">
+                    Est. 2025 • Certified Halal
+                  </span>
                 </div>
               </div>
             </motion.div>
@@ -169,10 +174,8 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
                 <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mb-6">
                   <Eye className="h-8 w-8 text-primary-foreground" />
                 </div>
-                <h3 className="text-2xl mb-4">{t('about.visionTitle')}</h3>
-                <p className="text-muted-foreground">
-                  {t('about.visionDesc')}
-                </p>
+                <h3 className="text-2xl mb-4">{t("about.visionTitle")}</h3>
+                <p className="text-muted-foreground">{t("about.visionDesc")}</p>
               </Card>
             </motion.div>
 
@@ -186,9 +189,9 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
                 <div className="w-16 h-16 bg-secondary rounded-2xl flex items-center justify-center mb-6">
                   <Target className="h-8 w-8 text-secondary-foreground" />
                 </div>
-                <h3 className="text-2xl mb-4">{t('about.missionTitle')}</h3>
+                <h3 className="text-2xl mb-4">{t("about.missionTitle")}</h3>
                 <p className="text-muted-foreground">
-                  {t('about.missionDesc')}
+                  {t("about.missionDesc")}
                 </p>
               </Card>
             </motion.div>
@@ -206,9 +209,11 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl sm:text-4xl mb-4">{t('about.valuesTitle')}</h2>
+            <h2 className="text-3xl sm:text-4xl mb-4">
+              {t("about.valuesTitle")}
+            </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              {t('about.valuesSubtitle')}
+              {t("about.valuesSubtitle")}
             </p>
           </motion.div>
 
@@ -226,7 +231,9 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
                     <value.icon className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-xl mb-3">{value.title}</h3>
-                  <p className="text-muted-foreground text-sm">{value.description}</p>
+                  <p className="text-muted-foreground text-sm">
+                    {value.description}
+                  </p>
                 </Card>
               </motion.div>
             ))}
@@ -247,13 +254,15 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
             <div className="w-24 h-24 bg-gradient-to-br from-primary to-secondary rounded-full mx-auto mb-6 flex items-center justify-center">
               <span className="text-3xl text-white">MJ</span>
             </div>
-            <h2 className="text-3xl mb-4">{t('about.founderTitle')}</h2>
-            <h3 className="text-xl text-primary mb-4">{t('about.founderName')}</h3>
+            <h2 className="text-3xl mb-4">{t("about.founderTitle")}</h2>
+            <h3 className="text-xl text-primary mb-4">
+              {t("about.founderName")}
+            </h3>
             <p className="text-muted-foreground max-w-2xl mx-auto mb-6">
-              {t('about.founderBio')}
+              {t("about.founderBio")}
             </p>
             <blockquote className="text-lg italic text-muted-foreground border-l-4 border-primary pl-6 py-2 max-w-2xl mx-auto">
-              {t('about.founderQuote')}
+              {t("about.founderQuote")}
             </blockquote>
           </motion.div>
         </div>
@@ -269,9 +278,11 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl sm:text-4xl mb-4">{t('about.teamTitle')}</h2>
+            <h2 className="text-3xl sm:text-4xl mb-4">
+              {t("about.teamTitle")}
+            </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              {t('about.teamSubtitle')}
+              {t("about.teamSubtitle")}
             </p>
           </motion.div>
 

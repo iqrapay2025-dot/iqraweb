@@ -30,8 +30,8 @@ export function ContactPage({ darkMode = false, onNavigate }: ContactPageProps =
     {
       icon: Mail,
       title: t('contact.emailLabel'),
-      detail: "iqrapay2025@gmail.com",
-      link: "mailto:iqrapay2025@gmail.com",
+      detail: "info@iqrapay.com.ng",
+      link: "mailto:info@iqrapay.com.ng",
     },
     {
       icon: Phone,
@@ -88,7 +88,7 @@ export function ContactPage({ darkMode = false, onNavigate }: ContactPageProps =
       }
     } catch (error) {
       toast.error(t('common.error'), {
-        description: "Please try again or email us directly at iqrapay2025@gmail.com",
+        description: "Please try again or email us directly at info@iqrapay.com.ng",
       });
     } finally {
       setIsSubmitting(false);
