@@ -68,7 +68,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
       role: "Chief Operations Officer (COO)",
       location: "Oyo, Nigeria",
       description:
-        "Fasasi Zaynab Adeola (Al-Mubtasimah) A proud graduate of Adult Education Studies, University of Ilorin , and a creative at heart — writer, poet, designer, and problem solver . I find joy in transforming imagination into impact through words, art, and innovation. Founder of Royal Relish , a pastry brand where every bite tells a story of warmth and passion. Rooted in Iseyin, Oyo State , my journey reflects simplicity, resilience, and love for community. Creativity is not just a skill — it's a lifestyle.'Khayr bi idhnillah.'",
+        "I'm Fasasi Zaynab Adeola, also known as Almubtasimah, a writer, poet, designer, and creative strategist with a strong passion for innovation and problem-solving. My work focuses on creating purposeful and visually engaging content that connects ideas with impact. I combine creativity, communication, and analytical thinking to deliver meaningful results across writing and design projects.",
     },
     {
       id: 5,
