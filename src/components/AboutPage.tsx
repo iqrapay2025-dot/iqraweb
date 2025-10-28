@@ -56,11 +56,11 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
     },
     {
       id: 3,
-      name: "Ibrahim Yusuf",
+      name: "Yusuf Olosan",
       role: "Chief Technology Officer (CTO)",
-      location: "Abuja, Nigeria",
+      location: "Ilorin, Nigeria",
       description:
-        "Full-stack developer with expertise in fintech and educational platforms. Ensures our platform is secure, scalable, and user-friendly.",
+        "Backend Engineer with 4+ years of experience building scalable, secure Java Spring Boot systems for fintech, SaaS, and marketplace platforms. Skilled in microservices, cloud integration, and performance optimization. Passionate about solving complex technical problems and delivering reliable business solutions.",
     },
     {
       id: 4,
