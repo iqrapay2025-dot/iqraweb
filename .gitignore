@@ -15,3 +15,5 @@ src/QUICK_SETUP_CONTACT_FORMS.txt
 src/QUICK_START.md src/SETUP_FORMS_NOW.txt 
 src/SIMPLE_FILE_LIST.txt
 src/WEB3FORMS_SETUP_GUIDE.md
+# Snyk Security Extension - AI Rules (auto-generated)
+.github\instructions\snyk_rules.instructions.md

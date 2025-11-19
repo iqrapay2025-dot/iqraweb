@@ -1,4 +1,4 @@
-import { LayoutDashboard, FileText, PlusCircle, Settings, LogOut } from 'lucide-react';
+import { LayoutDashboard, FileText, PlusCircle, Settings, LogOut, MessageCircle, Trash2 } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -23,6 +23,8 @@ export function AdminSidebar({
     { id: "admin-dashboard", label: "Dashboard", icon: LayoutDashboard },
     { id: "admin-blog", label: "All Posts", icon: FileText },
     { id: "admin-new-post", label: "New Post", icon: PlusCircle },
+    { id: "admin-comments", label: "Comments", icon: MessageCircle },
+    { id: "admin-recycle-bin", label: "Recycle Bin", icon: Trash2 },
     { id: "admin-settings", label: "Settings", icon: Settings },
   ];
 

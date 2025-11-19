@@ -18,12 +18,66 @@ import { mockAmbassadors } from "../data/mockAmbassadors";
 import { useLanguage } from "../contexts/LanguageContext";
 import ambassadorImage from "figma:asset/95bf0964463b9370401c4f83c40caaa6f395ec74.png";
 
+// Prefer a public path (easier for static downloads). If not present,
+// fall back to the bundled src asset URL produced by Vite.
+const publicPdfPath = "/documents/IqraPay-Campus-Ambassadorship-Program.pdf";
+const ambassadorPdf = new URL(
+  "../documents/IqraPay Campus Ambassadorship Program.pdf",
+  import.meta.url
+).href;
 interface AmbassadorsPageProps {
   onNavigate?: (page: string) => void;
 }
 
 export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
   const { t } = useLanguage();
+
+  // Improved download handler:
+  // - Tries to GET the `public` path first, then falls back to the bundled URL
+  // - Validates `Content-Type` includes `pdf`
+  // - Downloads via blob URL to prevent the browser PDF viewer showing
+  //   an HTML 404/error page (which triggers "Failed to load PDF document")
+  const handleDownload = async (e: any) => {
+    e.preventDefault();
+
+    const tryFetchPdf = async (url: string) => {
+      try {
+        const res = await fetch(url);
+        if (!res.ok) return null;
+        const ct = (res.headers.get("content-type") || "").toLowerCase();
+        if (!ct.includes("pdf")) return null;
+        const blob = await res.blob();
+        return blob;
+      } catch (err) {
+        return null;
+      }
+    };
+
+    let blob = await tryFetchPdf(publicPdfPath);
+    if (!blob) blob = await tryFetchPdf(ambassadorPdf);
+
+    if (blob) {
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      a.download = "Ambassador-Info.pdf";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      // Revoke object URL shortly after
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
+      return;
+    }
+
+    // Last resort: open the bundled URL in a new tab so user can see server response
+    try {
+      window.open(ambassadorPdf, "_blank");
+    } catch (err) {
+      // fallback alert
+      // eslint-disable-next-line no-alert
+      alert("Unable to download the PDF. Check the console/network tab for details.");
+    }
+  };
 
   const benefits = [
     {
@@ -344,10 +398,7 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
                 className="border-white text-primary hover:bg-white/10"
                 asChild
               >
-                <a
-                  href="src/documents/IqraPay Campus Ambassadorship Program.pdf"
-                  download="Ambassador-Info.pdf"
-                >
+                <a href={publicPdfPath} onClick={handleDownload}>
                   {t("ambassadors.downloadInfo")}
                 </a>
               </Button>

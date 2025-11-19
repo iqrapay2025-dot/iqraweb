@@ -6,6 +6,8 @@ import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { toast } from 'sonner';
+import { CommentSection } from './CommentSection';
+import { copyToClipboard } from '../../types/clipboard';
 
 interface BlogPostPageProps {
   post: BlogPost;
@@ -14,16 +16,25 @@ interface BlogPostPageProps {
 }
 
 export function BlogPostPage({ post, onNavigate, onBack }: BlogPostPageProps) {
-  const handleShare = () => {
+  const handleShare = async () => {
     if (navigator.share) {
-      navigator.share({
-        title: post.title,
-        text: post.excerpt,
-        url: window.location.href,
-      });
+      try {
+        await navigator.share({
+          title: post.title,
+          text: post.excerpt,
+          url: window.location.href,
+        });
+      } catch (err) {
+        // User cancelled share or share failed
+        console.log('Share cancelled or failed:', err);
+      }
     } else {
-      navigator.clipboard.writeText(window.location.href);
-      toast.success('Link copied to clipboard!');
+      const success = await copyToClipboard(window.location.href);
+      if (success) {
+        toast.success('Link copied to clipboard!');
+      } else {
+        toast.error('Failed to copy link. Please copy manually.');
+      }
     }
   };
 
@@ -185,6 +196,9 @@ export function BlogPostPage({ post, onNavigate, onBack }: BlogPostPageProps) {
                 Join Waitlist
               </Button>
             </div>
+
+            {/* Comment Section */}
+            <CommentSection postSlug={post.slug} postTitle={post.title} />
           </div>
         </article>
       </div>
