@@ -37,7 +37,7 @@ export function BlogCard({ post, onNavigate }: BlogCardProps) {
           {post.excerpt}
         </p>
         
-        <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
+        <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-4">
           <div className="flex items-center gap-1">
             <User className="h-4 w-4" />
             <span>{post.author.name}</span>
@@ -55,6 +55,10 @@ export function BlogCard({ post, onNavigate }: BlogCardProps) {
             <span>{post.readTime}</span>
           </div>
         </div>
+        
+        <button className="text-primary hover:text-primary/80 transition-colors flex items-center gap-2">
+          Read More →
+        </button>
       </div>
     </Card>
   );
