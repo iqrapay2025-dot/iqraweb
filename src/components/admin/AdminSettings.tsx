@@ -167,7 +167,7 @@ export function AdminSettings() {
                 <Input
                   id="siteDescription"
                   type="text"
-                  defaultValue="Learn the Deen. Earn for the Dunyā."
+                  defaultValue="Learn. Build Skills. Earn with Purpose."
                   className="text-sm sm:text-base"
                 />
               </div>

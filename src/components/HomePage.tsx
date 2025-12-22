@@ -58,7 +58,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
               transition={{ duration: 0.6 }}
             >
               <div className="inline-block px-4 py-2 bg-accent rounded-full mb-6">
-                <span className="text-accent-foreground">🕌 Faith-Driven • Tech-Forward</span>
+                <span className="text-accent-foreground">📚 Learn • Build Skills • Earn</span>
               </div>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl mb-6">
                 {t('home.tagline')}

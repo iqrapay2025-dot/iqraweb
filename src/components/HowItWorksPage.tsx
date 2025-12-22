@@ -1,4 +1,4 @@
-import { UserPlus, BookOpen, Award, TrendingUp, Shield, CheckCircle2 } from "lucide-react";
+import { UserPlus, BookOpen, Award, TrendingUp, Shield, CheckCircle2, Target, ShoppingBag, Lightbulb } from "lucide-react";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { IslamicPattern } from "./IslamicPattern";
@@ -27,16 +27,46 @@ export function HowItWorksPage({ onNavigate }: HowItWorksPageProps) {
       details: [t('howItWorks.step2Detail1'), t('howItWorks.step2Detail2'), t('howItWorks.step2Detail3')],
     },
     {
-      icon: Award,
+      icon: CheckCircle2,
       title: t('howItWorks.step3Title'),
       description: t('howItWorks.step3Desc'),
       details: [t('howItWorks.step3Detail1'), t('howItWorks.step3Detail2'), t('howItWorks.step3Detail3')],
     },
     {
-      icon: TrendingUp,
+      icon: Target,
       title: t('howItWorks.step4Title'),
       description: t('howItWorks.step4Desc'),
       details: [t('howItWorks.step4Detail1'), t('howItWorks.step4Detail2'), t('howItWorks.step4Detail3')],
+    },
+    {
+      icon: Award,
+      title: t('howItWorks.step5Title'),
+      description: t('howItWorks.step5Desc'),
+      details: [t('howItWorks.step5Detail1'), t('howItWorks.step5Detail2'), t('howItWorks.step5Detail3')],
+    },
+    {
+      icon: TrendingUp,
+      title: t('howItWorks.step6Title'),
+      description: t('howItWorks.step6Desc'),
+      details: [t('howItWorks.step6Detail1'), t('howItWorks.step6Detail2'), t('howItWorks.step6Detail3')],
+    },
+    {
+      icon: ShoppingBag,
+      title: t('howItWorks.step7Title'),
+      description: t('howItWorks.step7Desc'),
+      details: [t('howItWorks.step7Detail1'), t('howItWorks.step7Detail2'), t('howItWorks.step7Detail3')],
+    },
+    {
+      icon: Shield,
+      title: t('howItWorks.step8Title'),
+      description: t('howItWorks.step8Desc'),
+      details: [t('howItWorks.step8Detail1'), t('howItWorks.step8Detail2'), t('howItWorks.step8Detail3')],
+    },
+    {
+      icon: Lightbulb,
+      title: t('howItWorks.step9Title'),
+      description: t('howItWorks.step9Desc'),
+      details: [t('howItWorks.step9Detail1'), t('howItWorks.step9Detail2'), t('howItWorks.step9Detail3')],
     },
   ];
 
@@ -141,7 +171,7 @@ export function HowItWorksPage({ onNavigate }: HowItWorksPageProps) {
             className="text-center mb-16"
           >
             <div className="inline-block px-4 py-2 bg-accent rounded-full mb-6">
-              <span className="text-accent-foreground">✓ 100% Halal Certified</span>
+              <span className="text-accent-foreground">✓ Quality Verified</span>
             </div>
             <h2 className="text-3xl sm:text-4xl mb-4">{t('howItWorks.halalSectionTitle')}</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -181,25 +211,25 @@ export function HowItWorksPage({ onNavigate }: HowItWorksPageProps) {
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-1" />
                   <p className="text-muted-foreground">
-                    <strong className="text-foreground">Ethical Advertising:</strong> Only ads from halal-certified businesses and services
+                    <strong className="text-foreground">Premium Features:</strong> Optional premium subscriptions with advanced tools and exclusive content
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-1" />
                   <p className="text-muted-foreground">
-                    <strong className="text-foreground">Premium Subscriptions:</strong> Optional premium content with enhanced features
+                    <strong className="text-foreground">Marketplace Commission:</strong> Small service fee on verified skill marketplace transactions
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-1" />
                   <p className="text-muted-foreground">
-                    <strong className="text-foreground">Educational Partnerships:</strong> Collaborations with Islamic institutions and scholars
+                    <strong className="text-foreground">Educational Partnerships:</strong> Collaborations with institutions and organizations for quality content
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-1" />
                   <p className="text-muted-foreground">
-                    <strong className="text-foreground">Charitable Contributions:</strong> 2.5% of all profits go to Zakat-eligible causes
+                    <strong className="text-foreground">Ethical Advertising:</strong> Carefully vetted sponsors aligned with our values and standards
                   </p>
                 </div>
               </div>

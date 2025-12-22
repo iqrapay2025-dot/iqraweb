@@ -11,7 +11,7 @@ export const en = {
 
   // Home Page
   home: {
-    tagline: "Learn the Deen. Earn for the Dunyā.",
+    tagline: "Learn. Build Skills. Earn with Purpose.",
     heroTitle: "Read the Qur'an, Earn Halal Income",
     heroDescription:
       "Join thousands of Muslims worldwide earning rewards while deepening their knowledge of Islam through our revolutionary Read-to-Earn platform.",
@@ -20,12 +20,12 @@ export const en = {
 
     // Steps
     stepsTitle: "How It Works",
-    readTitle: "Read",
-    readDesc: "Engage with the Qur'an and beneficial Islamic knowledge daily",
-    earnTitle: "Earn",
-    earnDesc: "Get rewarded with halal earnings for your consistent learning",
-    growTitle: "Grow",
-    growDesc: "Build your faith and wealth while strengthening the Ummah",
+    readTitle: "Learn",
+    readDesc: "Engage with structured content designed to build understanding step by step",
+    earnTitle: "Apply",
+    earnDesc: "Complete practical projects and get your skills verified through quality review",
+    growTitle: "Earn",
+    growDesc: "Access the marketplace and earn by offering your verified skills and services",
 
     // Stats
     activeLearners: "Active Learners",
@@ -58,44 +58,44 @@ export const en = {
   about: {
     title: "Our Story",
     subtitle:
-      "Building a platform that honors the sacred pursuit of knowledge while providing halal sustenance to the Ummah",
+      "Building a platform that values genuine knowledge, real skill development, and verified work while creating opportunities for ethical earning",
 
     journeyTitle: "The Journey Begins",
     journeyPara1:
-      "IqraPay was born from a simple observation: Muslims around the world want to deepen their knowledge of Islam, but many face financial barriers to dedicating time to learning.",
+      "IqraPay was born from a simple observation: people around the world want to develop valuable skills and earn income, but many face barriers to accessing quality education and fair earning opportunities.",
     journeyPara2:
-      "We asked ourselves: What if we could create a platform that rewards the noble pursuit of Islamic knowledge? What if learning the Qur'an and Sunnah could also provide halal sustenance?",
+      "We asked ourselves: What if we could create a platform that rewards genuine learning and skill development? What if acquiring knowledge could lead directly to verified abilities and earning potential?",
     journeyPara3:
-      "That question led to IqraPay — a revolutionary platform that combines faith-based education with ethical, transparent earning opportunities. We've built this with scholars, educators, and fintech experts to ensure everything aligns with Islamic principles.",
+      "That question led to IqraPay — a revolutionary platform that combines structured education with practical skill verification and ethical earning opportunities. We've built this with educators, industry experts, and technology specialists to ensure quality, fairness, and real-world value.",
 
     visionTitle: "Our Vision",
     visionDesc:
-      "To become the world's leading platform for Islamic education, empowering every Muslim to access, learn, and benefit from the treasures of our faith while earning halal sustenance in the process.",
+      "To become the world's leading platform for learning-to-earning, empowering every individual to access quality education, develop verified skills, and build sustainable income through ethical opportunities.",
 
     missionTitle: "Our Mission",
     missionDesc:
-      "To create a sustainable, transparent, and halal ecosystem where Muslims can deepen their knowledge of the Qur'an, Hadith, and Islamic sciences while receiving ethical rewards that support their worldly needs.",
+      "To create a sustainable, transparent, and ethical ecosystem where learners can build genuine knowledge, verify their skills through practical projects, and earn income that reflects their real abilities and effort.",
     missionText:
       "At IqraPay, we believe that seeking knowledge is an act of worship that should be rewarded both spiritually and materially. Our mission is to create a sustainable ecosystem where Muslims can earn halal income while strengthening their connection with the Qur'an and Islamic knowledge. We're building a global community of learners who are committed to personal growth and serving the Ummah.",
 
     valuesTitle: "Our Core Values",
     valuesSubtitle: "The principles that guide everything we do",
-    faithFirstTitle: "Faith-First",
-    faithFirstDesc: "Every decision is rooted in Islamic principles and ethics",
+    faithFirstTitle: "Integrity-First",
+    faithFirstDesc: "Every decision is rooted in fairness, honesty, and ethical principles",
     transparencyTitle: "Transparency",
     transparencyDesc: "Complete clarity in our halal earning mechanisms",
     excellenceTitle: "Excellence",
-    excellenceDesc: "Commitment to quality in both content and platform",
+    excellenceDesc: "Commitment to quality in both educational content and platform experience",
     communityTitle: "Community",
-    communityDesc: "Building and empowering the global Muslim Ummah",
+    communityDesc: "Building and empowering the global Muslim Ummah through knowledge and opportunity",
 
     founderTitle: "About the Founder",
     founderName: "Muhammad Jumah",
     founderRole: "Founder & CEO",
     founderBio:
-      "IqraPay was founded by Muhammad Jumah, a visionary student and entrepreneur committed to bridging the gap between faith, education, and technology. As a Linguistics student at the University of Ilorin, he continues to observe the challenges many Muslims face in balancing the pursuit of knowledge with financial stability. These ongoing experiences have inspired him to reflect deeply on how learning, faith, and livelihood can coexist harmoniously. Driven by a desire to make learning both rewarding and sustainable, he established IqraPay — a halal “Read-to-Earn” platform designed to empower Muslims to grow spiritually and financially through meaningful learning.",
+      "IqraPay was founded by Muhammad Jumah, a visionary student and entrepreneur passionate about merging education, skill development, and technology. As a student of Linguistics at the University of Ilorin, he witnessed how many people struggled to balance learning with livelihood. Driven by a desire to make knowledge both rewarding and sustainable, he created IqraPay — a learning-to-earning platform that empowers individuals to grow professionally and financially through verified skill development.",
     founderQuote:
-      '"Knowledge without action is pointless, and action without halal sustenance is unsustainable. IqraPay bridges all three."',
+      '"Knowledge without action is pointless, and action without halal sustenance is unsustainable. IqraPay bridges"Knowledge without application is incomplete, and skills without verification lack credibility. IqraPay bridges all three: learning, verification, and earning." all three."',
     founderMessage:
       "As-salamu alaykum! IqraPay was born from a simple yet powerful vision: to make Islamic knowledge accessible while providing halal earning opportunities for Muslims worldwide. In a world filled with distractions, we wanted to create a platform that incentivizes what matters most - our connection with Allah through His Book. Alhamdulillah, what started as a dream has grown into a thriving community of thousands of learners across the globe. Join us in this blessed journey!",
 
@@ -112,47 +112,72 @@ export const en = {
   // How It Works Page
   howItWorks: {
     title: "How IqraPay Works",
-    subtitle: "Three simple steps to start your journey of faith and growth",
+    subtitle: "A complete journey from learning to verified skills to earning opportunities",
+    
+    step1Title: "1. Simple Registration & Guided Onboarding",
+    step1Desc: "Create your free account and complete a short onboarding process that introduces you to the IqraPay journey. From the start, the platform emphasizes progress, consistency, and integrity.",
+    step1Detail1: "Secure account creation",
+    step1Detail2: "Guided introduction to platform",
+    step1Detail3: "Activity tracking setup",
+    
+    step2Title: "2. Structured Reading Experience",
+    step2Desc: "Engage with carefully structured content designed to build understanding step by step. Progress is sequential — move forward only after completing each section.",
+    step2Detail1: "Sequential learning paths",
+    step2Detail2: "Focused, comprehensive content",
+    step2Detail3: "Progress-based advancement",
+    
+    step3Title: "3. Knowledge Checks & Progress Validation",
+    step3Desc: "Take short knowledge checks to reinforce understanding. These assessments are fair, varied, and educational, helping you reflect on what you've learned.",
+    step3Detail1: "Regular comprehension checks",
+    step3Detail2: "Meaningful assessments",
+    step3Detail3: "Learning reinforcement",
+    
+    step4Title: "4. Skill Learning Pathways",
+    step4Desc: "Unlock skill-based learning modules focused on real-world application. Develop relevant digital and professional skills through concise, practical courses.",
+    step4Detail1: "Practical skill courses",
+    step4Detail2: "Real-world application focus",
+    step4Detail3: "Structured progression",
+    
+    step5Title: "5. Practical Projects & Skill Verification",
+    step5Desc: "Apply your skills by completing real, practical projects. Projects are reviewed through quality assurance combining intelligent systems and human oversight.",
+    step5Detail1: "Real project applications",
+    step5Detail2: "Quality review process",
+    step5Detail3: "Official skill verification",
+    
+    step6Title: "6. Rewards & Earnings System",
+    step6Desc: "Earn through a tiered reward system that aligns with your effort. Learning activities unlock progress-based rewards, skill completion increases earning potential.",
+    step6Detail1: "Progress-based rewards",
+    step6Detail2: "Skill-linked earnings",
+    step6Detail3: "Effort-aligned compensation",
+    
+    step7Title: "7. Skill-Based Marketplace",
+    step7Desc: "After skill verification, access the IqraPay Marketplace where you can offer verified skills as services or digital products with full transparency.",
+    step7Detail1: "Verified skills marketplace",
+    step7Detail2: "Service and product offerings",
+    step7Detail3: "Transparent activity tracking",
+    
+    step8Title: "8. Fairness, Integrity & Trust",
+    step8Desc: "Built around fairness, IqraPay promotes honest learning and skill development by discouraging shortcuts and protecting the integrity of the entire process.",
+    step8Detail1: "Anti-abuse systems",
+    step8Detail2: "Quality protection",
+    step8Detail3: "Merit-based advancement",
+    
+    step9Title: "9. Complete Learning-to-Earning Ecosystem",
+    step9Desc: "Experience the complete journey: Read → Learn → Apply → Verify → Earn. Everything comes together in one seamless platform.",
+    step9Detail1: "Integrated experience",
+    step9Detail2: "End-to-end journey",
+    step9Detail3: "Real-world value creation",
 
-    step1Title: "Sign Up & Verify",
-    step1Desc:
-      "Create your free account and complete your profile. We verify all members to maintain a trusted community.",
-    step1Detail1: "Email verification",
-    step1Detail2: "Profile completion",
-    step1Detail3: "Community guidelines acceptance",
-
-    step2Title: "Choose Your Path",
-    step2Desc:
-      "Select from Qur'an recitation, Tafsir study, Hadith learning, or Islamic history modules.",
-    step2Detail1: "Multiple learning tracks",
-    step2Detail2: "Personalized recommendations",
-    step2Detail3: "Progress tracking",
-
-    step3Title: "Learn & Complete",
-    step3Desc:
-      "Engage with high-quality content, complete lessons, and take verification quizzes to prove understanding.",
-    step3Detail1: "Video lessons",
-    step3Detail2: "Interactive quizzes",
-    step3Detail3: "Certification upon completion",
-
-    step4Title: "Earn Rewards",
-    step4Desc:
-      "Receive halal earnings credited to your wallet. Withdraw or donate to charitable causes.",
-    step4Detail1: "Instant credit",
-    step4Detail2: "Multiple withdrawal options",
-    step4Detail3: "Zakat integration",
-
-    halalSectionTitle: "Built on Islamic Principles",
-    halalSectionDesc:
-      "Complete transparency and Shariah compliance in every aspect",
-    halalTitle1: "Shariah-Compliant",
-    halalDesc1: "Reviewed and certified by qualified Islamic scholars",
-    halalTitle2: "Transparent Revenue",
-    halalDesc2: "Clear disclosure of all revenue sources and distribution",
+    halalSectionTitle: "Built on Core Principles",
+    halalSectionDesc: "Complete transparency and fairness in every aspect",
+    halalTitle1: "Quality-Focused",
+    halalDesc1: "Rigorous standards ensuring genuine learning and verified skills",
+    halalTitle2: "Transparent System",
+    halalDesc2: "Clear disclosure of all earning mechanisms and progression criteria",
     halalTitle3: "Ethical Partnerships",
-    halalDesc3: "Only work with verified halal businesses and institutions",
-
-    revenueTitle: "Revenue Transparency",
+    halalDesc3: "Only work with verified, reputable organizations and institutions",
+    
+    revenueTitle: "How It Works",
 
     ctaTitle: "Ready to Get Started?",
     ctaDesc:
@@ -328,19 +353,18 @@ export const en = {
 
   // Footer
   footer: {
-    tagline: "Learn the Deen. Earn for the Dunyā.",
-    description:
-      "Empowering Muslims worldwide through knowledge and halal earnings.",
-
+    tagline: "Learn. Build Skills. Earn with Purpose.",
+    description: "Empowering learners worldwide through verified skill development and ethical earning opportunities.",
+    
     quickLinks: "Quick Links",
     legal: "Legal",
     connect: "Connect",
-
+    
     privacyPolicy: "Privacy Policy",
     termsOfService: "Terms of Service",
-
+    
     rights: "All rights reserved.",
-
+    
     home: "Home",
     about: "About",
     howItWorks: "How It Works",

@@ -420,7 +420,7 @@ export function TermsOfServicePage({ onNavigate }: TermsOfServicePageProps) {
                   "Read in the name of your Lord who created" - Qur'an 96:1
                 </p>
                 <p className="text-foreground mt-4">
-                  Learn the Deen. Earn for the Dunyā.
+                  Learn. Build Skills. Earn with Purpose.
                 </p>
               </div>
             </section>
