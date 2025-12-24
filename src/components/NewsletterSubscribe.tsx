@@ -115,7 +115,7 @@ export function NewsletterSubscribe() {
                 {t('newsletter.privacy')}
               </p>
               
-              <p className="text-xs text-muted-foreground mt-2">
+              {/* <p className="text-xs text-muted-foreground mt-2">
                 To enable email delivery, replace YOUR_ACCESS_KEY_HERE in the code with your Web3Forms access key.{" "}
                 <a 
                   href="https://web3forms.com" 
@@ -125,7 +125,7 @@ export function NewsletterSubscribe() {
                 >
                   Get your free key here
                 </a>
-              </p>
+              </p> */}
             </form>
           </Card>
         </motion.div>
