@@ -80,9 +80,9 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
     },
     {
       id: 6,
-      name: "Zainab Malik",
+      name: "Aderemi Fathia",
       role: "Chief Marketing Officer (CMO)",
-      location: "Port Harcourt, Nigeria",
+      location: "Ilorin, Nigeria",
       description:
         "Digital marketing expert focused on spreading IqraPay's mission across the Muslim world through ethical marketing strategies.",
     },
