@@ -6,6 +6,7 @@ import { HowItWorksPage } from "./components/HowItWorksPage";
 import { AmbassadorsPage } from "./components/AmbassadorsPage";
 import { BlogPage } from "./components/BlogPage";
 import { ContactPage } from "./components/ContactPage";
+import {SupportPage} from "./components/SupportPage"
 import { PrivacyPolicyPage } from "./components/PrivacyPolicyPage";
 import { TermsOfServicePage } from "./components/TermsOfServicePage";
 import { ScrollToTop } from "./components/ScrollToTop";
@@ -296,6 +297,8 @@ function AppContent() {
         );
       case "contact":
         return <ContactPage darkMode={darkMode} onNavigate={handleNavigate} />;
+      case "support":
+        return <SupportPage darkMode={darkMode} onNavigate={handleNavigate} />;
       case "privacy-policy":
         return <PrivacyPolicyPage onNavigate={handleNavigate} />;
       case "terms-of-service":

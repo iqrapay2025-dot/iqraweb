@@ -72,11 +72,11 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
     },
     {
       id: 5,
-      name: "Bilal Ahmed",
+      name: "Najeemdeen Zulqarnain",
       role: "Chief Shariah Officer (CSO)",
-      location: "Ilorin, Nigeria",
+      location: "Medina, Saudi Arabia",
       description:
-        "Islamic scholar ensuring all platform operations align with Shariah principles. Provides guidance on halal earning mechanisms.",
+        "Zulqarnain Najeemdeen is a student at Islamic University of Madinah and an entrepreneur from Lagos. His interests include Agricultural Science, Islamic Jurisprudence, and Islamic Economics and Finance, with a focus on entrepreneurship and promoting Islamic financial stability.",
     },
     {
       id: 6,
