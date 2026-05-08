@@ -28,8 +28,8 @@ export const en = {
     growDesc: "Access the marketplace and earn by offering your verified skills and services",
     
     // Stats
-    activeLearners: "Active Learners",
-    hoursRead: "Hours of Learning",
+    activeLearners: "Community Members",
+    hoursRead: "Books for Learning",
     halalCertified: "Verified Skills",
     countries: "Countries",
     

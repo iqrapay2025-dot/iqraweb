@@ -70,7 +70,7 @@ export function SupportPage({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           access_key: "ae27bb89-a980-4ca2-9eed-65eac83a9aed",
-          to: "info@iqrapay.com.ng",
+          to: "iqrapay2025@gmail.com",
           subject: "Support IqraPay Enquiry",
           ...formData,
         }),
@@ -90,7 +90,7 @@ export function SupportPage({
       }
     } catch {
       toast.error(t("common.error") || "Something went wrong", {
-        description: "Please try again or email info@iqrapay.com.ng",
+        description: "Please try again or email iqrapay2025@gmail.com",
       });
     } finally {
       setIsSubmitting(false);
@@ -100,7 +100,7 @@ export function SupportPage({
   const impactStats = [
     {
       icon: Users,
-      value: "10,000+", // Align with home.activeLearners value from en.ts
+      value: "300+", // Align with home.activeLearners value from en.ts
       label: t("home.activeLearners"),
       // Use Tailwind's semantic colors directly for dynamic generation
       // If 'primary' is not defined, 'text-green-500' or similar could be used.
@@ -123,7 +123,7 @@ export function SupportPage({
     },
     {
       icon: Globe,
-      value: "12",
+      value: "1",
       label: t("home.countries"),
       color: "text-primary",
       bg: "bg-primary/10",
@@ -671,13 +671,13 @@ export function SupportPage({
 
                 <div className="space-y-4">
                   <a
-                    href="mailto:info@iqrapay.com.ng"
+                    href="mailto:iqrapay2025@gmail.com"
                     className="flex items-center gap-3 text-white/80 hover:text-white group"
                   >
                     <div className="bg-white/10 group-hover:bg-white/20 p-2 rounded-xl transition-colors">
                       <Mail className="w-5 h-5" />
                     </div>
-                    <span className="text-sm">info@iqrapay.com.ng</span>
+                    <span className="text-sm">iqrapay2025@gmail.com</span>
                   </a>
                   <button
                     onClick={() => setIsWhatsAppModalOpen(true)}
