@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Heart,
   Shield,
@@ -47,6 +47,13 @@ export function SupportPage({
   const [whatsappHover, setWhatsappHover] = useState(false);
   const [submitHover, setSubmitHover] = useState(false);
   const [tierHoverIndex, setTierHoverIndex] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -190,25 +197,55 @@ export function SupportPage({
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div
+      className="min-h-screen text-foreground"
+      style={{
+        backgroundColor: darkMode ? "#1a1a1a" : "var(--background)",
+      }}
+    >
       {/* ── Hero Section ── */}
-      <section className="relative pt-32 pb-34 overflow-hidden bg-brand-dark  ">
-        {/* Radial gradient — matches the image (bright maroon top-right → near-black) */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse at 70% 0%, #4a0800 0%, #2a0300 45%, #0d0000 100%)",
-          }}
-        />
+      <section
+        className="relative pt-32 pb-34 overflow-hidden"
+        style={{
+          background: darkMode
+            ? "radial-gradient(ellipse at 70% 0%, #2a1500 0%, #1a0a00 45%, #0a0000 100%)"
+            : "radial-gradient(ellipse at 70% 0%, #4a0800 0%, #2a0300 45%, #0d0000 100%)",
+        }}
+      >
 
         {/* Islamic pattern — slightly more visible than before */}
         <div className="absolute inset-0 opacity-[0.07]">
           <IslamicPattern />
         </div>
         {/* Glow orbs */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/4" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-amber/10 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/4" />
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            width: "500px",
+            height: "500px",
+            backgroundColor: "rgba(76, 175, 80, 0.2)",
+            borderRadius: "50%",
+            filter: "blur(120px)",
+            transform: "translate(25%, -50%)",
+            pointerEvents: "none",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            width: "400px",
+            height: "400px",
+            backgroundColor: "rgba(255, 193, 7, 0.1)",
+            borderRadius: "50%",
+            filter: "blur(100px)",
+            transform: "translate(-25%, 50%)",
+            pointerEvents: "none",
+          }}
+        />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
@@ -275,7 +312,12 @@ export function SupportPage({
       </section>
 
       {/* ── Impact Stats Section ── */}
-      <section className="py-16 bg-muted/30">
+      <section
+        className="py-16"
+        style={{
+          backgroundColor: darkMode ? "#0f0f0f" : "var(--muted)",
+        }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             {impactStats.map((stat, i) => (
@@ -304,7 +346,12 @@ export function SupportPage({
       </section>
 
       {/* ── How It Works Section ── */}
-      <section className="py-20 bg-background">
+      <section
+        className="py-20"
+        style={{
+          backgroundColor: darkMode ? "#1a1a1a" : "var(--background)",
+        }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -364,7 +411,10 @@ export function SupportPage({
       {/* ── Sponsorship Tiers Section ── */}
       <section
         id="sponsorship-tiers"
-        className="py-20 bg-muted/20 relative overflow-hidden"
+        className="py-20 relative overflow-hidden"
+        style={{
+          backgroundColor: darkMode ? "#0f0f0f" : "var(--muted)",
+        }}
       >
         <div className="absolute inset-0 opacity-[0.03]">
           <IslamicPattern />
@@ -442,12 +492,15 @@ export function SupportPage({
                   <Button
                     className="mt-8 w-full font-semibold"
                     onClick={() => setIsWhatsAppModalOpen(true)}
+                    onMouseEnter={() => setTierHoverIndex(i)}
+                    onMouseLeave={() => setTierHoverIndex(null)}
                     style={{
                       borderRadius: "12px",
-                      backgroundColor: "var(--foreground)",
+                      backgroundColor: i === tierHoverIndex ? "rgba(0, 0, 0, 0.8)" : "var(--foreground)",
                       color: "var(--background)",
                       padding: "12px 16px",
                       height: "auto",
+                      transition: "background-color 0.2s",
                     }}
                   >
                     {t("support.tierCta")}
@@ -568,7 +621,13 @@ export function SupportPage({
       </section>
 
       {/* ── Contact Form Section ── */}
-      <section id="contact-form" className="py-20 bg-background">
+      <section
+        id="contact-form"
+        className="py-20"
+        style={{
+          backgroundColor: darkMode ? "#1a1a1a" : "var(--background)",
+        }}
+      >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -587,7 +646,7 @@ export function SupportPage({
           <div
             style={{
               display: "flex",
-              flexDirection: "row",
+              flexDirection: isMobile ? "column" : "row",
               gap: "2rem",
               alignItems: "flex-start",
             }}
@@ -597,7 +656,7 @@ export function SupportPage({
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              style={{ width: "40%", flexShrink: 0 }}
+              style={{ width: isMobile ? "100%" : "40%", flexShrink: 0 }}
               className="space-y-6"
             >
               {/* Info card */}
@@ -697,18 +756,29 @@ export function SupportPage({
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              style={{ width: "60%" }}
+              style={{ width: isMobile ? "100%" : "60%" }}
             >
               <div
-                className="bg-card border border-border shadow-sm"
-                style={{ borderRadius: "24px", padding: "32px" }}
+                style={{
+                  borderRadius: "24px",
+                  padding: "32px",
+                  backgroundColor: darkMode ? "#2a2a2a" : "var(--card)",
+                  border: `1px solid ${darkMode ? "#3a3a3a" : "var(--border)"}`,
+                  boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+                }}
               >
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="grid p-2 sm:grid-cols-2 gap-5">
                     <div>
                       <Label
                         htmlFor="name"
-                        className="text-sm font-medium mb-2 block"
+                        style={{
+                          fontSize: "14px",
+                          fontWeight: 500,
+                          marginBottom: "8px",
+                          display: "block",
+                          color: darkMode ? "#e0e0e0" : "var(--foreground)",
+                        }}
                       >
                         {t("support.fullName")}
                         <span className="text-red-500 ml-1">*</span>
@@ -719,14 +789,27 @@ export function SupportPage({
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="rounded-xl mb-3"
                         placeholder="Your full name"
+                        style={{
+                          borderRadius: "12px",
+                          marginBottom: "12px",
+                          backgroundColor: darkMode ? "#3a3a3a" : "var(--background)",
+                          color: darkMode ? "#e0e0e0" : "var(--foreground)",
+                          border: `1px solid ${darkMode ? "#4a4a4a" : "var(--border)"}`,
+                          padding: "10px 12px",
+                        }}
                       />
                     </div>
                     <div>
                       <Label
                         htmlFor="organisation"
-                        className="text-sm font-medium mb-2 block"
+                        style={{
+                          fontSize: "14px",
+                          fontWeight: 500,
+                          marginBottom: "8px",
+                          display: "block",
+                          color: darkMode ? "#e0e0e0" : "var(--foreground)",
+                        }}
                       >
                         {t("support.organisation")}
                       </Label>
@@ -735,8 +818,14 @@ export function SupportPage({
                         name="organisation"
                         value={formData.organisation}
                         onChange={handleChange}
-                        className="rounded-xl"
                         placeholder="Your organisation"
+                        style={{
+                          borderRadius: "12px",
+                          backgroundColor: darkMode ? "#3a3a3a" : "var(--background)",
+                          color: darkMode ? "#e0e0e0" : "var(--foreground)",
+                          border: `1px solid ${darkMode ? "#4a4a4a" : "var(--border)"}`,
+                          padding: "10px 12px",
+                        }}
                       />
                     </div>
                   </div>
@@ -744,7 +833,13 @@ export function SupportPage({
                   <div>
                     <Label
                       htmlFor="email"
-                      className="text-sm font-medium mb-2 block"
+                      style={{
+                        fontSize: "14px",
+                        fontWeight: 500,
+                        marginBottom: "8px",
+                        display: "block",
+                        color: darkMode ? "#e0e0e0" : "var(--foreground)",
+                      }}
                     >
                       {t("support.email")}
                       <span className="text-red-500 ml-1">*</span>
@@ -756,15 +851,27 @@ export function SupportPage({
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="rounded-xl"
                       placeholder="your@email.com"
+                      style={{
+                        borderRadius: "12px",
+                        backgroundColor: darkMode ? "#3a3a3a" : "var(--background)",
+                        color: darkMode ? "#e0e0e0" : "var(--foreground)",
+                        border: `1px solid ${darkMode ? "#4a4a4a" : "var(--border)"}`,
+                        padding: "10px 12px",
+                      }}
                     />
                   </div>
 
                   <div>
                     <Label
                       htmlFor="message"
-                      className="text-sm font-medium mb-2 block"
+                      style={{
+                        fontSize: "14px",
+                        fontWeight: 500,
+                        marginBottom: "8px",
+                        display: "block",
+                        color: darkMode ? "#e0e0e0" : "var(--foreground)",
+                      }}
                     >
                       {t("support.message")}
                       <span className="text-red-500 ml-1">*</span>
@@ -776,8 +883,15 @@ export function SupportPage({
                       onChange={handleChange}
                       required
                       rows={5}
-                      className="rounded-xl resize-none"
                       placeholder="Tell us how you'd like to support IqraPay..."
+                      style={{
+                        borderRadius: "12px",
+                        resize: "none",
+                        backgroundColor: darkMode ? "#3a3a3a" : "var(--background)",
+                        color: darkMode ? "#e0e0e0" : "var(--foreground)",
+                        border: `1px solid ${darkMode ? "#4a4a4a" : "var(--border)"}`,
+                        padding: "10px 12px",
+                      }}
                     />
                   </div>
 
@@ -824,7 +938,9 @@ export function SupportPage({
       <section
         className="text-white relative overflow-hidden"
         style={{
-          background: "linear-gradient(to right, #360400, #5a0800)",
+          background: darkMode
+            ? "linear-gradient(to right, #1a0800, #2d0400)"
+            : "linear-gradient(to right, #360400, #5a0800)",
           padding: "40px 16px",
         }}
       >
