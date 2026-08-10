@@ -1,6 +1,7 @@
 export const ig = {
   // Navigation
   nav: {
+    joinWaitlist: "Sonye na ndepụta",
     home: "Ụlọ",
     about: "Banyere Anyị",
     howItWorks: "Otu Ọ Si Arụ Ọrụ",
@@ -309,6 +310,24 @@ export const ig = {
     successTitle: "Debanye Aha Nke Ọma!",
     successMessage: "Ị ga-anata mmelite gbasara IqraPay na ohere mmụta.",
     privacy: "Anyị na-asọpụrụ nzuzo gị. Kwụsị debanye aha n'oge ọ bụla.",
+  },
+
+  // Waitlist
+  waitlist: {
+    badge: "Ohere n'oge",
+    title: "Sonye na Ndepụta Echere",
+    description: "Bụrụ onye mbụ ịhụ IqraPay. Debe ebe gị taa ma nweta ohere na mbido.",
+    name: "Aha Njirimara",
+    namePlaceholder: "Tinye aha njirimara gị",
+    email: "Adresị Email",
+    emailPlaceholder: "gị@email.com",
+    join: "Sonye na Ndepụta Echere",
+    submitting: "Ọ na-abanye...",
+    privacy: "Anyị na-asọpụrụ nzuzo gị. Enweghị spam, ọ dịghị mgbe ọ bụla.",
+    successTitle: "Ị nọ na ndepụta!",
+    successMessage: "Daalụ maka isonye. Anyị ga-ezitere gị email ozugbo IqraPay malitere.",
+    submitError: "Ihe mere. Biko nwaa ọzọ.",
+    notConfigured: "Ndepụta echere etinyebeghị. Tinye URL Google Sheets gị na src/config/waitlist.ts.",
   },
 
   // Footer

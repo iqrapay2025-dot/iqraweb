@@ -1,6 +1,7 @@
 export const zh = {
   // Navigation
   nav: {
+    joinWaitlist: "加入候补名单",
     home: "首页",
     about: "关于我们",
     howItWorks: "如何运作",
@@ -309,6 +310,24 @@ export const zh = {
     successTitle: "订阅成功！",
     successMessage: "您将收到有关 IqraPay 和学习机会的更新。",
     privacy: "我们尊重您的隐私。随时取消订阅。",
+  },
+
+  // Waitlist
+  waitlist: {
+    badge: "抢先体验",
+    title: "加入候补名单",
+    description: "成为首批体验 IqraPay 的人。立即预订名额，在发布时获得抢先体验。",
+    name: "全名",
+    namePlaceholder: "请输入您的全名",
+    email: "电子邮箱",
+    emailPlaceholder: "you@email.com",
+    join: "加入候补名单",
+    submitting: "加入中...",
+    privacy: "我们尊重您的隐私。绝无垃圾邮件。",
+    successTitle: "您已在名单上！",
+    successMessage: "感谢您的加入。IqraPay 上线时我们会第一时间给您发邮件。",
+    submitError: "出错了，请重试。",
+    notConfigured: "候补名单尚未配置。请在 src/config/waitlist.ts 中添加您的 Google Sheets 网址。",
   },
 
   // Footer

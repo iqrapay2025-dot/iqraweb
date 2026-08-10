@@ -8,6 +8,7 @@ import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { toast } from 'sonner';
 import { CommentSection } from './CommentSection';
 import { copyToClipboard } from '../../types/clipboard';
+import { openWaitlist } from '../WaitlistModal';
 
 interface BlogPostPageProps {
   post: BlogPost;
@@ -191,7 +192,7 @@ export function BlogPostPage({ post, onNavigate, onBack }: BlogPostPageProps) {
               <Button
                 size="lg"
                 className="bg-primary text-primary-foreground hover:bg-primary/90"
-                onClick={() => window.open('https://chat.whatsapp.com/Ej08ZEjAnlyAS7vE6uY7W8', '_blank')}
+                onClick={() => openWaitlist("blog-post")}
               >
                 Join Waitlist
               </Button>

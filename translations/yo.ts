@@ -1,6 +1,7 @@
 export const yo = {
   // Navigation
   nav: {
+    joinWaitlist: "Darapọ̀ mọ́ àkójọ",
     home: "Ilé",
     about: "Nípa Wa",
     howItWorks: "Bí Ó Ṣe Ń Ṣiṣẹ́",
@@ -309,6 +310,24 @@ export const yo = {
     successTitle: "Ìforúkọsílẹ̀ ṣe àṣeyọrí!",
     successMessage: "Ìwọ máa gba àwọn ìmúdájú nípa IqraPay àti àwọn àǹfààní ẹ̀kọ́.",
     privacy: "A ń bọ̀wọ̀ fún ìpamọ́ rẹ. Pa ìforúkọsílẹ̀ rẹ ní àkókò kan.",
+  },
+
+  // Waitlist
+  waitlist: {
+    badge: "Ìwọ̀lé ní kíákíá",
+    title: "Darapọ̀ mọ́ Àkójọ Ìdúró",
+    description: "Jẹ́ ọ̀kan nínú àwọn àkọ́kọ́ láti rí IqraPay. Fọ̀wọ́ sí ààyè rẹ lónìí kí o sì ní ìwọ̀lé ní kíákíá nígbà ìbẹ̀rẹ̀.",
+    name: "Orúkọ Kíkún",
+    namePlaceholder: "Tẹ orúkọ kíkún rẹ",
+    email: "Àdírẹ́sì Íméèlì",
+    emailPlaceholder: "ìwọ@email.com",
+    join: "Darapọ̀ mọ́ Àkójọ Ìdúró",
+    submitting: "Ń Ṣàkójọ...",
+    privacy: "A bọ̀wọ̀ fún ìkọ̀kọ̀ rẹ. Kò sí spam, láéláé.",
+    successTitle: "O wà lórí àkójọ!",
+    successMessage: "Ẹ̀ṣẹ́ fún dídarapọ̀. A máa rán ọ ní méèlì ní kété tí IqraPay bá bẹ̀rẹ̀.",
+    submitError: "Nǹkan kan ṣàṣìṣe. Jọ̀wọ́ gbìyànjú lẹ́ẹ̀kan sí i.",
+    notConfigured: "Àkójọ ìdúró kò tíì ṣètò. Fi URL Google Sheets rẹ kún un ní src/config/waitlist.ts.",
   },
 
   // Footer

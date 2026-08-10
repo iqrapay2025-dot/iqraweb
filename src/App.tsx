@@ -26,6 +26,7 @@ import { BlogProvider, useBlog } from "./contexts/BlogContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { Toaster } from "./components/ui/sonner";
 import { IqraPayLoader } from "./components/IqraPayLoader";
+import { WaitlistModal } from "./components/WaitlistModal";
 import { Button } from "./components/ui/button";
 import { Menu } from "lucide-react";
 
@@ -39,6 +40,8 @@ function AppContent() {
   const [currentBlogSlug, setCurrentBlogSlug] = useState<string | null>(null);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [waitlistOpen, setWaitlistOpen] = useState(false);
+  const [waitlistSource, setWaitlistSource] = useState("navbar");
   const { isAuthenticated, logout } = useAuth();
   const { posts } = useBlog();
 
@@ -58,6 +61,18 @@ function AppContent() {
       document.documentElement.classList.remove("dark");
     }
   }, [darkMode]);
+
+  // Open the waitlist modal from any "Join the Waitlist" button on the site
+  useEffect(() => {
+    const handleWaitlistEvent = (e: Event) => {
+      const detail = (e as CustomEvent)?.detail ?? {};
+      setWaitlistSource(detail.source || "generic");
+      setWaitlistOpen(true);
+    };
+    window.addEventListener("iqrapay:open-waitlist", handleWaitlistEvent);
+    return () =>
+      window.removeEventListener("iqrapay:open-waitlist", handleWaitlistEvent);
+  }, []);
 
   // Handle browser back/forward buttons
   useEffect(() => {
@@ -329,6 +344,11 @@ function AppContent() {
       )}
       <main>{renderPage()}</main>
       {!isAdminPage && !isLoginPage && <ScrollToTop />}
+      <WaitlistModal
+        open={waitlistOpen}
+        onOpenChange={setWaitlistOpen}
+        source={waitlistSource}
+      />
       <Toaster />
     </div>
   );

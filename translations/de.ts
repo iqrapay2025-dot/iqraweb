@@ -1,6 +1,7 @@
 export const de = {
   // Navigation
   nav: {
+    joinWaitlist: "Warteliste beitreten",
     home: "Startseite",
     about: "Über uns",
     howItWorks: "Wie es funktioniert",
@@ -304,6 +305,24 @@ export const de = {
     successTitle: "Erfolgreich abonniert!",
     successMessage: "Du erhältst Updates über IqraPay und Lernmöglichkeiten.",
     privacy: "Wir respektieren deine Privatsphäre. Jederzeit abmelden.",
+  },
+
+  // Waitlist
+  waitlist: {
+    badge: "Früher Zugang",
+    title: "Warteliste beitreten",
+    description: "Sei unter den Ersten, die IqraPay erleben. Sichere dir heute deinen Platz und erhalte beim Start frühen Zugang.",
+    name: "Vollständiger Name",
+    namePlaceholder: "Gib deinen vollständigen Namen ein",
+    email: "E-Mail-Adresse",
+    emailPlaceholder: "du@email.com",
+    join: "Warteliste beitreten",
+    submitting: "Wird beigetreten...",
+    privacy: "Wir respektieren deine Privatsphäre. Kein Spam, niemals.",
+    successTitle: "Du bist auf der Liste!",
+    successMessage: "Danke für deinen Beitritt. Wir schreiben dir, sobald IqraPay live geht.",
+    submitError: "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+    notConfigured: "Die Warteliste ist noch nicht konfiguriert. Füge deine Google-Sheets-URL in src/config/waitlist.ts hinzu.",
   },
 
   // Footer

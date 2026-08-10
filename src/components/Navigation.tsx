@@ -1,8 +1,9 @@
-import { Menu, X, Moon, Sun } from "lucide-react";
+import { Menu, X, Moon, Sun, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { LanguageSelector } from "./LanguageSelector";
 import { useLanguage } from "../contexts/LanguageContext";
+import { openWaitlist } from "./WaitlistModal";
 import logoLight from "figma:asset/39ba4a0dd03e9a935003109f9573af3b0b10ff85.png";
 import logoDark from "figma:asset/95c433e7c8d7b15a23b7736bc56fc1d657934d51.png";
 
@@ -99,6 +100,14 @@ export function Navigation({ currentPage, onNavigate, darkMode, toggleDarkMode }
 
           {/* Language Selector, Dark Mode Toggle & Mobile Menu Button */}
           <div className="flex items-center gap-2">
+            <Button
+              onClick={() => openWaitlist("navbar")}
+              className="hidden md:inline-flex h-9 items-center gap-2 rounded-lg bg-gradient-to-r from-teal to-teal-dark px-4 text-sm font-medium text-white shadow-md shadow-teal/20 transition-all hover:scale-105 hover:shadow-teal/30"
+            >
+              <Sparkles className="h-4 w-4" />
+              {t("nav.joinWaitlist")}
+            </Button>
+
             <LanguageSelector />
             
             <Button
@@ -140,6 +149,19 @@ export function Navigation({ currentPage, onNavigate, darkMode, toggleDarkMode }
                 {item.name}
               </button>
             ))}
+
+            <div className="pt-2">
+              <Button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  openWaitlist("navbar");
+                }}
+                className="w-full items-center gap-2 rounded-lg bg-gradient-to-r from-teal to-teal-dark text-white shadow-md shadow-teal/20"
+              >
+                <Sparkles className="h-4 w-4" />
+                {t("nav.joinWaitlist")}
+              </Button>
+            </div>
           </div>
         </div>
       )}

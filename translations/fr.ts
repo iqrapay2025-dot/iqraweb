@@ -1,6 +1,7 @@
 export const fr = {
   // Navigation
   nav: {
+    joinWaitlist: "Rejoindre la liste",
     home: "Accueil",
     about: "À propos",
     howItWorks: "Comment ça marche",
@@ -309,6 +310,24 @@ export const fr = {
     successTitle: "Abonnement réussi!",
     successMessage: "Tu recevras des mises à jour sur IqraPay et les opportunités d'apprentissage.",
     privacy: "Nous respectons ta vie privée. Désabonne-toi à tout moment.",
+  },
+
+  // Waitlist
+  waitlist: {
+    badge: "Accès anticipé",
+    title: "Rejoindre la liste d'attente",
+    description: "Sois parmi les premiers à découvrir IqraPay. Réserve ta place dès aujourd'hui et obtiens un accès anticipé au lancement.",
+    name: "Nom complet",
+    namePlaceholder: "Entre ton nom complet",
+    email: "Adresse e-mail",
+    emailPlaceholder: "toi@email.com",
+    join: "Rejoindre la liste d'attente",
+    submitting: "Inscription...",
+    privacy: "Nous respectons ta vie privée. Aucun spam, jamais.",
+    successTitle: "Tu es sur la liste !",
+    successMessage: "Merci de t'être inscrit. Nous t'enverrons un e-mail dès le lancement d'IqraPay.",
+    submitError: "Une erreur s'est produite. Réessaie.",
+    notConfigured: "La liste d'attente n'est pas encore configurée. Ajoute l'URL de ta feuille Google dans src/config/waitlist.ts.",
   },
 
   // Footer

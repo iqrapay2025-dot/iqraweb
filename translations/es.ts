@@ -1,6 +1,7 @@
 export const es = {
   // Navigation
   nav: {
+    joinWaitlist: "Unirse a la lista",
     home: "Inicio",
     about: "Acerca de",
     howItWorks: "Cómo funciona",
@@ -309,6 +310,24 @@ export const es = {
     successTitle: "¡Suscripción exitosa!",
     successMessage: "Recibirás actualizaciones sobre IqraPay y oportunidades de aprendizaje.",
     privacy: "Respetamos tu privacidad. Cancela la suscripción en cualquier momento.",
+  },
+
+  // Waitlist
+  waitlist: {
+    badge: "Acceso anticipado",
+    title: "Únete a la lista de espera",
+    description: "Sé de los primeros en experimentar IqraPay. Reserva tu lugar hoy y obtén acceso anticipado en el lanzamiento.",
+    name: "Nombre completo",
+    namePlaceholder: "Ingresa tu nombre completo",
+    email: "Correo electrónico",
+    emailPlaceholder: "tu@email.com",
+    join: "Únete a la lista de espera",
+    submitting: "Uniéndose...",
+    privacy: "Respetamos tu privacidad. Sin spam, nunca.",
+    successTitle: "¡Estás en la lista!",
+    successMessage: "Gracias por unirte. Te enviaremos un correo en cuanto IqraPay esté activo.",
+    submitError: "Algo salió mal. Inténtalo de nuevo.",
+    notConfigured: "La lista de espera aún no está configurada. Agrega tu URL de Google Sheets en src/config/waitlist.ts.",
   },
 
   // Footer

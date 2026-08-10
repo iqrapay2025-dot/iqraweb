@@ -1,6 +1,7 @@
 export const ar = {
   // Navigation
   nav: {
+    joinWaitlist: "انضم إلى القائمة",
     home: "الرئيسية",
     about: "من نحن",
     howItWorks: "كيف يعمل",
@@ -309,6 +310,24 @@ export const ar = {
     successTitle: "تم الاشتراك بنجاح!",
     successMessage: "ستتلقى تحديثات حول إقرأ باي وفرص التعلم.",
     privacy: "نحن نحترم خصوصيتك. إلغاء الاشتراك في أي وقت.",
+  },
+
+  // Waitlist
+  waitlist: {
+    badge: "وصول مبكر",
+    title: "انضم إلى قائمة الانتظار",
+    description: "كن من الأوائل الذين يجربون إقرأ باي. احجز مكانك اليوم واحصل على وصول مبكر عند الإطلاق.",
+    name: "الاسم الكامل",
+    namePlaceholder: "أدخل اسمك الكامل",
+    email: "البريد الإلكتروني",
+    emailPlaceholder: "you@email.com",
+    join: "انضم إلى القائمة",
+    submitting: "جاري الانضمام...",
+    privacy: "نحترم خصوصيتك. لا رسائل مزعجة أبدًا.",
+    successTitle: "أنت في القائمة!",
+    successMessage: "شكرًا لانضمامك. سنرسل لك بريدًا إلكترونيًا فور إطلاق إقرأ باي.",
+    submitError: "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+    notConfigured: "قائمة الانتظار غير مهيأة بعد. أضف رابط جداول بيانات Google في src/config/waitlist.ts.",
   },
 
   // Footer

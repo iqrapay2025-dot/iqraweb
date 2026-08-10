@@ -1,6 +1,7 @@
 export const ha = {
   // Navigation
   nav: {
+    joinWaitlist: "Shiga cikin jeri",
     home: "Gida",
     about: "Game da Mu",
     howItWorks: "Yadda Yake Aiki",
@@ -309,6 +310,24 @@ export const ha = {
     successTitle: "An Yi Rajista Da Nasara!",
     successMessage: "Za ku karɓi sabuntawa game da IqraPay da damar koyo.",
     privacy: "Muna mutunta sirrin ku. Soke rajista a kowane lokaci.",
+  },
+
+  // Waitlist
+  waitlist: {
+    badge: "Shiga da wuri",
+    title: "Shiga Jerin Jira",
+    description: "Kasance cikin na farko don sanin IqraPay. Rike wurinka yau kuma sami shiga da wuri lokacin ƙaddamarwa.",
+    name: "Cikakken Suna",
+    namePlaceholder: "Shigar da cikakken sunanka",
+    email: "Adireshin Imel",
+    emailPlaceholder: "kai@email.com",
+    join: "Shiga Jerin Jira",
+    submitting: "Ana shiga...",
+    privacy: "Muna mutunta sirrinka. Babu spam, har abada.",
+    successTitle: "Kana cikin jeri!",
+    successMessage: "Na gode da shiga. Za mu turo maka imel da zaran IqraPay ya fara.",
+    submitError: "Wani abu ya faru. Da fatan za a sake gwadawa.",
+    notConfigured: "Jerin jira bai shirya ba tukuna. Saka URL na Google Sheets a src/config/waitlist.ts.",
   },
 
   // Footer

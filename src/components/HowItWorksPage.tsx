@@ -5,6 +5,7 @@ import { IslamicPattern } from "./IslamicPattern";
 import { Footer } from "./Footer";
 import { motion } from "motion/react";
 import { useLanguage } from "../contexts/LanguageContext";
+import { openWaitlist } from "./WaitlistModal";
 
 interface HowItWorksPageProps {
   onNavigate?: (page: string) => void;
@@ -254,15 +255,9 @@ export function HowItWorksPage({ onNavigate }: HowItWorksPageProps) {
             <Button
               size="lg"
               className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 transition-all hover:scale-105 hover:shadow-lg"
-              asChild
+              onClick={() => openWaitlist("how-it-works")}
             >
-              <a
-                href="https://chat.whatsapp.com/Ej08ZEjAnlyAS7vE6uY7W8"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Join Waitlist Now
-              </a>
+              Join Waitlist Now
             </Button>
           </motion.div>
         </div>

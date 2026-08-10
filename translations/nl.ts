@@ -1,6 +1,7 @@
 export const nl = {
   // Navigation
   nav: {
+    joinWaitlist: "Op de wachtlijst",
     home: "Home",
     about: "Over ons",
     howItWorks: "Hoe het werkt",
@@ -309,6 +310,24 @@ export const nl = {
     successTitle: "Succesvol geabonneerd!",
     successMessage: "Je ontvangt updates over IqraPay en leermogelijkheden.",
     privacy: "We respecteren je privacy. Uitschrijven op elk moment.",
+  },
+
+  // Waitlist
+  waitlist: {
+    badge: "Vroege toegang",
+    title: "Sluit je aan bij de wachtlijst",
+    description: "Wees een van de eersten die IqraPay ervaart. Reserveer vandaag je plek en krijg vroege toegang bij de lancering.",
+    name: "Volledige naam",
+    namePlaceholder: "Voer je volledige naam in",
+    email: "E-mailadres",
+    emailPlaceholder: "jij@email.com",
+    join: "Sluit je aan bij de wachtlijst",
+    submitting: "Aan het inschrijven...",
+    privacy: "We respecteren je privacy. Nooit spam.",
+    successTitle: "Je staat op de lijst!",
+    successMessage: "Bedankt voor je inschrijving. We mailen je zodra IqraPay live gaat.",
+    submitError: "Er is iets misgegaan. Probeer het opnieuw.",
+    notConfigured: "De wachtlijst is nog niet geconfigureerd. Voeg je Google Sheets-URL toe in src/config/waitlist.ts.",
   },
 
   // Footer
