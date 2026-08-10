@@ -20,17 +20,32 @@ export const SHEET_COLUMNS = ["Timestamp", "Name", "Email", "Source"] as const;
 /**
  * Sample Google Apps Script (paste into Extensions → Apps Script):
  *
- * function doPost(e) {
- *   const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
- *   const data = JSON.parse(e.postData.contents);
- *   sheet.appendRow([
- *     new Date(),
- *     data.name || "",
- *     data.email || "",
- *     data.source || "",
- *   ]);
- *   return ContentService
- *     .createTextOutput(JSON.stringify({ success: true }))
- *     .setMimeType(ContentService.MimeType.JSON);
- * }
+ *   const SHEET_ID = "YOUR_SPREADSHEET_ID"; // <-- replace with your Sheet ID
+ *
+ *   function doPost(e) {
+ *     const data = JSON.parse(e.postData.contents || "{}");
+ *     const ss = SpreadsheetApp.openById(SHEET_ID);
+ *     const sheet = ss.getSheetByName("Sheet1") || ss.getActiveSheet();
+ *     sheet.appendRow([
+ *       new Date(),
+ *       data.fullName || "",
+ *       data.email || "",
+ *       data.source || "",
+ *     ]);
+ *     return ContentService
+ *       .createTextOutput(JSON.stringify({ success: true }))
+ *       .setMimeType(ContentService.MimeType.JSON);
+ *   }
+ *
+ *  IMPORTANT — deploy as a "Web app":
+ *   - Execute as: Me
+ *   - Who has access: Anyone, even anonymous  (enables cross-origin POST)
+ *   - Copy the *Web app URL* (ends in /exec) into GOOGLE_SHEETS_ENDPOINT.
+ *
+ *  Debug if the form fails to submit:
+ *   - The published URL must end in "/exec" (not "/dev" or the editor URL).
+ *   - Test the endpoint directly to rule out CORS:
+ *       curl -X POST "WEB_APP_URL" -H "Content-Type: application/json" \
+ *            -d '{"fullName":"Test","email":"t@e.com","source":"hero"}'
+  *     A green row in the Sheet means the backend is healthy.
  */

@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import { CommentSection } from './CommentSection';
 import { copyToClipboard } from '../../types/clipboard';
 import { openWaitlist } from '../WaitlistModal';
+import { sanitizeHtml } from '@/lib/sanitize';
 
 interface BlogPostPageProps {
   post: BlogPost;
@@ -62,7 +63,7 @@ export function BlogPostPage({ post, onNavigate, onBack }: BlogPostPageProps) {
       if (line.startsWith('> ')) {
         return (
           <blockquote key={index} className="border-l-4 border-primary pl-4 py-2 my-4 italic text-muted-foreground">
-            <p dangerouslySetInnerHTML={{ __html: processedLine.substring(2) }} />
+            <p dangerouslySetInnerHTML={{ __html: sanitizeHtml(processedLine.substring(2)) }} />
           </blockquote>
         );
       }
@@ -81,7 +82,7 @@ export function BlogPostPage({ post, onNavigate, onBack }: BlogPostPageProps) {
       }
       
       // Regular paragraphs
-      return <p key={index} className="mb-4" dangerouslySetInnerHTML={{ __html: processedLine }} />;
+      return <p key={index} className="mb-4" dangerouslySetInnerHTML={{ __html: sanitizeHtml(processedLine) }} />;
     });
   };
 
@@ -160,28 +161,28 @@ export function BlogPostPage({ post, onNavigate, onBack }: BlogPostPageProps) {
               <Button
                 variant="outline"
                 size="icon"
-                onClick={() => window.open(`https://facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank')}
+                onClick={() => window.open(`https://facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank', 'noopener,noreferrer')}
               >
                 <Facebook className="h-4 w-4" />
               </Button>
               <Button
                 variant="outline"
                 size="icon"
-                onClick={() => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(post.title)}`, '_blank')}
+                onClick={() => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(post.title)}`, '_blank', 'noopener,noreferrer')}
               >
                 <Twitter className="h-4 w-4" />
               </Button>
               <Button
                 variant="outline"
                 size="icon"
-                onClick={() => window.open(`https://linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank')}
+                onClick={() => window.open(`https://linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank', 'noopener,noreferrer')}
               >
                 <Linkedin className="h-4 w-4" />
               </Button>
             </div>
 
             {/* Article Content */}
-            <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: post.content }}></div>
+            <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }}></div>
 
             {/* Call to Action */}
             <div className="mt-12 p-8 bg-muted rounded-xl text-center">

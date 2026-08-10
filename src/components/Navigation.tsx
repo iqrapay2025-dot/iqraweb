@@ -1,4 +1,4 @@
-import { Menu, X, Moon, Sun, Sparkles } from "lucide-react";
+import { Menu, X, Moon, Sun } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { LanguageSelector } from "./LanguageSelector";
@@ -95,19 +95,17 @@ export function Navigation({ currentPage, onNavigate, darkMode, toggleDarkMode }
               >
                 {item.name}
               </button>
-            ))}
+                        ))}
+            <button
+              onClick={() => openWaitlist("navbar")}
+              className="ml-2 px-4 py-2 rounded-lg bg-teal text-white hover:bg-teal/90 transition-colors font-medium"
+            >
+              {t('nav.joinWaitlist')}
+            </button>
           </div>
 
           {/* Language Selector, Dark Mode Toggle & Mobile Menu Button */}
           <div className="flex items-center gap-2">
-            <Button
-              onClick={() => openWaitlist("navbar")}
-              className="hidden md:inline-flex h-9 items-center gap-2 rounded-lg bg-gradient-to-r from-teal to-teal-dark px-4 text-sm font-medium text-white shadow-md shadow-teal/20 transition-all hover:scale-105 hover:shadow-teal/30"
-            >
-              <Sparkles className="h-4 w-4" />
-              {t("nav.joinWaitlist")}
-            </Button>
-
             <LanguageSelector />
             
             <Button
@@ -148,20 +146,16 @@ export function Navigation({ currentPage, onNavigate, darkMode, toggleDarkMode }
               >
                 {item.name}
               </button>
-            ))}
-
-            <div className="pt-2">
-              <Button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  openWaitlist("navbar");
-                }}
-                className="w-full items-center gap-2 rounded-lg bg-gradient-to-r from-teal to-teal-dark text-white shadow-md shadow-teal/20"
-              >
-                <Sparkles className="h-4 w-4" />
-                {t("nav.joinWaitlist")}
-              </Button>
-            </div>
+                        ))}
+            <button
+              onClick={() => {
+                openWaitlist("navbar");
+                setMobileMenuOpen(false);
+              }}
+              className="w-full text-left px-4 py-3 rounded-lg bg-teal text-white hover:bg-teal/90 transition-colors font-medium"
+            >
+              {t('nav.joinWaitlist')}
+            </button>
           </div>
         </div>
       )}

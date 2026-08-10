@@ -1,22 +1,76 @@
+# Dependencies
 node_modules/
+
+# Build output
+dist/
+build/
+
+# Environment variables (never commit secrets)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor directories and files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Testing
+coverage/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Documentation markdown files (keep in src for reference but don't commit)
 src/ADMIN_GUIDE.md
 src/ADMIN_ACCESS_SUMMARY.md
-src/ADMIN_GUIDE.md 
-src/ADMIN_IMAGE_QUICK_GUIDE.md 
-src/Attributions.md 
-src/BLOG_IMAGE_GUIDE.md 
-src/FINAL_WEB3FORMS_SETUP.md 
-src/GRADIENT_FIX_GUIDE.md 
-src/HOW_TO_ACCESS_ADMIN.md 
-src/MASTER_UPDATE_GUIDE.md 
-src/QUICK_FIX_GUIDE.txt 
-src/QUICK_GRADIENT_FIX.txt 
-src/QUICK_SETUP_CONTACT_FORMS.txt 
-src/QUICK_START.md src/SETUP_FORMS_NOW.txt 
+src/ADMIN_IMAGE_QUICK_GUIDE.md
+src/Attributions.md
+src/BLOG_IMAGE_GUIDE.md
+src/FINAL_WEB3FORMS_SETUP.md
+src/GRADIENT_FIX_GUIDE.md
+src/HOW_TO_ACCESS_ADMIN.md
+src/MASTER_UPDATE_GUIDE.md
+src/QUICK_FIX_GUIDE.txt
+src/QUICK_GRADIENT_FIX.txt
+src/QUICK_SETUP_CONTACT_FORMS.txt
+src/QUICK_START.md
+src/SETUP_FORMS_NOW.txt
 src/SIMPLE_FILE_LIST.txt
 src/WEB3FORMS_SETUP_GUIDE.md
-# Snyk Security Extension - AI Rules (auto-generated)
-.github\instructions\snyk_rules.instructions.md
 
 # Snyk Security Extension - AI Rules (auto-generated)
 .github/instructions/snyk_rules.instructions.md
+
+# Figma assets (generated)
+figma_assets/
+
+# TypeScript cache
+*.tsbuildinfo
+nul 

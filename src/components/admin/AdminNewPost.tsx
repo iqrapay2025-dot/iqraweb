@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from '../ui/select';
 import { Card } from '../ui/card';
+import { sanitizeHtml } from '@/lib/sanitize';
 import { blogCategories } from '../../data/mockBlogPosts';
 import { useBlog } from '../../contexts/BlogContext';
 import { BlogPost } from '../../types/blog';
@@ -410,7 +411,7 @@ export function AdminNewPost({ onNavigate, existingPost }: AdminNewPostProps) {
       }
       const boldRegex = /\*\*(.*?)\*\*/g;
       const processedLine = line.replace(boldRegex, '<strong>$1</strong>');
-      return <p key={index} className="mb-4" dangerouslySetInnerHTML={{ __html: processedLine }} />;
+      return <p key={index} className="mb-4" dangerouslySetInnerHTML={{ __html: sanitizeHtml(processedLine) }} />;
     });
   };
 
@@ -489,7 +490,7 @@ export function AdminNewPost({ onNavigate, existingPost }: AdminNewPostProps) {
             )}
             <h1 className="text-2xl sm:text-3xl lg:text-4xl mb-4 break-words">{title || 'Untitled Post'}</h1>
             <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8">{excerpt}</p>
-            <div className="prose prose-sm sm:prose-base lg:prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: content || '<p class="text-muted-foreground">No content yet...</p>' }}></div>
+            <div className="prose prose-sm sm:prose-base lg:prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: sanitizeHtml(content || '<p class="text-muted-foreground">No content yet...</p>') }}></div>
           </Card>
         </div>
       ) : (

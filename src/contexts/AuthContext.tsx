@@ -13,11 +13,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<{ name: string; email: string } | null>(null);
 
+    // Admin credentials come from environment variables so that no secret is
+  // committed to version control. Copy `.env.example` to `.env` and set them
+  // before running `npm run dev` / `npm run build`.
+  //
+  // NOTE: this is a static site (no backend), so these values are still
+  // present in the emitted bundle. They act as a basic gate, NOT real
+  // authentication. For production access control use a server-side
+  // authentication layer.
+  const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL || "";
+  const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || "";
+
   const login = async (email: string, password: string): Promise<boolean> => {
-    // Mock authentication - in production, this would call a real API
-    if (email === 'admin@iqrapay.com' && password === 'iqrapay2025') {
+    if (!ADMIN_EMAIL || !ADMIN_PASSWORD) {
+      // Credentials not configured via env — login stays disabled.
+      return false;
+    }
+    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
       setIsAuthenticated(true);
-      setUser({ name: 'Muhammad Jumah', email: 'admin@iqrapay.com' });
+      setUser({ name: "Muhammad Jumah", email: ADMIN_EMAIL });
       return true;
     }
     return false;

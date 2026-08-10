@@ -7,6 +7,7 @@ import { Footer } from "./Footer";
 import { TestimonialCarousel } from "./TestimonialCarousel";
 import { motion } from "motion/react";
 import { useLanguage } from "../contexts/LanguageContext";
+import { openWaitlist } from "./WaitlistModal";
 
 interface HomePageProps {
   onNavigate?: (page: string) => void;
@@ -78,11 +79,10 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 </Button>
                 <Button 
                   size="lg" 
-                  variant="outline" 
-                  className="border-primary text-primary hover:bg-primary/10 transition-all hover:scale-105 hover:shadow-md"
-                  onClick={() => onNavigate && onNavigate('about')}
+                  className="border border-teal bg-transparent px-8 text-teal transition-all hover:scale-105 hover:border-transparent hover:bg-teal hover:text-white"
+                  onClick={() => openWaitlist("hero")}
                 >
-                  {t('home.learnMore')}
+                  {t('waitlist.join')}
                 </Button>
               </div>
             </motion.div>

@@ -366,6 +366,15 @@ html {
   }
 }
 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .animate-gradient-shift {
   animation: gradient-shift 8s ease infinite;
 }
@@ -378,3 +387,27 @@ html {
   animation: particle-float 4s ease-in-out infinite;
   will-change: transform, opacity;
 }
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* ------------------------------------------------------------------
+ * Waitlist modal sizing.
+ * On mobile the modal is near-full width (base Tailwind `max-width:
+ * calc(100% - 2rem)`), which gives a 1rem gutter on each side.
+ *
+ * From the `sm` breakpoint upward the modal becomes a fixed fitting card:
+ *   • max-width capped at 640px
+ *   • automatic side margins keep it centered and away from viewport edges
+ *   • the `!important` flag wins over the generic `sm:max-w-lg` that the
+ *     reusable DialogContent component applies to every dialog.
+ * ------------------------------------------------------------------ */
+@media (min-width: 640px) {
+  .waitlist-modal {
+    max-width: 640px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
