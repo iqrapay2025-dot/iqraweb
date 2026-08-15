@@ -24,7 +24,7 @@ export function ContactPage({ darkMode = false, onNavigate }: ContactPageProps =
     email: "",
     subject: "",
     message: "",
-    website: "", // honeypot: hidden from real users, filled by bots
+    hp_field_x7d2: "", // honeypot: hidden from real users, filled by bots. Renamed from "website" so browser autofill doesn't recognize/target it.
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -70,7 +70,7 @@ export function ContactPage({ darkMode = false, onNavigate }: ContactPageProps =
     e.preventDefault();
 
     // Honeypot: bots fill it, real users cannot see it. Discard silently.
-    if (formData.website.trim() !== "") {
+    if (formData.hp_field_x7d2.trim() !== "") {
       return;
     }
 
@@ -103,7 +103,13 @@ export function ContactPage({ darkMode = false, onNavigate }: ContactPageProps =
         // request (Google Apps Script web apps answer OPTIONS with 405). The
         // body is still a JSON string the server parses via e.postData.contents.
         headers: { "Content-Type": "text/plain" },
-        body: JSON.stringify({ action: "contact", ...formData }),
+        body: JSON.stringify({
+          action: "contact",
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        }),
       });
 
       let result: { success?: boolean; message?: string } = {};
@@ -117,7 +123,7 @@ export function ContactPage({ darkMode = false, onNavigate }: ContactPageProps =
         toast.success(t('contact.successTitle'), {
           description: t('contact.successMessage'),
         });
-        setFormData({ name: "", email: "", subject: "", message: "", website: "" });
+        setFormData({ name: "", email: "", subject: "", message: "", hp_field_x7d2: "" });
       } else {
         toast.error(t('common.error'), {
           description: result.message || `Please try again or email us directly at ${CONTACT_EMAIL}.`,
@@ -222,13 +228,36 @@ export function ContactPage({ darkMode = false, onNavigate }: ContactPageProps =
               </div>
 
                             <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Honeypot: hidden from real users, filled by bots only */}
-                <div className="absolute left-[-9999px] top-[-9999px]">
-                  <Label htmlFor="website" className="sr-only">If you are human, leave this blank</Label>
+                {/*
+                  Honeypot: hidden from real users, filled by bots only.
+                  - Field name is a random token (not "website"/"email"/"name") so
+                    browser autofill heuristics don't recognize it and offer a
+                    saved-value dropdown over it.
+                  - Clipped via `clip` + 1px box (instead of only off-canvas
+                    positioning) so it's genuinely invisible and non-interactive
+                    for real users and their browsers, while still being present
+                    in the DOM for naive bots to fill in.
+                  - aria-hidden + tabIndex=-1 + autoComplete="off" keep it out of
+                    the accessibility tree and tab order.
+                */}
+                <div
+                  aria-hidden="true"
+                  style={{
+                    position: "absolute",
+                    width: "1px",
+                    height: "1px",
+                    overflow: "hidden",
+                    clip: "rect(0,0,0,0)",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  <Label htmlFor="hp_field_x7d2" className="sr-only">
+                    If you are human, leave this blank
+                  </Label>
                   <Input
-                    id="website"
-                    name="website"
-                    value={formData.website}
+                    id="hp_field_x7d2"
+                    name="hp_field_x7d2"
+                    value={formData.hp_field_x7d2}
                     onChange={handleChange}
                     tabIndex={-1}
                     autoComplete="off"
@@ -236,11 +265,11 @@ export function ContactPage({ darkMode = false, onNavigate }: ContactPageProps =
                 </div>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="name">{t('contact.name')} *</Label>
+                    <Label htmlFor="fullName">Name</Label>
                     <Input 
-                      id="name"
+                      id="fullName"
                       name="name"
-                      placeholder={t('contact.name')} 
+                      placeholder="Full Name" 
                       value={formData.name}
                       onChange={handleChange}
                       required
@@ -295,7 +324,7 @@ export function ContactPage({ darkMode = false, onNavigate }: ContactPageProps =
                     <>{t('contact.sending')}</>
                   ) : (
                     <>
-                      {t('contact.send')} <Send className="h-4 w-4 ml-2" />
+                      {t('contact.send')} <Send className="h-4 w-4 ml-2 text-white" />
                     </>
                   )}
                 </Button>
