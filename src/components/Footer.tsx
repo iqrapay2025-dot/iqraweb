@@ -16,8 +16,8 @@ export function Footer({ onNavigate }: FooterProps) {
     { name: t('footer.about'), page: "about" },
     { name: t('footer.howItWorks'), page: "how-it-works" },
     { name: t('footer.ambassadors'), page: "ambassadors" },
-    { name: t('footer.blog'), page: "blog-list" },
     { name: t('footer.contact'), page: "contact" },
+    { name: t('footer.faq'), page: "support" },
   ];
 
   const socialLinks = [
@@ -28,27 +28,27 @@ export function Footer({ onNavigate }: FooterProps) {
   return (
     <footer className="relative bg-secondary text-secondary-foreground mt-20 dark:bg-card dark:border-t dark:border-border">
       <IslamicPattern opacity={0.05} />
-      
+
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* About Section */}
           <div>
-            <img 
+            <img
               src={logoDark}
-              alt="IqraPay Logo" 
+              alt="IqraPay Logo"
               className="h-10 w-auto mb-4"
             />
-            <p className="text-secondary-foreground/80 dark:text-foreground/80 mb-4">
+            <p className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-foreground/80 mb-4">
               {t('footer.tagline')}
             </p>
-            <p className="text-sm text-secondary-foreground/60 dark:text-muted-foreground">
+            <p className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/60 dark:text-muted-foreground">
               {t('footer.description')}
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="mb-4 text-accent dark:text-primary">{t('footer.quickLinks')}</h4>
+            <h4 className="font-display font-medium text-accent dark:text-primary text-[16px] mb-3">{t('footer.quickLinks')}</h4>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.page}>
@@ -58,14 +58,14 @@ export function Footer({ onNavigate }: FooterProps) {
                         onNavigate(link.page);
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                       }}
-                      className="text-secondary-foreground/80 dark:text-foreground/70 hover:text-accent dark:hover:text-primary transition-colors duration-200 text-left"
+                      className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-foreground/70 hover:text-accent dark:hover:text-primary transition-colors duration-200 text-left"
                     >
                       {link.name}
                     </button>
                   ) : (
                     <a
                       href={`#${link.page}`}
-                      className="text-secondary-foreground/80 dark:text-foreground/70 hover:text-accent dark:hover:text-primary transition-colors duration-200"
+                      className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-foreground/70 hover:text-accent dark:hover:text-primary transition-colors duration-200"
                     >
                       {link.name}
                     </a>
@@ -77,30 +77,30 @@ export function Footer({ onNavigate }: FooterProps) {
 
           {/* Contact Info */}
           <div>
-            <h4 className="mb-4 text-accent dark:text-primary">{t('footer.connect')}</h4>
+            <h4 className="font-display font-medium text-accent dark:text-primary text-[16px] mb-3">{t('footer.connect')}</h4>
             <ul className="space-y-3">
-              <li className="flex items-start gap-2 text-secondary-foreground/80 dark:text-foreground/70">
-                <Mail className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                <a href="mailto:info@iqrapay.com.ng" className="hover:text-accent dark:hover:text-primary transition-colors duration-200">
-                  info@iqrapay.com.ng
+              <li className="flex items-start gap-2">
+                <Mail className="w-5 h-5 mt-0.5 flex-shrink-0 text-accent dark:text-primary" />
+                <a href="mailto:iqrapay2025@gmail.com" className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-foreground/70 hover:text-accent dark:hover:text-primary transition-colors duration-200">
+                  iqrapay2025@gmail.com
                 </a>
               </li>
-              <li className="flex items-start gap-2 text-secondary-foreground/80 dark:text-foreground/70">
-                <Phone className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                <a href="tel:+2348155956187" className="hover:text-accent dark:hover:text-primary transition-colors duration-200">
+              <li className="flex items-start gap-2">
+                <Phone className="w-5 h-5 mt-0.5 flex-shrink-0 text-accent dark:text-primary" />
+                <a href="tel:+2348155956187" className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-foreground/70 hover:text-accent dark:hover:text-primary transition-colors duration-200">
                   +234 815 595 6187
                 </a>
               </li>
-              <li className="flex items-start gap-2 text-secondary-foreground/80 dark:text-foreground/70">
-                <MapPin className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                <span>Ibadan, Nigeria</span>
+              <li className="flex items-start gap-2">
+                <MapPin className="w-5 h-5 mt-0.5 flex-shrink-0 text-accent dark:text-primary" />
+                <span className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-foreground/70">Ibadan, Nigeria</span>
               </li>
             </ul>
           </div>
 
           {/* Social & Newsletter */}
           <div>
-            <h4 className="mb-4 text-accent dark:text-primary">{t('footer.connect')}</h4>
+            <h4 className="font-display font-medium text-accent dark:text-primary text-[16px] mb-3">{t('footer.connect')}</h4>
             <div className="flex gap-3 mb-6">
               {socialLinks.map((social) => {
                 const Icon = social.icon;
@@ -116,7 +116,7 @@ export function Footer({ onNavigate }: FooterProps) {
                 );
               })}
             </div>
-            <p className="text-sm text-secondary-foreground/60 dark:text-muted-foreground">
+            <p className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/60 dark:text-muted-foreground">
               {t('footer.description')}
             </p>
           </div>
@@ -125,10 +125,10 @@ export function Footer({ onNavigate }: FooterProps) {
         {/* Bottom Bar */}
         <div className="border-t border-secondary-foreground/20 dark:border-border pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-secondary-foreground/60 dark:text-muted-foreground">
+            <p className="font-sans text-[15px] text-secondary-foreground/60 dark:text-muted-foreground">
               © {currentYear} IqraPay. {t('footer.rights')}
             </p>
-            <div className="flex gap-6 text-sm">
+            <div className="flex gap-6">
               {onNavigate ? (
                 <>
                   <button
@@ -136,7 +136,7 @@ export function Footer({ onNavigate }: FooterProps) {
                       onNavigate('privacy-policy');
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
-                    className="text-secondary-foreground/60 dark:text-muted-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200"
+                    className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/60 dark:text-muted-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200"
                   >
                     {t('footer.privacyPolicy')}
                   </button>
@@ -145,17 +145,17 @@ export function Footer({ onNavigate }: FooterProps) {
                       onNavigate('terms-of-service');
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
-                    className="text-secondary-foreground/60 dark:text-muted-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200"
+                    className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/60 dark:text-muted-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200"
                   >
                     {t('footer.termsOfService')}
                   </button>
                 </>
               ) : (
                 <>
-                  <a href="#privacy-policy" className="text-secondary-foreground/60 dark:text-muted-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200">
+                  <a href="#privacy-policy" className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/60 dark:text-muted-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200">
                     {t('footer.privacyPolicy')}
                   </a>
-                  <a href="#terms-of-service" className="text-secondary-foreground/60 dark:text-muted-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200">
+                  <a href="#terms-of-service" className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/60 dark:text-muted-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200">
                     {t('footer.termsOfService')}
                   </a>
                 </>
@@ -163,12 +163,12 @@ export function Footer({ onNavigate }: FooterProps) {
             </div>
           </div>
           <div className="text-center mt-6">
-            <p className="text-sm text-secondary-foreground/50 dark:text-muted-foreground/70 italic">
+            <p className="font-sans text-[15px] text-secondary-foreground/50 dark:text-muted-foreground/70 italic">
               "Read in the name of your Lord who created" - Surah Al-Alaq (96:1)
             </p>
           </div>
         </div>
       </div>
     </footer>
-  );
-}
+    );
+  }

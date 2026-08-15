@@ -5,12 +5,10 @@ node_modules/
 dist/
 build/
 
-# Environment variables (never commit secrets)
+# Environment variables (never commit secrets — template kept in repo)
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*
+!.env.example
 
 # Logs
 *.log
@@ -53,17 +51,13 @@ src/ADMIN_ACCESS_SUMMARY.md
 src/ADMIN_IMAGE_QUICK_GUIDE.md
 src/Attributions.md
 src/BLOG_IMAGE_GUIDE.md
-src/FINAL_WEB3FORMS_SETUP.md
 src/GRADIENT_FIX_GUIDE.md
 src/HOW_TO_ACCESS_ADMIN.md
 src/MASTER_UPDATE_GUIDE.md
 src/QUICK_FIX_GUIDE.txt
 src/QUICK_GRADIENT_FIX.txt
-src/QUICK_SETUP_CONTACT_FORMS.txt
 src/QUICK_START.md
-src/SETUP_FORMS_NOW.txt
 src/SIMPLE_FILE_LIST.txt
-src/WEB3FORMS_SETUP_GUIDE.md
 
 # Snyk Security Extension - AI Rules (auto-generated)
 .github/instructions/snyk_rules.instructions.md
@@ -73,4 +67,6 @@ figma_assets/
 
 # TypeScript cache
 *.tsbuildinfo
-nul 
+
+# Windows null-device artifact (accidental stray file named "nul")
+nul

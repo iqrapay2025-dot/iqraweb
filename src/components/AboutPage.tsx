@@ -17,18 +17,18 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
   const values = [
     {
       icon: CheckCircle,
-      title: t("about.faithFirstTitle"),
-      description: t("about.faithFirstDesc"),
+      title: t("about.authenticityTitle"),
+      description: t("about.authenticityDesc"),
     },
     {
       icon: Sparkles,
-      title: t("about.transparencyTitle"),
-      description: t("about.transparencyDesc"),
+      title: t("about.accountabilityTitle"),
+      description: t("about.accountabilityDesc"),
     },
     {
       icon: Target,
-      title: t("about.excellenceTitle"),
-      description: t("about.excellenceDesc"),
+      title: t("about.dignityTitle"),
+      description: t("about.dignityDesc"),
     },
     {
       icon: Eye,
@@ -143,11 +143,9 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
               className="space-y-6"
             >
               <h2 className="text-3xl sm:text-4xl">
-                {t("about.journeyTitle")}
+                {t("about.storyTitle")}
               </h2>
-              <p className="text-muted-foreground">{t("about.journeyPara1")}</p>
-              <p className="text-muted-foreground">{t("about.journeyPara2")}</p>
-              <p className="text-muted-foreground">{t("about.journeyPara3")}</p>
+              <p className="text-muted-foreground">{t("about.storyBody")}</p>
               <div className="pt-4">
                 <div className="inline-block px-4 py-2 bg-accent rounded-lg">
                   <span className="text-accent-foreground">
@@ -238,6 +236,23 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Where We Are Now */}
+      <section className="px-4 sm:px-6 lg:px-8 py-20 bg-muted/30">
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl sm:text-4xl mb-6">{t("about.whereWeAreTitle")}</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              {t("about.whereWeAreBody")}
+            </p>
+          </motion.div>
         </div>
       </section>
 

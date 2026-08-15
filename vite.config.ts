@@ -53,9 +53,27 @@
         '@': path.resolve(__dirname, './src'),
       },
     },
-    build: {
+        build: {
       target: 'esnext',
       outDir: 'dist',
+      // Split dependencies out of the single app chunk so no single asset
+      // exceeds the ~500 kB warning threshold and vendors are cached
+      // independently of app code (scalability).
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              if (id.includes('react') || id.includes('react-dom')) return 'react';
+              if (id.includes('motion')) return 'motion';
+              if (id.includes('recharts')) return 'charts';
+              if (id.includes('lucide')) return 'icons';
+              if (id.includes('@radix-ui')) return 'radix';
+              if (id.includes('tailwind-merge') || id.includes('clsx')) return 'utils';
+              return 'vendor';
+            }
+          },
+        },
+      },
     },
     server: {
       port: 3000,

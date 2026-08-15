@@ -44,13 +44,11 @@ export function Navigation({ currentPage, onNavigate, darkMode, toggleDarkMode }
     setLogoTapTimer(timer);
   };
 
-  const navItems = [
+    const navItems = [
     { name: t('nav.home'), id: "home" },
     { name: t('nav.about'), id: "about" },
     { name: t('nav.howItWorks'), id: "how-it-works" },
     { name: t('nav.ambassadors'), id: "ambassadors" },
-    { name: t('nav.blog'), id: "blog-list" },
-    { name: t('nav.support'), id: "support" },
     { name: t('nav.contact'), id: "contact" },
   ];
 

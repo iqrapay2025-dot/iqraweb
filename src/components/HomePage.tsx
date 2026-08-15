@@ -1,4 +1,4 @@
-import { BookOpen, TrendingUp, Users, Award, Heart } from "lucide-react";
+import { BookOpen, Brain, Wallet, Users, Award, Heart } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { IslamicPattern } from "./IslamicPattern";
@@ -24,26 +24,47 @@ export function HomePage({ onNavigate }: HomePageProps) {
       color: "bg-primary",
     },
     {
-      icon: TrendingUp,
-      title: t('home.earnTitle'),
-      description: t('home.earnDesc'),
+      icon: Brain,
+      title: t('home.learnTitle'),
+      description: t('home.learnDesc'),
       color: "bg-secondary",
     },
     {
-      icon: Users,
-      title: t('home.growTitle'),
-      description: t('home.growDesc'),
+      icon: Wallet,
+      title: t('home.earnTitle'),
+      description: t('home.earnDesc'),
       color: "bg-primary",
     },
   ];
 
-
-
-  const stats = [
-    { value: "300+", label: t('Active Community Members') },
-    { value: "50+", label: t('X(Twitter) Social Followers') },
+  const legacyStats = [
+    { value: "300+", label: "Community Members" },
+    { value: "50+", label: "X (Twitter) Followers" },
     { value: "100%", label: t('home.halalCertified') },
-    { value: "100+", label: t('Instagram Social Followers') },
+    { value: "100+", label: "Instagram Followers" },
+  ];
+
+  const whoIsFor = [
+    {
+      title: t('home.studentTitle'),
+      description: t('home.studentDesc'),
+      icon: BookOpen,
+    },
+    {
+      title: t('home.universityTitle'),
+      description: t('home.universityDesc'),
+      icon: Award,
+    },
+    {
+      title: t('home.revertTitle'),
+      description: t('home.revertDesc'),
+      icon: Users,
+    },
+    {
+      title: t('home.anyoneTitle'),
+      description: t('home.anyoneDesc'),
+      icon: Heart,
+    },
   ];
 
   return (
@@ -58,9 +79,6 @@ export function HomePage({ onNavigate }: HomePageProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <div className="inline-block px-4 py-2 bg-accent rounded-full mb-6">
-                <span className="text-accent-foreground">📚 Learn • Build Skills • Earn</span>
-              </div>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl mb-6">
                 {t('home.tagline')}
               </h1>
@@ -115,6 +133,40 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
+      {/* The Problem */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl sm:text-4xl mb-6">{t('home.problemTitle')}</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              {t('home.problemBody')}
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* What Is IqraPay */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl sm:text-4xl mb-6">{t('home.whatIsTitle')}</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              {t('home.whatIsBody')}
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
       {/* How It Works - 3 Steps */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
         <div className="max-w-7xl mx-auto">
@@ -146,6 +198,53 @@ export function HomePage({ onNavigate }: HomePageProps) {
               </motion.div>
             ))}
           </div>
+
+          <div className="text-center mt-12">
+            <Button 
+              size="lg" 
+              className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 transition-all hover:scale-105 hover:shadow-lg"
+              onClick={() => openWaitlist("how-it-works")}
+            >
+              {t('home.howItWorksCta')}
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Who Is IqraPay For */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl sm:text-4xl mb-4">{t('home.whoIsForTitle')}</h2>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {whoIsFor.map((card, index) => (
+              <motion.div
+                key={card.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <Card className="p-6 text-center hover:shadow-lg transition-shadow h-full">
+                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <card.icon className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-xl mb-3">{card.title}</h3>
+                  <p className="text-muted-foreground text-sm">
+                    {card.description}
+                  </p>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -153,7 +252,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-primary text-primary-foreground">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
+            {legacyStats.map((stat, index) => (
               <motion.div
                 key={stat.label}
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -180,9 +279,9 @@ export function HomePage({ onNavigate }: HomePageProps) {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl sm:text-4xl mb-4">{t('home.testimonialsTitle')}</h2>
+            <h2 className="text-3xl sm:text-4xl mb-4">What Our Community Says</h2>
             <p className="text-xl text-muted-foreground">
-              {t('home.testimonialsTitle')}
+              Hear from those who have walked this path before you
             </p>
           </motion.div>
 

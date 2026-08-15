@@ -411,3 +411,43 @@ html {
   }
 }
 
+/* ------------------------------------------------------------------
+ * Scroll in / out animation for <section> elements.
+ *
+ * Scope: the animation only engages when JavaScript is available —
+ * `main.tsx` adds the `js` class to <html> before the first render and
+ * `src/lib/scrollAnimate.ts` attaches `.scroll-animate` (then toggles
+ * `.in-view` via an Intersection Observer). Without JS, no
+ * `.scroll-animate` class is ever attached, so sections remain fully
+ * visible — no hidden content if JS fails.
+ *
+ * Effect: a section fades in and slides up (opacity 0 → 1,
+ * translateY(24px) → 0) as it enters the viewport, and reverses
+ * (slides back down / fades out) as it leaves.
+ * ------------------------------------------------------------------ */
+:root {
+  --scroll-anim-duration: 0.6s;
+  --scroll-anim-easing: ease-out;
+  --scroll-anim-translate: 24px;
+}
+
+.js .scroll-animate {
+  opacity: 0;
+  transform: translateY(var(--scroll-anim-translate));
+  transition: opacity var(--scroll-anim-duration) var(--scroll-anim-easing),
+    transform var(--scroll-anim-duration) var(--scroll-anim-easing);
+}
+
+.js .scroll-animate.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .scroll-animate {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+

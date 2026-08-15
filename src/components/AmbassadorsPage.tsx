@@ -403,8 +403,8 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
                 </a>
               </Button>
             </div>
-            <p className="text-sm mt-6 opacity-75">
-              Have questions? Contact us at info@iqrapay.com.ng
+                          <p className="text-sm mt-6 opacity-75">
+              Have questions? Contact us at <a href="mailto:iqrapay2025@gmail.com" className="text-primary hover:underline">iqrapay2025@gmail.com</a>
             </p>
           </motion.div>
         </div>
