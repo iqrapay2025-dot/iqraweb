@@ -1,6 +1,16 @@
 /*! tailwindcss v4.1.3 | MIT License | https://tailwindcss.com */
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap');
-@import url('https://use.cdnfonts.com/css/utendo.css');
+/* ------------------------------------------------------------------
+   Utendo brand font — previously imported from use.cdnfonts.com:
+     @import url('https://use.cdnfonts.com/css/utendo.css');
+   That host is DNS-unresolvable here (reproduces the browser
+   ERR_NAME_NOT_RESOLVED), so the external request is removed to stop
+   the failing network call on restrictive networks. `--font-display`
+   (defined below) now falls back to system-ui. To RESTORE Utendo,
+   self-host the .woff2 locally: place the file in src/assets/fonts/
+   and add a local @font-face here pointing at ./assets/fonts/utendo....
+   (See QUICK_FIX_GUIDE.txt.)
+------------------------------------------------------------------- */
 @import './styles/globals.css';
 @layer properties {
   @supports (((-webkit-hyphens: none)) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color: rgb(from red r g b)))) {

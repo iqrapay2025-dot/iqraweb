@@ -6,7 +6,13 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+        extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+    // Force Vite to resolve every `react` / `react-dom` import (app AND libraries)
+    // to a single module instance. Without this, libraries doing
+    // `import * as React from 'react'` can observe React's namespace as undefined
+    // at the split boundary, causing:
+    //   TypeError: Cannot read properties of undefined (reading 'useLayoutEffect')
+    dedupe: ['react', 'react-dom'],
     alias: {
       'vaul@1.1.2': 'vaul',
       'sonner@2.0.3': 'sonner',

@@ -61,7 +61,7 @@ export function SupportPage({
                 <AccordionItem
                   key={faq.id}
                   value={faq.id}
-                  className="px-4 rounded-xl border bg-card shadow-sm mb-6 last:mb-0"
+                  className="px-4 rounded-xl border bg-card shadow-sm mb-8 last:mb-0"
                 >
                   <AccordionTrigger
                     className="font-display text-left text-[16px] font-semibold gap-4 py-4 hover:no-underline"
