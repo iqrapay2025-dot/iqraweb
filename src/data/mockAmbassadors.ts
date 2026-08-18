@@ -11,7 +11,7 @@ export const mockAmbassadors: Ambassador[] = [
   {
     id: '1',
     name: 'Tijani Aisha Oyindamola',
-    location: 'Ilorin, Nigeria',
+    location: 'Qatar',
     title: 'Community Ambassador',
     joinedDate: '2025-10',
     referrals: 150,

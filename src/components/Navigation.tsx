@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import { LanguageSelector } from "./LanguageSelector";
 import { useLanguage } from "../contexts/LanguageContext";
-import { openWaitlist } from "./WaitlistModal";
 import logoLight from "figma:asset/39ba4a0dd03e9a935003109f9573af3b0b10ff85.png";
 import logoDark from "figma:asset/95c433e7c8d7b15a23b7736bc56fc1d657934d51.png";
 
@@ -94,12 +93,6 @@ export function Navigation({ currentPage, onNavigate, darkMode, toggleDarkMode }
                 {item.name}
               </button>
                         ))}
-            <button
-              onClick={() => openWaitlist("navbar")}
-              className="ml-2 px-4 py-2 rounded-lg bg-teal text-white hover:bg-teal/90 transition-colors font-medium"
-            >
-              {t('nav.joinWaitlist')}
-            </button>
           </div>
 
           {/* Language Selector, Dark Mode Toggle & Mobile Menu Button */}
@@ -145,15 +138,6 @@ export function Navigation({ currentPage, onNavigate, darkMode, toggleDarkMode }
                 {item.name}
               </button>
                         ))}
-            <button
-              onClick={() => {
-                openWaitlist("navbar");
-                setMobileMenuOpen(false);
-              }}
-              className="w-full text-left px-4 py-3 rounded-lg bg-teal text-white hover:bg-teal/90 transition-colors font-medium"
-            >
-              {t('nav.joinWaitlist')}
-            </button>
           </div>
         </div>
       )}
