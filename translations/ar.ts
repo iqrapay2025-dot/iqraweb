@@ -6,6 +6,7 @@ export const ar = {
     about: "من نحن",
     howItWorks: "كيف يعمل",
     ambassadors: "السفراء",
+    campusAmbassadors: "Campus Ambassadors",
     blog: "المدونة",
     contact: "اتصل بنا",
   },

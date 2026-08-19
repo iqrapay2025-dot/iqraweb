@@ -4,6 +4,7 @@ import { HomePage } from "./components/HomePage";
 import { AboutPage } from "./components/AboutPage";
 import { HowItWorksPage } from "./components/HowItWorksPage";
 import { AmbassadorsPage } from "./components/AmbassadorsPage";
+import { CampusAmbassadorsPage } from "./components/CampusAmbassadorsPage";
 import { BlogPage } from "./components/BlogPage";
 import { ContactPage } from "./components/ContactPage";
 import {SupportPage} from "./components/SupportPage"
@@ -287,6 +288,8 @@ function AppContent() {
         return <HowItWorksPage onNavigate={handleNavigate} />;
       case "ambassadors":
         return <AmbassadorsPage onNavigate={handleNavigate} />;
+      case "campus-ambassadors":
+        return <CampusAmbassadorsPage onNavigate={handleNavigate} />;
       case "blog":
         return <BlogPage onNavigate={handleNavigate} />;
       case "blog-list":

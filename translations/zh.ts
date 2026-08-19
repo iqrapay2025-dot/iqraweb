@@ -6,6 +6,7 @@ export const zh = {
     about: "关于我们",
     howItWorks: "如何运作",
     ambassadors: "大使",
+    campusAmbassadors: "Campus Ambassadors",
     blog: "博客",
     contact: "联系我们",
   },

@@ -6,6 +6,7 @@ export const de = {
     about: "Über uns",
     howItWorks: "Wie es funktioniert",
     ambassadors: "Botschafter",
+    campusAmbassadors: "Campus Ambassadors",
     blog: "Blog",
     contact: "Kontakt",
   },
