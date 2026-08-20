@@ -239,6 +239,33 @@ export const es = {
     currentDesc: "Conoce a algunos de nuestros dedicados líderes comunitarios de todo el mundo",
   },
 
+// Página de Embajadores de Campus
+  campusPage: {
+    badge: "Nuestros Embajadores de Campus",
+    title1: "IqraPay ya está",
+    title2Before: "en tu ",
+    title2Accent: "campus",
+    title2After: ".",
+    subtitle1: "Tenemos embajadores de campus que representan a IqraPay en varias escuelas de Nigeria — y seguimos creciendo.",
+    subtitle2:
+      "Nuestros embajadores de campus son musulmanes que creen en la misión y la difunden en sus instituciones. Son la fuerza que lleva IqraPay a todos los rincones de Nigeria.",
+    statAmbassadors: "Embajadores",
+    statSchools: "Escuelas",
+    statMission: "Misión",
+    cardBefore: "Orgulloso de representar a IqraPay en",
+    cardAfter: "llevar la misión a casa, una recomendación a la vez.",
+    prevAmbassadors: "Embajadores anteriores",
+    nextAmbassadors: "Embajadores siguientes",
+    goTo: "Ir a",
+    leaderboardTitle: "Los mejores embajadores de esta semana",
+    leaderboardSubtitle: "Actualizado cada lunes. Nueva semana — nueva oportunidad de liderar.",
+    loading: "Cargando clasificación…",
+    empty: "La clasificación se actualizará pronto. Vuelve la próxima semana.",
+    champion: "Campeón",
+    first: "1º",
+    second: "2º",
+    third: "3º",
+  },
   // Blog Page
   blog: {
     title: "Blog y Actualizaciones de IqraPay",

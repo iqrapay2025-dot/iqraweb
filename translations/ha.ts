@@ -239,6 +239,35 @@ export const ha = {
     currentDesc: "Sanin wasu daga cikin jagororinmu na al'umma masu sadaukarwa daga duk duniya",
   },
 
+// Shafin Jakadun Kampas
+  campusPage: {
+    badge: "Jakadun Kampas Mu",
+    title1: "IqraPay ya riga ya",
+    title2Before: "a ",
+    title2Accent: "kampus",
+    title2After: " ɗinka.",
+    subtitle1: "Muna da jakadun kampas da suke wakiltar IqraPay a makarantu da yawa a Najeriya — kuma suna haɓaka.",
+    subtitle2:
+      "Jakadun kampas mu Musulmi ne da suka gaskata da manufar kuma suna yada ta a cikin cibiyoyinsu. Su ne ƙarfin da ke kai IqraPay zuwa kowane lungu na Najeriya.",
+    statAmbassadors: "Jakadu",
+    statSchools: "Makarantu",
+    statMission: "Manufa",
+    cardBefore: "Abin alfahari ne wakiltar IqraPay a",
+    cardAfter: "kawo manufar gida, raba ɗaya bayan ɗaya.",
+    prevAmbassadors: "Jakadun da suka gabata",
+    nextAmbassadors: "Jakadun masu zuwa",
+    goTo: "Je zuwa",
+    leaderboardTitle: "Jakadun Farko Na Wannan Makon",
+    leaderboardSubtitle: "Ana sabunta kowace Litinin. Sabon mako — sabon damar jagoranci.",
+    loading: "Ana loda jerin sunayen…",
+    empty: "Za a sabunta jerin sunayen nan ba da jimawa ba. Dawo mako mai zuwa.",
+    posts: "karɓa",
+    referrals: "tufkoki",
+    champion: "Champion",
+    first: "Na 1",
+    second: "Na 2",
+    third: "Na 3",
+  },
   // Blog Page
   blog: {
     title: "Bulogi & Sabuntawa Na IqraPay",

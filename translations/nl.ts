@@ -239,6 +239,35 @@ export const nl = {
     currentDesc: "Ontmoet enkele van onze toegewijde gemeenschapsleiders van over de hele wereld",
   },
 
+// Campus-Ambassadeurs-pagina
+  campusPage: {
+    badge: "Onze campus-ambassadeurs",
+    title1: "IqraPay is al",
+    title2Before: "op jouw ",
+    title2Accent: "campus",
+    title2After: ".",
+    subtitle1: "We hebben campus-ambassadeurs die IqraPay in meerdere scholen in Nigeria vertegenwoordigen — en het aantal groeit.",
+    subtitle2:
+      "Onze campus-ambassadeurs zijn moslims die in de missie geloven en die over hun instellingen verspreiden. Ze zijn de kracht die IqraPay naar elke hoek van Nigeria brengt.",
+    statAmbassadors: "Ambassadeurs",
+    statSchools: "Scholen",
+    statMission: "Missie",
+    cardBefore: "Trots om IqraPay te vertegenwoordigen aan",
+    cardAfter: "de missie naar huis te brengen, één verwijzing tegelijk.",
+    prevAmbassadors: "Vorige ambassadeurs",
+    nextAmbassadors: "Volgende ambassadeurs",
+    goTo: "Ga naar",
+    leaderboardTitle: "Top-ambassadeurs van deze week",
+    leaderboardSubtitle: "Elke maandag bijgewerkt. Nieuwe week — nieuwe kans om te leiden.",
+    loading: "Klassement wordt geladen…",
+    empty: "Het klassement wordt binnenkort bijgewerkt. Kom volgende week terug.",
+    posts: "berichten",
+    referrals: "verwijzingen",
+    champion: "Kampioen",
+    first: "1e",
+    second: "2e",
+    third: "3e",
+  },
   // Blog Page
   blog: {
     title: "IqraPay Blog & Updates",

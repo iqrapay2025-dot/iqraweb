@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { IslamicPattern } from "./IslamicPattern";
 import { Footer } from "./Footer";
+import { useLanguage } from "../contexts/LanguageContext";
 import toh11Photo from "../assets/ambassador-toh11.jpeg";
 import aki18Photo from "../assets/ambassador-aki18.jpeg";
 import ade06Photo from "../assets/ambassador-ade06.jpeg";
@@ -100,9 +101,9 @@ const AMBASSADOR_PHOTOS: Record<string, string> = {
 };
 
 const STATS = [
-  { value: "19+", label: "Ambassadors" },
-  { value: "13", label: "Schools" },
-  { value: "1", label: "Mission" },
+  { value: "19+", key: "campusPage.statAmbassadors" },
+  { value: "13", key: "campusPage.statSchools" },
+  { value: "1", key: "campusPage.statMission" },
 ];
 
 // Published CSV export of the weekly leaderboard sheet.
@@ -763,6 +764,7 @@ function LeaderboardContent({
   leaderboard: LeaderboardEntry[];
 }) {
   const reduced = useReducedMotion();
+  const { t } = useLanguage();
 
   // Podium shows 2nd • 1st • 3rd (champion in the centre).
   const podiumOrder: ReadonlyArray<number> = [1, 0, 2];
@@ -813,7 +815,12 @@ function LeaderboardContent({
           if (!a) return null;
           const ring = ringForRank(a.rank);
           const isFirst = a.rank === 1;
-          const label = a.rank === 1 ? "1st" : a.rank === 2 ? "2nd" : "3rd";
+          const label =
+            a.rank === 1
+              ? t("campusPage.first")
+              : a.rank === 2
+                ? t("campusPage.second")
+                : t("campusPage.third");
           return (
             <motion.div
               className={`podium-spot ${podiumSlot[slotIdx]}`}
@@ -831,8 +838,8 @@ function LeaderboardContent({
                   <i
                     className="fas fa-crown crown"
                     role="img"
-                    aria-label="Champion"
-                    title={`${a.name} — 1st place`}
+                    aria-label={t("campusPage.champion")}
+                    title={`${a.name} — ${t("campusPage.first")}`}
                   />
                 )}
               </div>
@@ -840,7 +847,8 @@ function LeaderboardContent({
               <div className="p-name">{a.name}</div>
               <div className="p-xp">
                 <i className="fas fa-star" aria-hidden="true" />
-                {a.posts} posts · {a.referrals} referrals
+                {a.posts} {t("campusPage.posts")} · {a.referrals}{" "}
+                {t("campusPage.referrals")}
               </div>
               <div className="podium-base">{label}</div>
             </motion.div>
@@ -877,7 +885,8 @@ function LeaderboardContent({
               </div>
               <div className="r-xp">
                 <i className="fas fa-star" aria-hidden="true" />
-                {a.posts} posts · {a.referrals} referrals
+                {a.posts} {t("campusPage.posts")} · {a.referrals}{" "}
+                {t("campusPage.referrals")}
               </div>
             </motion.div>
           );
@@ -890,6 +899,7 @@ function LeaderboardContent({
 export function CampusAmbassadorsPage({
   onNavigate,
 }: CampusAmbassadorsPageProps) {
+    const { t } = useLanguage();
     const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[] | null>(null);
     // Remembers the data instance the leaderboard UI is currently showing, so
     // TTL cache hits don't replay the same animation on every focus event.
@@ -1072,29 +1082,24 @@ export function CampusAmbassadorsPage({
           >
             <div className="badge">
               <span aria-hidden="true"></span>
-              Our Campus Ambassadors
+              {t("campusPage.badge")}
             </div>
             <h1>
-              IqraPay is already{" "}
+              {t("campusPage.title1")}{" "}
               <br className="hidden sm:block" />
-              on your <span className="accent">campus</span>.
+              {t("campusPage.title2Before")}
+              <span className="accent">{t("campusPage.title2Accent")}</span>
+              {t("campusPage.title2After")}
             </h1>
-            <p className="lede">
-              We have campus ambassadors representing IqraPay across multiple
-              schools in Nigeria — and growing.
-            </p>
-            <p className="lede">
-              Our campus ambassadors are Muslims who believe in the mission and
-              are spreading it across their institutions. They are the ground
-              force bringing IqraPay to every corner of Nigeria.
-            </p>
+            <p className="lede">{t("campusPage.subtitle1")}</p>
+            <p className="lede">{t("campusPage.subtitle2")}</p>
 
             {/* Stats — pills beside each other */}
             <div className="stats-row">
               {STATS.map((stat) => (
-                <div className="stat-pill" key={stat.label}>
+                <div className="stat-pill" key={stat.key}>
                   <div className="num">{stat.value}</div>
-                  <div className="label">{stat.label}</div>
+                  <div className="label">{t(stat.key)}</div>
                 </div>
               ))}
             </div>
@@ -1122,9 +1127,9 @@ export function CampusAmbassadorsPage({
                   <div className="card-body">
                     <span className="quote-mark">“</span>
                     <p className="code">
-                      Proud to represent IqraPay at{" "}
-                      <strong>{ambassador.school}</strong>. Bringing the mission
-                      home, one referral at a time.
+                      {t("campusPage.cardBefore")}{" "}
+                      <strong>{ambassador.school}</strong>.{" "}
+                      {t("campusPage.cardAfter")}
                     </p>
                     <div className="name">
                       — <strong>{ambassador.name}</strong>, {ambassador.code}
@@ -1139,7 +1144,7 @@ export function CampusAmbassadorsPage({
                 type="button"
                 className="ambassador-ctrl-btn"
                 onClick={() => scrollCarousel(-1)}
-                aria-label="Previous ambassadors"
+                aria-label={t("campusPage.prevAmbassadors")}
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                   <path
@@ -1154,7 +1159,7 @@ export function CampusAmbassadorsPage({
                 type="button"
                 className="ambassador-ctrl-btn"
                 onClick={() => scrollCarousel(1)}
-                aria-label="Next ambassadors"
+                aria-label={t("campusPage.nextAmbassadors")}
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                   <path
@@ -1176,7 +1181,7 @@ export function CampusAmbassadorsPage({
                     index === activeCard ? " active" : ""
                   }`}
                   onClick={() => handleDotClick(index)}
-                  aria-label={`Go to ${ambassador.name}`}
+                  aria-label={`${t("campusPage.goTo")} ${ambassador.name}`}
                 />
               ))}
             </div>
@@ -1189,21 +1194,19 @@ export function CampusAmbassadorsPage({
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12 sm:mb-14">
             <h2 className="font-display font-bold text-[#2D0A02] dark:text-foreground text-3xl sm:text-4xl mb-4">
-              This Week's Top Ambassadors
+              {t("campusPage.leaderboardTitle")}
             </h2>
             <p className="font-sans text-lg text-muted-foreground">
-              Updated every Monday. New week — new chance to lead.
+              {t("campusPage.leaderboardSubtitle")}
             </p>
           </div>
 
           <div id="iqrapay-leaderboard" className="iqrapay-leaderboard">
             {leaderboard === null && (
-              <p className="lb-loading">Loading leaderboard…</p>
+              <p className="lb-loading">{t("campusPage.loading")}</p>
             )}
             {leaderboard !== null && leaderboard.length === 0 && (
-              <p className="lb-empty">
-                Leaderboard updating soon. Check back Monday.
-              </p>
+              <p className="lb-empty">{t("campusPage.empty")}</p>
             )}
             {leaderboard !== null && leaderboard.length > 0 && (
               <LeaderboardContent leaderboard={leaderboard} />

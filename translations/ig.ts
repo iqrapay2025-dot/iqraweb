@@ -239,6 +239,35 @@ export const ig = {
     currentDesc: "Zute ụfọdụ n'ime ndị ndu obodo anyị raara onwe ha nye si n'ụwa niile",
   },
 
+// Peeji Ndị Nnọchiteanya Kampos
+  campusPage: {
+    badge: "Ndị Nnọchiteanya Kampos Anyị",
+    title1: "IqraPay adịlarị",
+    title2Before: "na ",
+    title2Accent: "kampos",
+    title2After: " gị.",
+    subtitle1: "Anyị nwere ndị nnọchiteanya kampos na-anọchite anya IqraPay n'ọtụtụ ụlọ akwụkwọ na Nigeria — ma ọ na-eto eto.",
+    subtitle2:
+      "Ndị nnọchiteanya kampos anyị bụ ndị Alakụba kwenyere n'ebumnobi a ma na-ewusa ya n'ụlọ akwụkwọ ha. Ha bụ ndị na-eweta IqraPay n'akụkụ ọ bụla nke Nigeria.",
+    statAmbassadors: "Ndị Nnọchiteanya",
+    statSchools: "Ụlọ Akwụkwọ",
+    statMission: "Ebumnobi",
+    cardBefore: "Ọ dị m mpụga ịnọchite anya IqraPay na",
+    cardAfter: "iweta ebumnobi n'ụlọ, otu ntụaka n'otu oge.",
+    prevAmbassadors: "Ndị nnọchiteanya gara aga",
+    nextAmbassadors: "Ndị nnọchiteanya na-esote",
+    goTo: "Gaa na",
+    leaderboardTitle: "Ndị Nnọchiteanya Kasị Elu Nke Izu A",
+    leaderboardSubtitle: "A na-emelite ya kwa Mọnde. Izu ọhụrụ — ohere ọhụrụ idu ndú.",
+    loading: "Na-ebudata ndepụta…",
+    empty: "A ga-emelite ndepụta n'oge adịghị anya. Bịaghachi n'izu na-abịa.",
+    posts: "posts",
+    referrals: "ntụaka",
+    champion: "Onye mmeri",
+    first: "Mbụ",
+    second: "Abụọ",
+    third: "Atọ",
+  },
   // Blog Page
   blog: {
     title: "Blog & Mmelite IqraPay",

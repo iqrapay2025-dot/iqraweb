@@ -239,6 +239,35 @@ export const zh = {
     currentDesc: "认识来自世界各地的一些敬业的社区领袖",
   },
 
+// 校园大使页面
+  campusPage: {
+    badge: "我们的校园大使",
+    title1: "IqraPay 已经",
+    title2Before: "在你的",
+    title2Accent: "校园",
+    title2After: "。",
+    subtitle1: "我们的校园大使已在尼日利亚多所学校代表 IqraPay — 且数量不断增长。",
+    subtitle2:
+      "我们的校园大使是相信这一使命并在各自学校传播它的穆斯林。他们是把 IqraPay 带到尼日利亚每个角落的中坚力量。",
+    statAmbassadors: "大使",
+    statSchools: "学校",
+    statMission: "使命",
+    cardBefore: "很自豪在",
+    cardAfter: "代表 IqraPay，把使命带回家，一次一个推荐。",
+    prevAmbassadors: "上一位大使",
+    nextAmbassadors: "下一位大使",
+    goTo: "前往",
+    leaderboardTitle: "本周最佳大使",
+    leaderboardSubtitle: "每周一更新。新一周 — 新的领先机会。",
+    loading: "排行榜加载中…",
+    empty: "排行榜即将更新。请下周再来查看。",
+    posts: "帖子",
+    referrals: "推荐",
+    champion: "冠军",
+    first: "第1名",
+    second: "第2名",
+    third: "第3名",
+  },
   // Blog Page
   blog: {
     title: "IqraPay 博客和更新",

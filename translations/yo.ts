@@ -239,6 +239,35 @@ export const yo = {
     currentDesc: "Pàdé díẹ̀ nínú àwọn olùdarí àwùjọ wa tó ti fi ara mọ́ láti gbogbo ayé",
   },
 
+// Ojué Àwọn Aṣojú Ilé-Ẹ̀kọ́
+  campusPage: {
+    badge: "Àwọn Aṣojú Ilé-Ẹ̀kọ́ Wa",
+    title1: "IqraPay ti wà lórí",
+    title2Before: "ilé-ẹ̀kọ́ ",
+    title2Accent: "kampus",
+    title2After: " yín.",
+    subtitle1: "À ń ní àwọn aṣojú ilé-ẹ̀kọ́ tí ń ṣojú fún IqraPay káàkiri àwọn ilé-ẹ̀kọ́ ní Nàìjíríà — ó sì ń dàgbà.",
+    subtitle2:
+      "Àwọn aṣojú ilé-ẹ̀kọ́ wa jẹ́ àwọn Mùsùlùmí tí wọ́n gbàgbọ́ nínú iṣẹ́-ápamọ́ àti tí wọ́n ń tàn án káàkiri àwọn ilé-ẹ̀kọ́ wọn. Wọ́n ni agbára tí ń mú IqraPay dé gbogbo igun Nàìjíríà.",
+    statAmbassadors: "Àwọn Aṣojú",
+    statSchools: "Àwọn Ilé-Ẹ̀kọ́",
+    statMission: "Iṣẹ́-ápamọ́",
+    cardBefore: "Mo gbé e ga láti ṣojú fún IqraPay ní",
+    cardAfter: "mú iṣẹ́-ápamọ́ dé ilé, ìsọ̀rọ̀ kan lọ́ọ̀kan.",
+    prevAmbassadors: "Àwọn aṣojú tó ṣáájú",
+    nextAmbassadors: "Àwọn aṣojú tó tẹ̀ lé e",
+    goTo: "Lọ sí",
+    leaderboardTitle: "Àwọn Aṣojú Tó Ga Jùlọ Lọ́sẹ̀ Yìí",
+    leaderboardSubtitle: "A ń gbé e jáde ní gbogbo ọjọ́ Monday. Ọ̀sẹ̀ tuntun — àǹfààní tuntun láti darí.",
+    loading: "Ó ń gba àkójọ orúkọ…",
+    empty: "Àkójọ orúkọ yóò jáde láìpẹ́. Padà wá ní ọ̀sẹ̀ tó ń bọ̀.",
+    posts: "ìgbérò",
+    referrals: "ìtọ́kasí",
+    champion: "Aṣojú Ẹ̀kan",
+    first: "Kìn-ín-ní",
+    second: "Kejì",
+    third: "Kẹta",
+  },
   // Blog Page
   blog: {
     title: "Bùlọ́ọ̀gù & Àwọn Ìmúdájú IqraPay",
