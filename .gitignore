@@ -70,3 +70,9 @@ figma_assets/
 
 # Windows null-device artifact (accidental stray file named "nul")
 nul
+
+# Stray auto-downloaded image blobs in src/assets. The portraits actually used
+# by the site live under src/assets/campus-photo-* and ambassador-*.jpeg and must
+# stay tracked — only the unused/duplicate downloads below are excluded.
+75ca8820235f4d981525664871ceab2d.png
+*.jpg.jpeg

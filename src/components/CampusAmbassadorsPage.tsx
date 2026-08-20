@@ -1,10 +1,18 @@
 import { useEffect, useRef, useState } from "react";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { IslamicPattern } from "./IslamicPattern";
 import { Footer } from "./Footer";
 import toh11Photo from "../assets/ambassador-toh11.jpeg";
 import aki18Photo from "../assets/ambassador-aki18.jpeg";
 import ade06Photo from "../assets/ambassador-ade06.jpeg";
+// Locally-imported uploads reused (cycled) across the cards that don't have a
+// dedicated photo. (Remote hot-links were avoided so the images reliably render.)
+import campus1 from "../assets/campus-photo-1.jpg";
+import campus2 from "../assets/campus-photo-2.jpg";
+import campus3 from "../assets/campus-photo-3.jpg";
+import campus4 from "../assets/campus-photo-4.jpg";
+import campus5 from "../assets/campus-photo-5.jpg";
+import campus6 from "../assets/campus-photo-6.jpg";
 
 interface CampusAmbassadorsPageProps {
   onNavigate?: (page: string) => void;
@@ -65,13 +73,12 @@ const STOCK_PHOTOS = [
 // 7 images repeat across every remaining card. Kept as remote URL strings so
 // the build stays lean and the bundle isn't bloated with large portrait files.
 const AMBASSADOR_IMAGES = [
-  "https://i.pinimg.com/originals/75/ca/88/75ca8820235f4d981525664871ceab2d.png",
-  "https://i.pinimg.com/originals/33/d3/83/33d383a12261b9502f0d983c9b7e4646.jpg",
-  "https://i.pinimg.com/736x/75/ca/88/75ca8820235f4d981525664871ceab2d.jpg",
-  "https://i.pinimg.com/originals/fe/46/a8/fe46a8cb4973c597a86aa40ece441fec.jpg",
-  "https://i.pinimg.com/originals/35/b6/67/35b6670ff9a7795489b03263b8597c97.jpg",
-  "https://i.pinimg.com/736x/06/2b/a5/062ba5d66f034fe8593a1bcef55a742d.jpg",
-  "https://i.pinimg.com/736x/38/bc/59/38bc59aadf29dac3513e7755b30af712.jpg",
+  campus1,
+  campus2,
+  campus3,
+  campus4,
+  campus5,
+  campus6,
 ];
 
 // Real ambassador photos, keyed by referral code. These override the stock
@@ -104,127 +111,289 @@ const STATS = [
 const SHEET_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vT06PfG2nQYj3CghPSOrOlc-rZ_yUCfVYKDI3ldeIvC6eOL7sfM1exxY5YB3-QNflgaLpr31Gawqipu/pub?gid=772222314&single=true&output=csv";
 
+interface LeaderboardEntry {
+  rank: number;
+  name: string;
+  school: string;
+  code: string;
+  posts: string;
+  referrals: string;
+  photo: string | null;
+}
+
+// Two-letter initials, shown only when an ambassador has no matched portrait.
+function initials(name: string): string {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase();
+}
+
+// Rank accent cycle for the avatar rings: 1st = gold, 2nd = teal, 3rd = cocoa
+// (repeats for lower ranks). The rank-number badges reuse the original cycle
+// (teal / cocoa / gold) to stay consistent with the rest of the page.
+const RING_CLASS = ["gold", "teal", "cocoa"] as const;
+const RING_HEX: Record<typeof RING_CLASS[number], string> = {
+  gold: "#C8922B",
+  teal: "#009688",
+  cocoa: "#2D0A02",
+};
+function ringForRank(rank: number): (typeof RING_CLASS)[number] {
+  return RING_CLASS[(rank - 1) % 3];
+}
+
+// Resolve the exact portrait shown on the ambassador card for a referral code,
+// so every leaderboard circle displays the same image as its card. Reuses the
+// carousel's own sourcing (explicit photo -> cycling campus portfolio).
+function photoForCode(code: string): string | null {
+  const idx = AMBASSADORS.findIndex((a) => a.code === code);
+  if (idx < 0) return null;
+  return (
+    AMBASSADOR_PHOTOS[code] ??
+    AMBASSADOR_IMAGES[idx % AMBASSADOR_IMAGES.length] ??
+    STOCK_PHOTOS[idx]
+  );
+}
+
 const LEADERBOARD_CSS = `
-  .leaderboard-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    max-width: 760px;
-    margin: 0 auto;
+    .iqrapay-leaderboard {
     font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
+    max-width: 840px;
+    margin: 0 auto;
+    padding: 0 8px;
   }
-  .leaderboard-grid > .lb-empty {
+  .lb-empty,
+  .lb-loading {
     text-align: center;
     color: #6b6b6b;
-    padding: 2rem 1rem;
+    padding: 2.5rem 1rem;
+    font-size: 15px;
   }
-  .lb-row {
-    background: #ffffff;
-    border: 1px solid #ececec;
-    border-radius: 16px;
-    padding: 16px 18px 16px;
-    box-shadow: 0 2px 10px rgba(45, 10, 2, 0.05);
+
+  /* ===== Podium (top 3) ===== */
+  .leaderboard-content {
+    width: 100%;
   }
-  .lb-head {
+  .podium-row {
     display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 12px;
+    align-items: end;
+    justify-content: center;
+    gap: 22px;
+    margin: 12px auto 18px;
+    max-width: 660px;
   }
-  .lb-rank {
+  .podium-spot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  /* Stepped platform under each avatar: 1st tallest, then 2nd, then 3rd. */
+  .podium-step {
+    width: 130px;
+    border-radius: 10px 10px 0 0;
+    background: linear-gradient(180deg, #ececec 0%, #c8c4bf 100%);
+  }
+  .podium-spot.first  .podium-step { height: 48px; }
+  .podium-spot.second .podium-step { height: 32px; }
+  .podium-spot.third  .podium-step { height: 18px; }
+
+  .avatar-ring {
+    --ring: #aeb2b0;
+    --ring-w: 6px;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: var(--ring);
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
-    width: 40px;
-    height: 40px;
+    position: relative;
+    box-sizing: border-box;
+  }
+  .podium-spot.first .avatar-ring {
+    width: 108px;
+    height: 108px;
+    --ring-w: 7px;
+  }
+  .avatar-ring.gold   { --ring: #C8922B; }
+  .avatar-ring.teal  { --ring: #009688; }
+  .avatar-ring.cocoa { --ring: #2D0A02; }
+  .avatar-ring img {
+    width: calc(100% - var(--ring-w));
+    height: calc(100% - var(--ring-w));
+    object-fit: cover;
+    object-position: center top;
     border-radius: 50%;
+    display: block;
+  }
+  .avatar-ring .init {
     font-family: "Utendo", ui-sans-serif, system-ui, sans-serif;
     font-weight: 800;
-    font-size: 16px;
+    font-size: 30px;
+    letter-spacing: 1px;
     color: #ffffff;
-    background-color: #aeb2b0;
   }
-  .rank-1 .lb-rank { background-color: ${DEEP_TEAL}; }
-  .rank-2 .lb-rank { background-color: ${COCOA}; }
-  .rank-3 .lb-rank { background-color: #c8922a; }
-  .rank-4 .lb-rank,
-  .rank-5 .lb-rank { background-color: #9da3a0; }
-  .lb-who {
+
+  .crown {
+    position: absolute;
+    top: -11px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 26px;
+    color: #C8922B;
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.18));
+    animation: crown-bob 2.4s ease-in-out infinite;
+    z-index: 2;
+  }
+  .podium-spot.first .crown {
+    font-size: 28px;
+    top: -13px;
+  }
+  @keyframes crown-bob {
+    0%, 100% { transform: translate(-50%, 0) scale(1); opacity: 0.92; }
+    50% { transform: translate(-50%, -3px) scale(1.14); opacity: 1; }
+  }
+
+  .p-name {
+    font-family: "Utendo", ui-sans-serif, system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: #0f0f0f;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .p-xp {
+    font-size: 13px;
+    font-weight: 600;
+    color: #4b5563;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .podium-base {
+    font-family: "Utendo", ui-sans-serif, system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.6px;
+    color: #6b6b6b;
+  }
+    /* ===== Full ranking list ===== */
+  .rank-list {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    max-width: 660px;
+    margin: 0 auto;
+  }
+  .rank-row {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    background: #ffffff;
+    border: 1px solid #ececec;
+    border-radius: 12px;
+    padding: 10px 14px;
+    box-shadow: 0 1px 6px rgba(45, 10, 2, 0.04);
+    transition: box-shadow 0.18s ease;
+  }
+  .rank-row:hover {
+    box-shadow: 0 8px 20px rgba(45, 10, 2, 0.08);
+  }
+  .r-num {
+    --bg: #9da3a0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Utendo", ui-sans-serif, system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    color: #ffffff;
+    background: var(--bg);
+    flex-shrink: 0;
+  }
+  .rank-1 .r-num { --bg: ${DEEP_TEAL}; }    /* teal */
+  .rank-2 .r-num { --bg: ${COCOA}; }       /* cocoa */
+  .rank-3 .r-num { --bg: ${RING_HEX.gold}; } /* gold */
+  .r-avatar {
+    --ring: #aeb2b0;
+    --ring-w: 2px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--ring);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .r-avatar.gold   { --ring: ${RING_HEX.gold}; }
+  .r-avatar.teal  { --ring: ${RING_HEX.teal}; }
+  .r-avatar.cocoa { --ring: ${RING_HEX.cocoa}; }
+  .r-avatar img {
+    width: calc(100% - var(--ring-w));
+    height: calc(100% - var(--ring-w));
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 50%;
+    display: block;
+  }
+  .r-avatar .init {
+    font-family: "Utendo", ui-sans-serif, system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    color: #ffffff;
+  }
+  .r-info {
     flex: 1 1 auto;
     min-width: 0;
   }
-  .lb-name {
+  .r-name {
     font-family: "Utendo", ui-sans-serif, system-ui, sans-serif;
     font-weight: 700;
-    font-size: 16px;
-    line-height: 1.25;
+    font-size: 14px;
     color: #0f0f0f;
   }
-  .lb-school {
-    font-size: 12.5px;
-    color: #6b6b6b;
-    margin-top: 2px;
-  }
-  .lb-stats {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 5px;
-    flex-shrink: 0;
-  }
-  .lb-stat {
+  .r-school {
     font-size: 12px;
+    color: #6b6b6b;
+    margin-top: 1px;
+  }
+  .r-xp {
     font-weight: 600;
-    color: #4b5563;
-    background: #f3f4f6;
-    border-radius: 999px;
-    padding: 3px 10px;
+    font-size: 13px;
+    color: #0f0f0f;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
     white-space: nowrap;
   }
-  .lb-bar-track {
-    height: 10px;
-    background: #eef1f0;
-    border-radius: 999px;
-    overflow: hidden;
+
+  @media (prefers-reduced-motion: reduce) {
+    .crown { animation: none; }
+    .rank-row { transition: none; }
   }
-  .lb-bar {
-    height: 100%;
-    border-radius: 999px;
-    background-color: #aeb2b0;
-    transition: width 0.8s ease;
-  }
-  .rank-1 .lb-bar { background-color: ${DEEP_TEAL}; }
-  .rank-2 .lb-bar { background-color: ${COCOA}; }
-  .rank-3 .lb-bar { background-color: #c8922a; }
-  .rank-4 .lb-bar,
-  .rank-5 .lb-bar { background-color: #9da3a0; }
+
   @media (max-width: 639px) {
-    .lb-row {
-      padding: 14px 14px 13px;
-    }
-    .lb-head {
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    .lb-rank {
-      width: 32px;
-      height: 32px;
-      font-size: 14px;
-    }
-    .lb-name {
-      font-size: 14.5px;
-    }
-    .lb-school {
-      font-size: 12px;
-    }
-    .lb-stats {
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      width: 100%;
-      margin-left: 42px;
-    }
+    .podium-row { gap: 14px; }
+    .avatar-ring { width: 78px; height: 78px; }
+    .podium-spot.first .avatar-ring { width: 94px; height: 94px; }
+    .podium-step { width: 110px; }
+    .podium-spot.first  .podium-step { height: 36px; }
+    .podium-spot.second .podium-step { height: 24px; }
+    .podium-spot.third  .podium-step { height: 12px; }
+    .crown { font-size: 20px; top: -9px; }
+    .podium-spot.first .crown { font-size: 22px; top: -10px; }
+    .p-name { font-size: 14px; }
+    .r-num { width: 28px; height: 28px; font-size: 12px; }
+    .r-avatar { width: 36px; height: 36px; }
   }
 `;
 
@@ -480,85 +649,197 @@ const HERO_CSS = `
   }
 `;
 
+function LeaderboardContent({
+  leaderboard,
+}: {
+  leaderboard: LeaderboardEntry[];
+}) {
+  const reduced = useReducedMotion();
+
+  // Podium shows 2nd • 1st • 3rd (champion in the centre).
+  const podiumOrder: ReadonlyArray<number> = [1, 0, 2];
+  const podiumSlot: ReadonlyArray<string> = ["second", "first", "third"];
+
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.12, delayChildren: reduced ? 0 : 0.1 },
+    },
+  };
+  const podiumItem = {
+    hidden: { opacity: 0, y: 26, scale: 0.84 },
+    show: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.55, ease: "easeOut" as const },
+    },
+  };
+  const listContainer = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.07, delayChildren: reduced ? 0 : 0.5 },
+    },
+  };
+  const listItem = {
+    hidden: { opacity: 0, x: -30 },
+    show: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.45, ease: "easeOut" as const },
+    },
+  };
+
+  return (
+    <div className="leaderboard-content">
+      <motion.div
+        className="podium-row"
+        variants={reduced ? undefined : container}
+        initial={reduced ? undefined : "hidden"}
+        animate={reduced ? undefined : "show"}
+      >
+        {podiumOrder.map((dataIdx, slotIdx) => {
+          const a = leaderboard[dataIdx];
+          if (!a) return null;
+          const ring = ringForRank(a.rank);
+          const isFirst = a.rank === 1;
+          const label = a.rank === 1 ? "1st" : a.rank === 2 ? "2nd" : "3rd";
+          return (
+            <motion.div
+              className={`podium-spot ${podiumSlot[slotIdx]}`}
+              key={`pod-${a.rank}`}
+              variants={reduced ? undefined : podiumItem}
+              whileHover={reduced ? undefined : { scale: 1.08 }}
+            >
+              <div className={`avatar-ring ${ring}`}>
+                {a.photo ? (
+                  <img src={a.photo} alt={a.name} loading="eager" />
+                ) : (
+                  <span className="init">{initials(a.name)}</span>
+                )}
+                {isFirst && (
+                  <i
+                    className="fas fa-crown crown"
+                    role="img"
+                    aria-label="Champion"
+                    title={`${a.name} — 1st place`}
+                  />
+                )}
+              </div>
+              <div className="podium-step" aria-hidden="true" />
+              <div className="p-name">{a.name}</div>
+              <div className="p-xp">
+                <i className="fas fa-star" aria-hidden="true" />
+                {a.referrals} XP
+              </div>
+              <div className="podium-base">{label}</div>
+            </motion.div>
+          );
+        })}
+      </motion.div>
+
+      <motion.div
+        className="rank-list"
+        variants={reduced ? undefined : listContainer}
+        initial={reduced ? undefined : "hidden"}
+        animate={reduced ? undefined : "show"}
+      >
+        {leaderboard.map((a) => {
+          const ring = ringForRank(a.rank);
+          return (
+            <motion.div
+              className={`rank-row rank-${a.rank}`}
+              key={a.code || `row-${a.rank}`}
+              variants={reduced ? undefined : listItem}
+              whileHover={reduced ? undefined : { x: 6 }}
+            >
+              <div className="r-num">{a.rank}</div>
+              <div className={`r-avatar ${ring}`}>
+                {a.photo ? (
+                  <img src={a.photo} alt={a.name} loading="lazy" />
+                ) : (
+                  <span className="init">{initials(a.name)}</span>
+                )}
+              </div>
+              <div className="r-info">
+                <div className="r-name">{a.name}</div>
+                <div className="r-school">{a.school}</div>
+              </div>
+              <div className="r-xp">
+                <i className="fas fa-star" aria-hidden="true" />
+                {a.referrals} XP
+              </div>
+            </motion.div>
+          );
+        })}
+      </motion.div>
+    </div>
+  );
+}
+
 export function CampusAmbassadorsPage({
   onNavigate,
 }: CampusAmbassadorsPageProps) {
+    const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[] | null>(null);
+
   // Load the weekly leaderboard from the published Google Sheet.
   useEffect(() => {
+    let cancelled = false;
     async function loadLeaderboard() {
-      let container: HTMLElement | null = null;
       try {
-        container = document.getElementById("iqrapay-leaderboard");
-        if (!container) return;
-
         const response = await fetch(SHEET_URL);
         const csv = await response.text();
         const rows = csv.trim().split("\n").slice(1);
 
-        const leaderboard = rows.map((row, index) => {
-          const cols = row.split(",");
-          return {
-            rank: index + 1,
-            name: cols[1]?.trim() || "—",
-            school: cols[2]?.trim() || "—",
-            posts: cols[4]?.trim() || "0",
-            referrals: cols[5]?.trim() || "0",
-          };
-        });
-
-        // Show the top 5 ambassadors on the leaderboard as a bar chart.
-        const topFive = leaderboard.slice(0, 5);
-
-        if (topFive.length === 0) {
-          container.innerHTML =
-            "<p class='lb-empty'>Leaderboard updating soon. Check back Monday.</p>";
-          return;
-        }
-
-        const maxPosts = Math.max(
-          1,
-          ...topFive.map((a) => parseInt(a.posts, 10) || 0)
-        );
-
-        container.innerHTML = topFive
-          .map((a) => {
-            const posts = parseInt(a.posts, 10) || 0;
-            const referrals = parseInt(a.referrals, 10) || 0;
-            const widthPct = Math.max(
-              3,
-              Math.min(100, Math.round((posts / maxPosts) * 100))
-            );
-            return `
-              <div class="lb-row rank-${a.rank}">
-                <div class="lb-head">
-                  <div class="lb-rank">${a.rank}</div>
-                  <div class="lb-who">
-                    <div class="lb-name">${a.name}</div>
-                    <div class="lb-school">${a.school}</div>
-                  </div>
-                  <div class="lb-stats">
-                    <span class="lb-stat">${posts} posts this week</span>
-                    <span class="lb-stat">${referrals} referrals</span>
-                  </div>
-                </div>
-                <div class="lb-bar-track">
-                  <div class="lb-bar" style="width: ${widthPct}%;"></div>
-                </div>
-              </div>
-            `;
+        const data: LeaderboardEntry[] = rows
+          .map((row, index) => {
+            const cols = row.split(",");
+            const code = cols[3]?.trim() || "";
+            const name = cols[1]?.trim() || "—";
+            const parsedRank = parseInt(cols[0], 10);
+            return {
+              rank:
+                Number.isFinite(parsedRank) && parsedRank > 0
+                  ? parsedRank
+                  : index + 1,
+              name,
+              school: cols[2]?.trim() || "—",
+              code,
+              posts: cols[4]?.trim() || "0",
+              referrals: cols[5]?.trim() || "0",
+              photo: code ? photoForCode(code) : null,
+            };
           })
-          .join("");
+          // Drop blank/placeholder rows (e.g. the trailing editor note).
+          .filter((a) => a.name && a.name !== "—")
+          // Keep the ranking faithful to the sheet's Rank column in case rows
+          // are reordered or written out of sequence.
+          .sort((a, b) => a.rank - b.rank);
+
+        if (!cancelled) setLeaderboard(data);
       } catch (error) {
         console.error("Leaderboard error:", error);
-        container = document.getElementById("iqrapay-leaderboard");
-        if (container) {
-          container.innerHTML =
-            "<p>Leaderboard updating soon. Check back Monday.</p>";
-        }
+        if (!cancelled) setLeaderboard([]);
       }
     }
 
     void loadLeaderboard();
+    // Re-read the sheet every minute and on window focus so this section
+    // always reflects the published CSV (the sheet is republished every Monday).
+    const interval = window.setInterval(() => {
+      void loadLeaderboard();
+    }, 60000);
+    const onFocus = () => {
+      void loadLeaderboard();
+    };
+    window.addEventListener("focus", onFocus);
+    return () => {
+      cancelled = true;
+      window.clearInterval(interval);
+      window.removeEventListener("focus", onFocus);
+    };
   }, []);
 
   // ——— Campus Ambassador carousel ———
@@ -757,13 +1038,18 @@ export function CampusAmbassadorsPage({
             </p>
           </div>
 
-          <div
-            id="iqrapay-leaderboard"
-            className="leaderboard-grid"
-          >
-            <p className="text-center text-muted-foreground py-10">
-              Loading leaderboard…
-            </p>
+          <div id="iqrapay-leaderboard" className="iqrapay-leaderboard">
+            {leaderboard === null && (
+              <p className="lb-loading">Loading leaderboard…</p>
+            )}
+            {leaderboard !== null && leaderboard.length === 0 && (
+              <p className="lb-empty">
+                Leaderboard updating soon. Check back Monday.
+              </p>
+            )}
+            {leaderboard !== null && leaderboard.length > 0 && (
+              <LeaderboardContent leaderboard={leaderboard} />
+            )}
           </div>
         </div>
       </section>
