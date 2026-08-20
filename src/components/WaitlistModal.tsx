@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Loader2 } from "lucide-react";
 import { Dialog, DialogContent } from "./ui/dialog";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -38,9 +38,17 @@ export function WaitlistModal({
   const { t } = useLanguage();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [referralCode, setReferralCode] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [botField, setBotField] = useState(""); // honeypot: invisible to humans, bots fill it
+  const lastSubmitRef = useRef(0); // client-side cooldown between submissions
+
+  // Client-side rate limiter. The Apps Script endpoint accepts anonymous
+  // posts (there's no server-side throttle), so we enforce a small cooldown
+  // here to discourage bots from flooding the sheet.
+  const RATE_LIMIT_MS = 5000;
 
   // Normalize the configured endpoint: accepts either a full Web App URL
   // (https://script.google.com/macros/s/<ID>/exec) OR a bare Apps Script ID.
@@ -55,8 +63,10 @@ export function WaitlistModal({
   const resetForm = () => {
     setName("");
     setEmail("");
+    setReferralCode("");
     setSubmitted(false);
     setError("");
+    setBotField("");
   };
 
   const handleOpenChange = (next: boolean) => {
@@ -69,6 +79,17 @@ export function WaitlistModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+
+    // Honeypot: humans never see this field, bots do fill it. Discard
+    // silently so bots don't learn from an error response.
+    if (botField.trim() !== "") return;
+
+    // Rate limit: block rapid-fire submissions to the public sheet.
+    const nowMs = Date.now();
+    if (nowMs - lastSubmitRef.current < RATE_LIMIT_MS) {
+      setError("Please wait a moment before trying again.");
+      return;
+    }
 
     if (!name.trim()) {
       setError("Enter your name.");
@@ -87,8 +108,14 @@ export function WaitlistModal({
     }
 
     setIsSubmitting(true);
+    lastSubmitRef.current = Date.now();
     try {
-      const payload = { fullName: name, email, source };
+      const payload = {
+        fullName: name,
+        email,
+        source,
+        referralCode: referralCode.trim(),
+      };
       const response = await fetch(resolvedEndpoint, {
         method: "POST",
         // Use text/plain — a CORS *simple* content type — instead of
@@ -259,6 +286,25 @@ export function WaitlistModal({
                 </p>
 
                 <form onSubmit={handleSubmit} noValidate>
+                  {/* Honeypot — hidden off-screen, only bots fill it */}
+                  <div
+                    style={{
+                      position: "absolute",
+                      left: "-9999px",
+                      top: "-9999px",
+                    }}
+                    aria-hidden="true"
+                  >
+                    <input
+                      type="text"
+                      name="website"
+                      value={botField}
+                      onChange={(e) => setBotField(e.target.value)}
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
+                  </div>
+
                   <label
                     htmlFor="iqp-name"
                     style={{
@@ -320,6 +366,45 @@ export function WaitlistModal({
                     }}
                     required
                   />
+
+                  <label
+                    htmlFor="iqp-referral"
+                    style={{
+                      display: "block",
+                      fontSize: 12,
+                      fontWeight: 600,
+                      color: BRAND.ink,
+                      marginBottom: 6,
+                    }}
+                  >
+                    Referral Code (optional)
+                  </label>
+                  <input
+                    id="iqp-referral"
+                    type="text"
+                    placeholder="e.g. IQP-OLK01"
+                    value={referralCode}
+                    onChange={(e) => setReferralCode(e.target.value.toUpperCase())}
+                    style={{ ...inputStyle }}
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderColor = BRAND.accent;
+                      e.currentTarget.style.boxShadow =
+                        "0 0 0 3px rgba(245,158,11,0.15)";
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderColor = BRAND.border;
+                      e.currentTarget.style.boxShadow = "none";
+                    }}
+                  />
+                  <p
+                    style={{
+                      margin: "-10px 0 14px",
+                      fontSize: 11,
+                      color: BRAND.muted,
+                    }}
+                  >
+                    If a Campus Ambassador referred you, enter their code here.
+                  </p>
                   {error && (
                     <p
                       style={{

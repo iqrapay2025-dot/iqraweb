@@ -69,11 +69,11 @@ const STOCK_PHOTOS = [
   "https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?w=400&h=400&fit=crop",
 ];
 
-// The 7 uploaded ambassador portraits. They're explicitly assigned to the
-// first batch of unmapped cards (see AMBASSADOR_PHOTOS below), and any card
-// WITHOUT a dedicated photo automatically cycles through this set so the same
-// 7 images repeat across every remaining card. Kept as remote URL strings so
-// the build stays lean and the bundle isn't bloated with large portrait files.
+// Local campus photos cycled across cards that don't have a dedicated
+// upload. They're explicitly assigned to the first batch of cards below; any
+// card WITHOUT a mapped photo automatically cycles through this set so it
+// still shows a real image. Kept as local imports (no remote hot-links) so
+// every visitor sees the same photos reliably.
 const AMBASSADOR_IMAGES = [
   campus1,
   campus2,
@@ -84,10 +84,8 @@ const AMBASSADOR_IMAGES = [
 ];
 
 // Real ambassador photos, keyed by referral code. These override the stock
-// placeholders for the matching cards. Local imports are used for the first
-// three custom portraits; the seven remote portraits above are explicitly
-// assigned to the next seven cards. Every other card cycles through
-// AMBASSADOR_IMAGES (see the <img src={…} /> below).
+// images for matching cards. Any card WITHOUT a mapping falls back to the
+// cycling local set (see photoForCard below) — never an out-of-bounds value.
 const AMBASSADOR_PHOTOS: Record<string, string> = {
   "IQP-TOH11": toh11Photo,
   "IQP-AKI18": aki18Photo,
@@ -98,7 +96,6 @@ const AMBASSADOR_PHOTOS: Record<string, string> = {
   "IQP-ZAY04": AMBASSADOR_IMAGES[3],
   "IQP-MAI05": AMBASSADOR_IMAGES[4],
   "IQP-HAD07": AMBASSADOR_IMAGES[5],
-  "IQP-KHA08": AMBASSADOR_IMAGES[6],
   "IQP-LAW19": law19Photo,
 };
 
@@ -149,17 +146,45 @@ function ringForRank(rank: number): (typeof RING_CLASS)[number] {
 }
 
 // Resolve the exact portrait shown on the ambassador card for a referral code,
-// so every leaderboard circle displays the same image as its card. Reuses the
-// carousel's own sourcing (explicit photo -> cycling campus portfolio).
+// so every leaderboard circle displays the same image as its card.
 function photoForCode(code: string): string | null {
   const idx = AMBASSADORS.findIndex((a) => a.code === code);
   if (idx < 0) return null;
-  return (
-    AMBASSADOR_PHOTOS[code] ??
-    AMBASSADOR_IMAGES[idx % AMBASSADOR_IMAGES.length] ??
-    STOCK_PHOTOS[idx]
-  );
+  return photoForCard(code, idx);
 }
+
+// Bounds-safe portrait for both the carousel cards and the leaderboard.
+// An explicit mapping (by referral code) wins; otherwise a stable local photo
+// is cycled. Every fallback is length-guarded, so adding ambassadors or
+// swapping the photo set never yields a missing `src`.
+function photoForCard(code: string, index: number): string | null {
+  if (code) {
+    const mapped = AMBASSADOR_PHOTOS[code];
+    if (mapped) return mapped;
+  }
+  const safeIndex = Math.abs(index);
+  if (AMBASSADOR_IMAGES.length > 0) {
+    const campus = AMBASSADOR_IMAGES[safeIndex % AMBASSADOR_IMAGES.length];
+    if (campus) return campus;
+  }
+  if (STOCK_PHOTOS.length > 0) {
+    return STOCK_PHOTOS[safeIndex % STOCK_PHOTOS.length] ?? null;
+  }
+  return null;
+}
+
+// ——— Leaderboard fetch cache ———
+// The published CSV is refetched on a fixed interval and again whenever the
+// window regains focus. A thin in-memory guard stops rapid focus events from
+// fanning out concurrent requests to the same URL, and reuses a recent result
+// instead of re-parsing it (fewer hits, no redundant work for a static sheet).
+const LEADERBOARD_TTL_MS = 15_000;
+let leaderboardCache: {
+  url: string;
+  timestamp: number;
+  data: LeaderboardEntry[] | null;
+  inFlight: boolean;
+} | null = null;
 
 const LEADERBOARD_CSS = `
     .iqrapay-leaderboard {
@@ -786,11 +811,46 @@ export function CampusAmbassadorsPage({
   onNavigate,
 }: CampusAmbassadorsPageProps) {
     const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[] | null>(null);
+    // Remembers the data instance the leaderboard UI is currently showing, so
+    // TTL cache hits don't replay the same animation on every focus event.
+    const appliedLeaderboardRef = useRef<LeaderboardEntry[] | null>(null);
 
   // Load the weekly leaderboard from the published Google Sheet.
   useEffect(() => {
     let cancelled = false;
     async function loadLeaderboard() {
+      const now = Date.now();
+
+      // Reuse a freshly fetched result instead of re-hitting the CSV. This
+      // stops rapid focus / repeat events from fanning out duplicate requests
+      // to the same URL (and avoids re-parsing a static sheet).
+      if (
+        leaderboardCache &&
+        leaderboardCache.url === SHEET_URL &&
+        now - leaderboardCache.timestamp < LEADERBOARD_TTL_MS &&
+        leaderboardCache.data
+      ) {
+        if (
+          !cancelled &&
+          appliedLeaderboardRef.current !== leaderboardCache.data
+        ) {
+          appliedLeaderboardRef.current = leaderboardCache.data;
+          setLeaderboard(leaderboardCache.data);
+        }
+        return;
+      }
+
+      // Never stack concurrent fetches for the same URL. While one is in
+      // flight, later calls reuse the last-known value until it lands.
+      if (leaderboardCache?.inFlight) return;
+
+      leaderboardCache = {
+        url: SHEET_URL,
+        timestamp: now,
+        data: leaderboardCache?.data ?? null,
+        inFlight: true,
+      };
+
       try {
         const response = await fetch(SHEET_URL);
         const csv = await response.text();
@@ -821,9 +881,24 @@ export function CampusAmbassadorsPage({
           // are reordered or written out of sequence.
           .sort((a, b) => a.rank - b.rank);
 
-        if (!cancelled) setLeaderboard(data);
+        leaderboardCache = {
+          url: SHEET_URL,
+          timestamp: Date.now(),
+          data,
+          inFlight: false,
+        };
+        if (!cancelled) {
+          appliedLeaderboardRef.current = data;
+          setLeaderboard(data);
+        }
       } catch (error) {
         console.error("Leaderboard error:", error);
+        leaderboardCache = {
+          url: SHEET_URL,
+          timestamp: Date.now(),
+          data: null,
+          inFlight: false,
+        };
         if (!cancelled) setLeaderboard([]);
       }
     }
@@ -960,7 +1035,7 @@ export function CampusAmbassadorsPage({
                 <div className="ambassador-card" key={ambassador.code}>
                   <img
                     className="photo"
-                    src={AMBASSADOR_PHOTOS[ambassador.code] ?? AMBASSADOR_IMAGES[index % AMBASSADOR_IMAGES.length] ?? STOCK_PHOTOS[index]}
+                    src={photoForCard(ambassador.code, index) || undefined}
                     alt={ambassador.name}
                     loading="lazy"
                   />

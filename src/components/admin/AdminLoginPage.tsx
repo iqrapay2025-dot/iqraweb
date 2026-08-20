@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Lock, Mail } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -6,8 +6,14 @@ import { Label } from '../ui/label';
 import { Card } from '../ui/card';
 import { IslamicPattern } from '../IslamicPattern';
 import { useAuth } from '../../contexts/AuthContext';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import logoLight from "figma:asset/39ba4a0dd03e9a935003109f9573af3b0b10ff85.png";
+
+// Client-side brute-force guard. This app has no backend, so the login check
+// runs in the browser; we still slow down automated guessers by locking the
+// form for a short window after repeated failures.
+const MAX_ATTEMPTS = 5;
+const LOCK_DURATION_MS = 60_000;
 
 interface AdminLoginPageProps {
   onLoginSuccess: () => void;
@@ -18,19 +24,38 @@ export function AdminLoginPage({ onLoginSuccess, onNavigate }: AdminLoginPagePro
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const failedAttempts = useRef(0);
+  const [lockUntil, setLockUntil] = useState(0);
+  const locked = Date.now() < lockUntil;
   const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (locked) return;
+
     setIsLoading(true);
 
     try {
+      // Constant small delay: slows automated guessing and evens out response
+      // timing between valid and invalid attempts.
+      await new Promise((resolve) => setTimeout(resolve, 350));
       const success = await login(email, password);
       if (success) {
+        failedAttempts.current = 0;
         toast.success('Welcome back!');
         onLoginSuccess();
       } else {
-        toast.error('Invalid email or password. Please try again.');
+        failedAttempts.current += 1;
+        if (failedAttempts.current >= MAX_ATTEMPTS) {
+          failedAttempts.current = 0;
+          setLockUntil(Date.now() + LOCK_DURATION_MS);
+          toast.error(
+            `Too many failed attempts. Please wait ${LOCK_DURATION_MS / 1000}s and try again.`
+          );
+        } else {
+          toast.error('Invalid email or password. Please try again.');
+        }
       }
     } catch (error) {
       toast.error('An error occurred. Please try again.');
@@ -97,9 +122,13 @@ export function AdminLoginPage({ onLoginSuccess, onNavigate }: AdminLoginPagePro
               <Button
                 type="submit"
                 className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
-                disabled={isLoading}
+                disabled={isLoading || locked}
               >
-                {isLoading ? 'Signing in...' : 'Sign In'}
+                {locked
+                  ? `Locked — try again shortly`
+                  : isLoading
+                  ? 'Signing in...'
+                  : 'Sign In'}
               </Button>
             </form>
           </Card>

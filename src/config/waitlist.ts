@@ -15,7 +15,13 @@ export const GOOGLE_SHEETS_ENDPOINT = "https://script.google.com/macros/s/AKfycb
 // ===== 📋 Order of columns in your Sheet (must match header row) =====
 // The submit payload uses these keys. Align them with your Apps Script
 // parsing (see sample script below) and your Sheet's header row.
-export const SHEET_COLUMNS = ["Timestamp", "Name", "Email", "Source"] as const;
+export const SHEET_COLUMNS = [
+  "Timestamp",
+  "Name",
+  "Email",
+  "Source",
+  "Referral Code",
+] as const;
 
 /**
  * Sample Google Apps Script (paste into Extensions → Apps Script):
@@ -23,14 +29,16 @@ export const SHEET_COLUMNS = ["Timestamp", "Name", "Email", "Source"] as const;
  *   const SHEET_ID = "YOUR_SPREADSHEET_ID"; // <-- replace with your Sheet ID
  *
  *   function doPost(e) {
- *     const data = JSON.parse(e.postData.contents || "{}");
- *     const ss = SpreadsheetApp.openById(SHEET_ID);
- *     const sheet = ss.getSheetByName("Sheet1") || ss.getActiveSheet();
+ *     var data = JSON.parse(e.postData.contents || "{}");
+ *     var referralCode = data.referralCode || "";
+ *     var ss = SpreadsheetApp.openById(SHEET_ID);
+ *     var sheet = ss.getSheetByName("Waitlist Responses") || ss.getActiveSheet();
  *     sheet.appendRow([
  *       new Date(),
  *       data.fullName || "",
  *       data.email || "",
  *       data.source || "",
+ *       referralCode, // written to the "Referral Code" column (F in the sheet)
  *     ]);
  *     return ContentService
  *       .createTextOutput(JSON.stringify({ success: true }))
