@@ -732,7 +732,7 @@ function LeaderboardContent({
               <div className="p-name">{a.name}</div>
               <div className="p-xp">
                 <i className="fas fa-star" aria-hidden="true" />
-                {a.referrals} XP
+                {a.posts} posts · {a.referrals} referrals
               </div>
               <div className="podium-base">{label}</div>
             </motion.div>
@@ -769,7 +769,7 @@ function LeaderboardContent({
               </div>
               <div className="r-xp">
                 <i className="fas fa-star" aria-hidden="true" />
-                {a.referrals} XP
+                {a.posts} posts · {a.referrals} referrals
               </div>
             </motion.div>
           );
