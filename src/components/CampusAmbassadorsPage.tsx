@@ -570,6 +570,86 @@ const CAROUSEL_CSS = `
   }
 `;
 
+// Dark-theme overrides for the Campus Ambassadors page.
+// The page is driven by the global `.dark` class (toggled in App.tsx), so
+// these rules only take effect when dark mode is active. Neutrals reference the
+// theme variables defined in globals.css (already dark-aware) and the brand
+// teal / cocoa map to the dark-aware --primary / --secondary. Gold is left
+// untouched — it reads well on dark surfaces. These overrides are rendered
+// AFTER the page's own style blocks so cascade order resolves correctly, and
+// the rank-specific rules use higher specificity than the blanket ones so the
+// 1st (teal) / 2nd (cocoa) / 3rd (gold) badge colours are preserved.
+const DARK_MODE_CSS = `
+  /* ===== Hero / stats ===== */
+  .dark .hero .badge {
+    border-color: rgba(216, 165, 2, 0.28);
+    background: rgba(216, 165, 2, 0.13);
+    color: #fbbf24;
+  }
+  .dark .hero h1 { color: var(--foreground); }
+  .dark .hero h1 .accent { color: var(--primary); }
+  .dark .hero .lede { color: var(--muted-foreground); }
+  .dark .stat-pill {
+    background: rgba(0, 171, 171, 0.14);
+    color: var(--primary);
+  }
+  .dark .stat-pill .num { color: var(--primary); }
+
+  /* ===== Ambassador carousel ===== */
+  .dark .ambassador-card {
+    background: var(--card);
+    border-color: var(--border);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.34);
+  }
+  .dark .ambassador-card .photo { background-color: rgba(0, 171, 171, 0.15); }
+  .dark .ambassador-card .quote-mark { color: var(--primary); }
+  .dark .ambassador-card .code { color: var(--foreground); }
+  .dark .ambassador-card .name {
+    color: var(--muted-foreground);
+    border-top-color: var(--border);
+  }
+  .dark .ambassador-card .name strong { color: var(--foreground); }
+  .dark .ambassador-ctrl-btn {
+    border-color: var(--border);
+    background: var(--card);
+  }
+  .dark .ambassador-ctrl-btn svg path { stroke: var(--foreground); }
+  .dark .ambassador-dot { background: rgba(255, 255, 255, 0.3); }
+  .dark .ambassador-dot.active { background: var(--primary); }
+
+  /* ===== Leaderboard ===== */
+  .dark .lb-empty,
+  .dark .lb-loading { color: var(--muted-foreground); }
+  .dark .podium-step {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%);
+  }
+  .dark .avatar-ring { --ring: #6b7280; }
+  .dark .avatar-ring.gold   { --ring: #C8922B; }
+  .dark .avatar-ring.teal   { --ring: var(--primary); }
+  .dark .avatar-ring.cocoa  { --ring: var(--secondary); }
+  .dark .crown { filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.55)); }
+  .dark .p-name { color: var(--foreground); }
+  .dark .p-xp { color: var(--muted-foreground); }
+  .dark .podium-base { color: var(--muted-foreground); }
+  .dark .rank-row {
+    background: var(--card);
+    border-color: var(--border);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.32);
+  }
+  .dark .rank-row:hover { box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); }
+  .dark .r-num { --bg: #6b7280; }
+  .dark .rank-1 .r-num { --bg: var(--primary); }
+  .dark .rank-2 .r-num { --bg: var(--secondary); }
+  .dark .rank-3 .r-num { --bg: #C8922B; }
+  .dark .r-avatar { --ring: #6b7280; }
+  .dark .r-avatar.gold   { --ring: #C8922B; }
+  .dark .r-avatar.teal   { --ring: var(--primary); }
+  .dark .r-avatar.cocoa  { --ring: var(--secondary); }
+  .dark .r-name { color: var(--foreground); }
+  .dark .r-school { color: var(--muted-foreground); }
+  .dark .r-xp { color: var(--foreground); }
+`;
+
 const HERO_CSS = `
   .hero {
     max-width: 720px;
@@ -980,7 +1060,7 @@ export function CampusAmbassadorsPage({
   return (
     <div className="min-h-screen pt-24 pb-16">
       {/* ===== Section 1 — Our Campus Ambassadors ===== */}
-      <section className="relative px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 pb-14 sm:pb-20 bg-[#F9F9F9] overflow-hidden">
+      <section className="relative px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 pb-14 sm:pb-20 bg-[#F9F9F9] dark:bg-background overflow-hidden">
         <IslamicPattern />
         <div className="max-w-7xl mx-auto relative z-10">
           {/* ===== Hero ===== */}
@@ -1137,6 +1217,7 @@ export function CampusAmbassadorsPage({
       <style>{LEADERBOARD_CSS}</style>
       <style>{HERO_CSS}</style>
       <style>{CAROUSEL_CSS}</style>
+      <style>{DARK_MODE_CSS}</style>
     </div>
   );
 }
