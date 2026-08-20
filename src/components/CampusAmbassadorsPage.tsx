@@ -5,6 +5,7 @@ import { Footer } from "./Footer";
 import toh11Photo from "../assets/ambassador-toh11.jpeg";
 import aki18Photo from "../assets/ambassador-aki18.jpeg";
 import ade06Photo from "../assets/ambassador-ade06.jpeg";
+import law19Photo from "../assets/951948440012770967.jpeg";
 // Locally-imported uploads reused (cycled) across the cards that don't have a
 // dedicated photo. (Remote hot-links were avoided so the images reliably render.)
 import campus1 from "../assets/campus-photo-1.jpg";
@@ -42,6 +43,7 @@ const AMBASSADORS = [
   { name: "Aderinoye Suliyat", school: "University of Ilorin", code: "IQP-ADR16" },
   { name: "Zainab MuhammadAwwal", school: "University of Ilorin", code: "IQP-ZAM17" },
   { name: "Akindele Abdur-Rahman Ayomide", school: "Adekunle Ajasin University Akungba", code: "IQP-AKI18" },
+  { name: "Lawal Fawaz", school: "University of Lagos State Science and Technology", code: "IQP-LAW19" },
 ];
 
 // Placeholder portrait photos for the carousel cards (one per ambassador,
@@ -97,10 +99,11 @@ const AMBASSADOR_PHOTOS: Record<string, string> = {
   "IQP-MAI05": AMBASSADOR_IMAGES[4],
   "IQP-HAD07": AMBASSADOR_IMAGES[5],
   "IQP-KHA08": AMBASSADOR_IMAGES[6],
+  "IQP-LAW19": law19Photo,
 };
 
 const STATS = [
-  { value: "18+", label: "Ambassadors" },
+  { value: "19+", label: "Ambassadors" },
   { value: "Multiple", label: "Campuses" },
   { value: "1", label: "Mission" },
 ];
