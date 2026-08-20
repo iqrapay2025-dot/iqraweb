@@ -249,6 +249,7 @@ export function TestimonialCarousel() {
           variant="outline"
           size="icon"
           onClick={prevSlide}
+          aria-label="Previous testimonial"
           className="pointer-events-auto bg-background/80 backdrop-blur-sm hover:bg-primary hover:text-primary-foreground transition-all duration-300 shadow-lg border-2 -ml-4 md:-ml-12"
         >
           <ChevronLeft className="h-5 w-5" />
@@ -257,6 +258,7 @@ export function TestimonialCarousel() {
           variant="outline"
           size="icon"
           onClick={nextSlide}
+          aria-label="Next testimonial"
           className="pointer-events-auto bg-background/80 backdrop-blur-sm hover:bg-primary hover:text-primary-foreground transition-all duration-300 shadow-lg border-2 -mr-4 md:-mr-12"
         >
           <ChevronRight className="h-5 w-5" />

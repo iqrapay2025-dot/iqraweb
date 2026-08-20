@@ -101,7 +101,7 @@ const AMBASSADOR_PHOTOS: Record<string, string> = {
 
 const STATS = [
   { value: "19+", label: "Ambassadors" },
-  { value: "Multiple", label: "Campuses" },
+  { value: "13", label: "Schools" },
   { value: "1", label: "Mission" },
 ];
 

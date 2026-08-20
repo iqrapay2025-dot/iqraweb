@@ -113,9 +113,12 @@ export function HomePage({ onNavigate }: HomePageProps) {
             >
               <div className="relative rounded-2xl overflow-hidden shadow-2xl">
                 <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1721744687343-788d031da8b9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxxdXJhbiUyMGJvb2slMjBpc2xhbWljfGVufDF8fHx8MTc2MDQ5MDI1NXww&ixlib=rb-4.1.0&q=80&w=1080"
+                  src="https://images.unsplash.com/photo-1721744687343-788d031da8b9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxxdXJhbiUyMGJvb2slMjBpc2xhbWljfGVufDF8fHx8MTc2MDQ5MDI1NXww&ixlib=rb-4.1.0&q=80&w=760"
                   alt="Quran and Islamic learning"
                   className="w-full h-[500px] object-cover"
+                  width="570"
+                  height="760"
+                  fetchPriority="high"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
               </div>

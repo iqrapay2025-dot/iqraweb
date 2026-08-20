@@ -37,6 +37,8 @@ export function Footer({ onNavigate }: FooterProps) {
               src={logoDark}
               alt="IqraPay Logo"
               className="h-10 w-auto mb-4"
+              width="618"
+              height="404"
             />
             <p className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-foreground/80 mb-4">
               {t('footer.tagline')}
@@ -48,7 +50,7 @@ export function Footer({ onNavigate }: FooterProps) {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-display font-medium text-accent dark:text-primary text-[16px] mb-3">{t('footer.quickLinks')}</h4>
+            <h3 className="font-display font-medium text-accent dark:text-primary text-[16px] mb-3">{t('footer.quickLinks')}</h3>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.page}>
@@ -77,7 +79,7 @@ export function Footer({ onNavigate }: FooterProps) {
 
           {/* Contact Info */}
           <div>
-            <h4 className="font-display font-medium text-accent dark:text-primary text-[16px] mb-3">{t('footer.connect')}</h4>
+            <h3 className="font-display font-medium text-accent dark:text-primary text-[16px] mb-3">{t('footer.connect')}</h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-2">
                 <Mail className="w-5 h-5 mt-0.5 flex-shrink-0 text-accent dark:text-primary" />
@@ -100,7 +102,7 @@ export function Footer({ onNavigate }: FooterProps) {
 
           {/* Social & Newsletter */}
           <div>
-            <h4 className="font-display font-medium text-accent dark:text-primary text-[16px] mb-3">{t('footer.connect')}</h4>
+            <h3 className="font-display font-medium text-accent dark:text-primary text-[16px] mb-3">{t('footer.connect')}</h3>
             <div className="flex gap-3 mb-6">
               {socialLinks.map((social) => {
                 const Icon = social.icon;

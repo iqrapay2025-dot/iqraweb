@@ -76,6 +76,8 @@ export function Navigation({ currentPage, onNavigate, darkMode, toggleDarkMode }
               src={darkMode ? logoDark : logoLight} 
               alt="IqraPay Logo" 
               className="h-10 w-auto"
+              width="666"
+              height="435"
             />
           </div>
 
@@ -112,6 +114,7 @@ export function Navigation({ currentPage, onNavigate, darkMode, toggleDarkMode }
             <button
               className="md:hidden p-2 rounded-lg hover:bg-muted"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             >
               {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
