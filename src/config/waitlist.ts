@@ -30,18 +30,49 @@ export const SHEET_COLUMNS = [
  *
  *   function doPost(e) {
  *     var data = JSON.parse(e.postData.contents || "{}");
- *     var referralCode = data.referralCode || "";
+ *     // Normalised copies are used ONLY for duplicate comparison; the row is
+ *     // still stored exactly as submitted.
+ *     var emailNorm = String(data.email || "").trim().toLowerCase();
+ *     var nameNorm = String(data.fullName || "").trim().toLowerCase();
+ *
  *     var ss = SpreadsheetApp.openById(SHEET_ID);
  *     var sheet = ss.getSheetByName("Waitlist Responses") || ss.getActiveSheet();
+ *     var lastRow = sheet.getLastRow();
+ *
+ *     // CHECK 1 — Email (column C)
+ *     if (lastRow > 1) {
+ *       var emails = sheet.getRange(2, 3, lastRow - 1, 1).getValues();
+ *       for (var i = 0; i < emails.length; i++) {
+ *         if (String(emails[i][0]).trim().toLowerCase() === emailNorm) {
+ *           return jsonResponse({ "result": "duplicate_email" });
+ *         }
+ *       }
+ *     }
+ *
+ *     // CHECK 2 — Name (column B), only reached when the email is new
+ *     if (lastRow > 1) {
+ *       var names = sheet.getRange(2, 2, lastRow - 1, 1).getValues();
+ *       for (var j = 0; j < names.length; j++) {
+ *         if (String(names[j][0]).trim().toLowerCase() === nameNorm) {
+ *           return jsonResponse({ "result": "duplicate_name" });
+ *         }
+ *       }
+ *     }
+ *
+ *     // Neither duplicate → append the row normally
  *     sheet.appendRow([
  *       new Date(),
  *       data.fullName || "",
  *       data.email || "",
  *       data.source || "",
- *       referralCode, // written to the "Referral Code" column (F in the sheet)
+ *       data.referralCode || "", // written to the "Referral Code" column (E)
  *     ]);
+ *     return jsonResponse({ "result": "success" });
+ *   }
+ *
+ *   function jsonResponse(obj) {
  *     return ContentService
- *       .createTextOutput(JSON.stringify({ success: true }))
+ *       .createTextOutput(JSON.stringify(obj))
  *       .setMimeType(ContentService.MimeType.JSON);
  *   }
  *
@@ -49,6 +80,10 @@ export const SHEET_COLUMNS = [
  *   - Execute as: Me
  *   - Who has access: Anyone, even anonymous  (enables cross-origin POST)
  *   - Copy the *Web app URL* (ends in /exec) into GOOGLE_SHEETS_ENDPOINT.
+ *   - After EDITING an existing script (e.g. adding these duplicate checks),
+ *     Deploy → Manage deployments → ✏️ → Version: New version → Deploy.
+ *     The live /exec URL keeps running the old code until a new version is
+ *     published.
  *
  *  Debug if the form fails to submit:
  *   - The published URL must end in "/exec" (not "/dev" or the editor URL).

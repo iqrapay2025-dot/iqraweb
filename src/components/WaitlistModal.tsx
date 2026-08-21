@@ -136,11 +136,30 @@ export function WaitlistModal({
         result = {};
       }
 
-      if (response.ok && result.success !== false) {
-        setSubmitted(true);
-        toast.success(t("waitlist.successTitle"), {
-          description: t("waitlist.successMessage"),
-        });
+      // Apps Script responses: "duplicate_email" / "duplicate_name" keep the
+      // form open with an explanation via setError (the row was NOT saved);
+      // "success" shows the normal success state. Non-ok responses fall
+      // through to the error branch below.
+      if (response.ok) {
+        if (result.result === "duplicate_email") {
+          setError(
+            "This email address is already on our waitlist. JazakAllahu khayran — you are already registered. 🌿"
+          );
+          return;
+        }
+        if (result.result === "duplicate_name") {
+          setError(
+            "This name is already on our waitlist. If this is you, JazakAllahu khayran — you are already registered. If you are a different person, please contact us at iqrapay2025@gmail.com 🌿"
+          );
+          return;
+        }
+        if (result.result === "success") {
+          setSubmitted(true);
+          toast.success(t("waitlist.successTitle"), {
+            description: t("waitlist.successMessage"),
+          });
+          return;
+        }
       } else {
         // Surface the real HTTP status so CORS/script errors are diagnosable
         const detail =

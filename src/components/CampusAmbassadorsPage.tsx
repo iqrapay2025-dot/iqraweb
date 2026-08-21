@@ -50,7 +50,7 @@ const AMBASSADORS = [
   { name: "Lawal Fawaz", school: "University of Lagos State Science and Technology", code: "IQP-LAW19" },
   { name: "Adebayo Sekinah Asabi", school: "University of Ibadan", code: "IQP-SEK20" },
   { name: "Amidu Balikis Omotoyosi", school: "University of Ilorin", code: "IQP-BAL21" },
-  { name: "Sulayman Faridah Kehinde", school: "University of Ilorin", code: "IQP-FAR22" },
+  { name: "Sulayman Faridah Kehinde", school: "University of Ilorin", code: "IQP-FAR21" },
 ];
 
 // Placeholder portrait photos for the carousel cards (one per ambassador,
