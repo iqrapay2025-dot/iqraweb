@@ -10,7 +10,7 @@
  */
 
 // ===== 🔗 Paste your Google Apps Script Web App URL here =====
-export const GOOGLE_SHEETS_ENDPOINT = "https://script.google.com/macros/s/AKfycbyWJ5qJPf3Yt1UwmaoRmPTHkLDeSqdV8QU5-tEtxLeVqTpu42AjbuU79MNeflJBuI8Lzg/exec";
+export const GOOGLE_SHEETS_ENDPOINT = "https://script.google.com/macros/s/AKfycbwUzAgt8TpnD-Y418kHeFHktPcanmo4NRqyNcCKR9-iZ5nm1Sc2W_956ik6L59XbRtO/exec";
 
 // ===== 📋 Order of columns in your Sheet (must match header row) =====
 // The submit payload uses these keys. Align them with your Apps Script
