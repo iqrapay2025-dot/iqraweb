@@ -30,6 +30,7 @@ import { IqraPayLoader } from "./components/IqraPayLoader";
 import { WaitlistModal } from "./components/WaitlistModal";
 import { Button } from "./components/ui/button";
 import { Menu } from "lucide-react";
+import { Analytics } from "@vercel/analytics/react";
 
 function AppContent() {
   const [currentPage, setCurrentPage] = useState(() => {
@@ -359,12 +360,16 @@ function AppContent() {
 
 export default function App() {
   return (
-    <LanguageProvider>
-      <AuthProvider>
-        <BlogProvider>
-          <AppContent />
-        </BlogProvider>
-      </AuthProvider>
-    </LanguageProvider>
+    <>
+      <LanguageProvider>
+        <AuthProvider>
+          <BlogProvider>
+            <AppContent />
+          </BlogProvider>
+        </AuthProvider>
+      </LanguageProvider>
+      {/* Vercel Web Analytics: tracks page views across every route */}
+      <Analytics />
+    </>
   );
 }

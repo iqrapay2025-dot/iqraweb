@@ -76,3 +76,6 @@ nul
 # stay tracked — only the unused/duplicate downloads below are excluded.
 75ca8820235f4d981525664871ceab2d.png
 *.jpg.jpeg
+
+# Vercel CLI local project settings (linked project/org IDs)
+.vercel/
