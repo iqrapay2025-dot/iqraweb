@@ -237,7 +237,7 @@ export function WaitlistModal({
 
             <button
               type="button"
-              onClick={() => onOpenChange(false)}
+              onClick={() => handleOpenChange(false)}
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -560,7 +560,7 @@ export function WaitlistModal({
                 </a>
                 <button
                   type="button"
-                  onClick={() => onOpenChange(false)}
+                  onClick={() => handleOpenChange(false)}
                   style={{
                     marginTop: 18,
                     width: "100%",
