@@ -420,18 +420,64 @@ const LEADERBOARD_CSS = `
   }
 
   @media (max-width: 639px) {
-    .podium-row { gap: 14px; }
-    .avatar-ring { width: 78px; height: 78px; }
-    .podium-spot.first .avatar-ring { width: 94px; height: 94px; }
-    .podium-step { width: 110px; }
+    /* — Responsive podium —
+       Each spot is pinned to exactly one third of the row (minus the gap),
+       so the trio can never overflow the container or drift off-centre on
+       narrow viewports. Steps and rings scale fluidly below their desktop
+       caps instead of using fixed pixel widths. */
+    .iqrapay-leaderboard { padding: 0 4px; }
+    .podium-row {
+      gap: clamp(6px, 2.5vw, 14px);
+      max-width: 100%;
+    }
+    .podium-spot {
+      flex: 1 1 0;
+      min-width: 0;
+      max-width: calc((100% - 2 * clamp(6px, 2.5vw, 14px)) / 3);
+    }
+    .podium-step {
+      width: 100%;
+      max-width: 110px;
+    }
+    .avatar-ring {
+      width: clamp(58px, 20vw, 78px);
+      height: clamp(58px, 20vw, 78px);
+    }
+    .podium-spot.first .avatar-ring {
+      width: clamp(70px, 24vw, 94px);
+      height: clamp(70px, 24vw, 94px);
+    }
     .podium-spot.first  .podium-step { height: 36px; }
     .podium-spot.second .podium-step { height: 24px; }
     .podium-spot.third  .podium-step { height: 12px; }
-    .crown { font-size: 20px; top: -9px; }
-    .podium-spot.first .crown { font-size: 22px; top: -10px; }
-    .p-name { font-size: 14px; }
-    .r-num { width: 28px; height: 28px; font-size: 12px; }
-    .r-avatar { width: 36px; height: 36px; }
+    .crown { font-size: 18px; top: -8px; }
+    .podium-spot.first .crown { font-size: 20px; top: -9px; }
+    /* Long names ellipsize inside their spot instead of stretching the
+       podium past the screen edge (base rule keeps white-space: nowrap). */
+    .p-name {
+      font-size: clamp(11.5px, 3.4vw, 14px);
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .p-xp { font-size: clamp(10px, 2.9vw, 12px); }
+
+    /* — Rank rows —
+       Tighten the chrome so the name/school column keeps room to breathe
+       next to the XP badge on small screens. */
+    .rank-row { gap: 9px; padding: 9px 10px; }
+    .r-num { width: 26px; height: 26px; font-size: 12px; }
+    .r-avatar { width: 32px; height: 32px; }
+    .r-xp { font-size: 11.5px; gap: 3px; }
+  }
+
+  /* Very narrow phones: shrink the podium further so nothing ever clips. */
+  @media (max-width: 360px) {
+    .podium-row { gap: 5px; }
+    .podium-step { max-width: none; }
+    .avatar-ring { width: 54px; height: 54px; }
+    .podium-spot.first .avatar-ring { width: 66px; height: 66px; }
+    .p-xp { font-size: 10px; }
   }
 `;
 
