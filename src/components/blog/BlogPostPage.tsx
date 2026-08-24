@@ -1,5 +1,5 @@
 import { ArrowLeft, Calendar, Clock, User, Share2, Facebook, Twitter, Linkedin } from 'lucide-react';
-import { Footer } from '../Footer';
+
 import { IslamicPattern } from '../IslamicPattern';
 import { BlogPost } from '../../types/blog';
 import { Button } from '../ui/button';
@@ -205,7 +205,7 @@ export function BlogPostPage({ post, onNavigate, onBack }: BlogPostPageProps) {
         </article>
       </div>
 
-      <Footer onNavigate={onNavigate} />
+      
     </div>
   );
 }

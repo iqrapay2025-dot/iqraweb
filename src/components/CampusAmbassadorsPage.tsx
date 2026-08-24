@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { IslamicPattern } from "./IslamicPattern";
-import { Footer } from "./Footer";
+
 import { useLanguage } from "../contexts/LanguageContext";
 import toh11Photo from "../assets/ambassador-toh11.jpeg";
 import aki18Photo from "../assets/ambassador-aki18.jpeg";
@@ -478,6 +478,7 @@ const LEADERBOARD_CSS = `
     .avatar-ring { width: 54px; height: 54px; }
     .podium-spot.first .avatar-ring { width: 66px; height: 66px; }
     .p-xp { font-size: 10px; }
+    .r-xp { white-space: normal; line-height: 1.35; }
   }
 `;
 
@@ -1270,7 +1271,7 @@ export function CampusAmbassadorsPage({
         </div>
       </section>
 
-      <Footer onNavigate={onNavigate} />
+      
 
       <style>{LEADERBOARD_CSS}</style>
       <style>{HERO_CSS}</style>

@@ -11,7 +11,7 @@ import {
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { IslamicPattern } from "./IslamicPattern";
-import { Footer } from "./Footer";
+
 import { motion } from "motion/react";
 import { AmbassadorCarousel } from "./AmbassadorCarousel";
 import { mockAmbassadors } from "../data/mockAmbassadors";
@@ -410,7 +410,7 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
         </div>
       </section>
 
-      <Footer onNavigate={onNavigate} />
+      
     </div>
   );
 }

@@ -451,3 +451,10 @@ html {
   }
 }
 
+/* Global image safety: an image can never force a page wider than the
+   viewport, and keeps its aspect ratio when a width/height is constrained. */
+img {
+  max-width: 100%;
+  /* height: auto; */
+}
+

@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { IslamicPattern } from "./IslamicPattern";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { Footer } from "./Footer";
+
 import { TestimonialCarousel } from "./TestimonialCarousel";
 import { motion } from "motion/react";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -118,7 +118,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                   className="w-full h-[500px] object-cover"
                   width="570"
                   height="760"
-                  fetchPriority="high"
+                  // fetchpriority="high"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
               </div>
@@ -327,7 +327,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
-      <Footer onNavigate={onNavigate} />
+      
     </div>
   );
 }

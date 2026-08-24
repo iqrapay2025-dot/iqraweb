@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "./ui/tabs";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { Footer } from "./Footer";
+
 import { motion } from "motion/react";
 
 interface BlogPageProps {
@@ -252,7 +252,7 @@ export function BlogPage({ onNavigate }: BlogPageProps) {
         </div>
       </section>
 
-      <Footer onNavigate={onNavigate} />
+      
     </div>
   );
 }

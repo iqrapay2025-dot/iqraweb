@@ -3,7 +3,7 @@ import { UserPlus, BookOpen, Award, Wallet, TrendingUp, Shield, CheckCircle2, Ta
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { IslamicPattern } from "./IslamicPattern";
-import { Footer } from "./Footer";
+
 import { motion } from "motion/react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { openWaitlist } from "./WaitlistModal";
@@ -317,7 +317,7 @@ export function HowItWorksPage({ onNavigate }: HowItWorksPageProps) {
         </div>
       </section>
 
-      <Footer onNavigate={onNavigate} />
+      
     </div>
   );
 }

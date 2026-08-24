@@ -43,29 +43,35 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     setLanguageState(lang);
   };
 
-  // Translation function
+  // Translation function.
+  // Resolves a dotted key ("home.universityTitle") against the active language.
+  // If the key is missing in the active language (or resolves to an empty
+  // string), it transparently falls back to the English translation so the
+  // raw key is never shown to visitors. Only if the key is missing from
+  // English too does it return the key itself.
   const t = (key: string): string => {
     const keys = key.split('.');
-    let value: any = translations[language];
-    
-    for (const k of keys) {
-      if (value && typeof value === 'object') {
-        value = value[k];
-      } else {
-        // Fallback to English if translation not found
-        value = translations.en;
-        for (const fallbackKey of keys) {
-          if (value && typeof value === 'object') {
-            value = value[fallbackKey];
-          } else {
-            return key; // Return key if not found
-          }
+
+    const lookupIn = (source: any): string | undefined => {
+      let value = source;
+      for (const k of keys) {
+        // Only descend when the key actually exists and the parent is an
+        // object — otherwise treat the chain as "not found" for a full
+        // English fallback.
+        if (value && typeof value === 'object' && k in value) {
+          value = value[k];
+        } else {
+          return undefined;
         }
-        return value || key;
       }
-    }
-    
-    return value || key;
+      return typeof value === 'string' && value.length > 0 ? value : undefined;
+    };
+
+    return (
+      lookupIn(translations[language]) ||
+      lookupIn(translations.en) ||
+      key
+    );
   };
 
   return (

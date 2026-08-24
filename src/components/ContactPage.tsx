@@ -6,7 +6,7 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Label } from "./ui/label";
 import { IslamicPattern } from "./IslamicPattern";
-import { Footer } from "./Footer";
+
 import { motion } from "motion/react";
 import { toast } from "sonner";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -369,7 +369,7 @@ export function ContactPage({ darkMode = false, onNavigate }: ContactPageProps =
         </div>
       </section>
 
-      <Footer onNavigate={onNavigate} />
+      
     </div>
   );
 }

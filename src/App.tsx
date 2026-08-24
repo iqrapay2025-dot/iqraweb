@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Navigation } from "./components/Navigation";
+import { Footer } from "./components/Footer";
 import { HomePage } from "./components/HomePage";
 import { AboutPage } from "./components/AboutPage";
 import { HowItWorksPage } from "./components/HowItWorksPage";
@@ -337,7 +338,7 @@ function AppContent() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen flex flex-col overflow-x-hidden bg-background text-foreground">
       {!isAdminPage && !isLoginPage && (
         <Navigation
           currentPage={currentPage}
@@ -346,7 +347,8 @@ function AppContent() {
           toggleDarkMode={toggleDarkMode}
         />
       )}
-      <main>{renderPage()}</main>
+      <main className="flex-1">{renderPage()}</main>
+      {!isAdminPage && !isLoginPage && <Footer onNavigate={handleNavigate} />}
       {!isAdminPage && !isLoginPage && <ScrollToTop />}
       <WaitlistModal
         open={waitlistOpen}

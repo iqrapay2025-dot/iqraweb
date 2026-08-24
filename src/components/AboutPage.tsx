@@ -2,7 +2,7 @@ import { Target, Eye, Sparkles, CheckCircle } from "lucide-react";
 import { Card } from "./ui/card";
 import { IslamicPattern } from "./IslamicPattern";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { Footer } from "./Footer";
+
 import { motion } from "motion/react";
 import { TeamCarousel, TeamMember } from "./TeamCarousel";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -312,7 +312,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
         </div>
       </section>
 
-      <Footer onNavigate={onNavigate} />
+      
     </div>
   );
 }

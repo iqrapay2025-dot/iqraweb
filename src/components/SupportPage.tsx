@@ -6,7 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "./ui/accordion";
-import { Footer } from "./Footer";
+
 
 interface SupportPageProps {
   darkMode?: boolean;
@@ -98,7 +98,7 @@ export function SupportPage({
         </div>
       </section>
 
-      <Footer onNavigate={onNavigate} />
+      
     </div>
   );
 }

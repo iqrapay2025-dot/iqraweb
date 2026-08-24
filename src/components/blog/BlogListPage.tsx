@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Search } from 'lucide-react';
 import { BlogCard } from './BlogCard';
-import { Footer } from '../Footer';
+
 import { IslamicPattern } from '../IslamicPattern';
 import { NewsletterSubscribe } from '../NewsletterSubscribe';
 import { blogCategories } from '../../data/mockBlogPosts';
@@ -106,7 +106,7 @@ export function BlogListPage({ onNavigate, onNavigateToPost }: BlogListPageProps
       {/* Newsletter Subscription */}
       <NewsletterSubscribe />
 
-      <Footer onNavigate={onNavigate} />
+      
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { Footer } from "./Footer";
+
 import { ArrowLeft } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
@@ -429,7 +429,7 @@ export function TermsOfServicePage({ onNavigate }: TermsOfServicePageProps) {
         </Card>
       </div>
 
-      <Footer onNavigate={onNavigate} />
+      
     </div>
   );
 }
