@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Loader2 } from "lucide-react";
 import { Dialog, DialogContent } from "./ui/dialog";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -39,6 +39,7 @@ export function WaitlistModal({
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [referralCode, setReferralCode] = useState("");
+  const [referralAutoFilled, setReferralAutoFilled] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
@@ -49,6 +50,21 @@ export function WaitlistModal({
   // posts (there's no server-side throttle), so we enforce a small cooldown
   // here to discourage bots from flooding the sheet.
   const RATE_LIMIT_MS = 5000;
+
+  // Auto-fill referral code from the UTM link ambassadors share
+  // (?utm_content=IQP-XXX##) so visitors don't have to type it manually.
+  // Runs whenever the modal opens; reads the query string at that moment.
+  // Won't overwrite a code the visitor already typed themselves.
+  useEffect(() => {
+    if (!open) return;
+    const params = new URLSearchParams(window.location.search);
+    const utmContent = params.get("utm_content");
+    if (utmContent && !referralCode) {
+      setReferralCode(utmContent.toUpperCase());
+      setReferralAutoFilled(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
 
   // Normalize the configured endpoint: accepts either a full Web App URL
   // (https://script.google.com/macros/s/<ID>/exec) OR a bare Apps Script ID.
@@ -64,6 +80,7 @@ export function WaitlistModal({
     setName("");
     setEmail("");
     setReferralCode("");
+    setReferralAutoFilled(false);
     setSubmitted(false);
     setError("");
     setBotField("");
@@ -403,8 +420,11 @@ export function WaitlistModal({
                     type="text"
                     placeholder="e.g. IQP-OLK01"
                     value={referralCode}
-                    onChange={(e) => setReferralCode(e.target.value.toUpperCase())}
-                    style={{ ...inputStyle }}
+                    onChange={(e) => {
+                      setReferralCode(e.target.value.toUpperCase());
+                      setReferralAutoFilled(false);
+                    }}
+                    style={{ ...inputStyle, marginBottom: 6 }}
                     onFocus={(e) => {
                       e.currentTarget.style.borderColor = BRAND.accent;
                       e.currentTarget.style.boxShadow =
@@ -415,9 +435,21 @@ export function WaitlistModal({
                       e.currentTarget.style.boxShadow = "none";
                     }}
                   />
+                  {referralAutoFilled && (
+                    <p
+                      style={{
+                        margin: "-2px 0 8px",
+                        fontSize: 11,
+                        color: BRAND.primary,
+                        fontWeight: 600,
+                      }}
+                    >
+                      ✓ Referral code applied
+                    </p>
+                  )}
                   <p
                     style={{
-                      margin: "-10px 0 14px",
+                      margin: "-2px 0 14px",
                       fontSize: 11,
                       color: BRAND.muted,
                     }}
