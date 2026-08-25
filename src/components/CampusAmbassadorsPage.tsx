@@ -36,11 +36,11 @@ const AMBASSADORS = [
   { name: "Zaynab Adenike Hassan", school: "University of Lagos", code: "IQP-ZAY04" },
   { name: "Maimunah Mustapha", school: "University of Ilorin", code: "IQP-MAI05" },
   { name: "Adewuyi Abdulgafar", school: "FUHSI", code: "IQP-ADE06" },
-  { name: "Hadiyyatullaah Ajibola", school: "University of Medical Sciences Ondo", code: "IQP-HAD07" },
+  { name: "Hadiyyatullaah Ajibola", school: "University of Medical Sciences, Ondo", code: "IQP-HAD07" },
   { name: "Khadijah Adeniran", school: "College of Medicine UNILAG", code: "IQP-KHA08" },
   { name: "Rofiah Abdulganiyu", school: "College of Nursing Science NOH Igbobi", code: "IQP-ROF09" },
   { name: "Kamaldeen Uswat Hassanat", school: "Abiola Ajimobi Technical University", code: "IQP-KAM10" },
-  { name: "Toheeb Ayomide Lawal", school: "Kwara State University Malete", code: "IQP-TOH11" },
+  { name: "Toheeb Ayomide Lawal", school: "Kwara State University, Malete", code: "IQP-TOH11" },
   { name: "Rodiyya Ismail", school: "University of Ilorin", code: "IQP-ROD12" },
   { name: "Sheu Salamot", school: "College of Nursing Sciences Eleyele Ibadan", code: "IQP-SHE13" },
   { name: "Abdulkareem Rodiyah Kehinde", school: "Lagos State University of Education", code: "IQP-ABD14" },
@@ -52,7 +52,7 @@ const AMBASSADORS = [
   { name: "Adebayo Sekinah Asabi", school: "University of Ibadan", code: "IQP-SEK20" },
   { name: "Amidu Balikis Omotoyosi", school: "University of Ilorin", code: "IQP-BAL21" },
   { name: "Sulayman Faridah Kehinde", school: "University of Ilorin", code: "IQP-FAR22" },
-  { name: "Sanni Suliat Adeshubomi", school: "Federal University of Agriculture Abeokuta", code: "IQP-SSA23" },
+  { name: "Sanni Suliat Adeshubomi", school: "Federal University of Agriculture, Abeokuta", code: "IQP-SSA23" },
 ];
 
 // Placeholder portrait photos for the carousel cards (one per ambassador,
