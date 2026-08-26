@@ -27,9 +27,38 @@ const BRAND = {
 
 interface ContactPageProps {
   onNavigate?: (page: string) => void;
+  darkMode?: boolean;
 }
 
-export function ContactPage({ onNavigate }: ContactPageProps = {}) {
+export function ContactPage({ onNavigate, darkMode = false }: ContactPageProps = {}) {
+  // Theme-aware surfaces: light theme uses the brand palette, dark theme swaps
+  // the light surfaces for dark equivalents so every area of the page stays
+  // readable when dark mode is toggled on. Brand colours (teal, maroon, accent)
+  // and the intentionally-dark left panel gradient are kept constant.
+  const surface = darkMode
+    ? {
+        cardBg: "#26231f", // was BRAND.white — card + form grid background
+        inputBg: "#2b2823", // was BRAND.cream — inputs + soft accents
+        softBg: "#2b2823", // success check circle
+        ink: "#f2efe7", // was BRAND.ink — primary text
+        muted: "#b3aea2", // was BRAND.muted — secondary text
+        border: "#3b372f", // was BRAND.border — borders/seams
+        connectBg: "#26231f", // social button background
+        connectBgHover: "#37332b", // social button hover
+        iconDark: "#faf6ec", // social icon colour (light on dark)
+      }
+    : {
+        cardBg: BRAND.white,
+        inputBg: BRAND.cream,
+        softBg: BRAND.cream,
+        ink: BRAND.ink,
+        muted: BRAND.muted,
+        border: BRAND.border,
+        connectBg: "rgba(13,0,0,0.05)",
+        connectBgHover: BRAND.cream,
+        iconDark: BRAND.dark,
+      };
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
@@ -252,9 +281,9 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
     boxSizing: "border-box",
     padding: "13px 15px",
     borderRadius: 10,
-    border: `1px solid ${BRAND.border}`,
-    background: BRAND.cream,
-    color: BRAND.ink,
+    border: `1px solid ${surface.border}`,
+    background: surface.inputBg,
+    color: surface.ink,
     fontSize: 14.5,
     outline: "none",
     fontFamily: "inherit",
@@ -264,7 +293,7 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
     display: "block",
     fontSize: 12.5,
     fontWeight: 600,
-    color: BRAND.ink,
+    color: surface.ink,
     marginBottom: 7,
   };
 
@@ -274,7 +303,7 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
       e.currentTarget.style.boxShadow = "0 0 0 3px rgba(245,158,11,0.15)";
     },
     onBlur: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      e.currentTarget.style.borderColor = BRAND.border;
+      e.currentTarget.style.borderColor = surface.border;
       e.currentTarget.style.boxShadow = "none";
     },
   };
@@ -284,13 +313,13 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
       {/* Header */}
       <section style={{ padding: "100px 24px 0", textAlign: "center" }}>
         <div style={{ maxWidth: 640, margin: "0 auto" }}>
-          <h1 style={{ margin: 0, fontSize: 32, fontWeight: 700, color: BRAND.ink }}>
+          <h1 style={{ margin: 0, fontSize: 32, fontWeight: 700, color: surface.ink }}>
             Get in Touch
           </h1>
-          <p style={{ margin: "12px 0 0", fontSize: 15, lineHeight: 1.7, color: BRAND.muted }}>
+          <p style={{ margin: "12px 0 0", fontSize: 15, lineHeight: 1.7, color: surface.muted }}>
             Have questions or feedback? We'd love to hear from you. Reach out and we'll respond as soon as possible.
           </p>
-          <p style={{ margin: "10px 0 0", fontSize: 13.5, color: BRAND.muted }}>
+          <p style={{ margin: "10px 0 0", fontSize: 13.5, color: surface.muted }}>
             Looking for answers to common questions?{" "}
             <a
               href="#support"
@@ -349,10 +378,10 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
           display: "grid",
           gridTemplateColumns: "1fr 1fr",
           gap: 0,
-          background: BRAND.white,
+          background: surface.cardBg,
           borderRadius: 28,
           overflow: "hidden",
-          border: `1px solid ${BRAND.border}`,
+          border: `1px solid ${surface.border}`,
           boxShadow: "0 20px 60px -30px rgba(13,0,0,0.35)",
         }}
         className="iqp-contact-grid"
@@ -465,7 +494,7 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
                   width: 48,
                   height: 48,
                   borderRadius: "50%",
-                  background: BRAND.cream,
+                  background: surface.softBg,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -489,13 +518,13 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
                 style={{
                   margin: "0 0 8px",
                   fontSize: 18,
-                  color: BRAND.ink,
+                  color: surface.ink,
                   fontWeight: 700,
                 }}
               >
                 Message sent
               </h2>
-              <p style={{ margin: 0, fontSize: 13.5, color: BRAND.muted }}>
+              <p style={{ margin: 0, fontSize: 13.5, color: surface.muted }}>
                 JazakAllahu khayran — we'll get back to you soon.
               </p>
               <button
@@ -505,9 +534,9 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
                   marginTop: 24,
                   padding: "10px 20px",
                   borderRadius: 9,
-                  border: `1px solid ${BRAND.border}`,
+                  border: `1px solid ${surface.border}`,
                   background: "none",
-                  color: BRAND.ink,
+                  color: surface.ink,
                   fontSize: 13,
                   fontWeight: 600,
                   cursor: "pointer",
@@ -682,9 +711,9 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
           gap: 14px;
           padding: 18px 24px;
           border-radius: 16px;
-          border: 1px solid ${BRAND.border};
-          background: ${BRAND.white};
-          color: ${BRAND.ink};
+          border: 1px solid ${surface.border};
+          background: ${surface.cardBg};
+          color: ${surface.ink};
           text-decoration: none;
           transition: all .18s ease;
           box-shadow: 0 4px 14px -10px rgba(13,0,0,0.18);
@@ -701,7 +730,7 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
           width: 42px;
           height: 42px;
           border-radius: 12px;
-          background: ${BRAND.cream};
+          background: ${surface.inputBg};
           color: ${BRAND.primary};
           flex-shrink: 0;
         }
@@ -711,14 +740,14 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
           font-weight: 600;
           text-transform: uppercase;
           letter-spacing: 0.05em;
-          color: ${BRAND.muted};
+          color: ${surface.muted};
           margin-bottom: 2px;
         }
         .iqp-contact-card-value {
           display: block;
           font-size: 14px;
           font-weight: 600;
-          color: ${BRAND.ink};
+          color: ${surface.ink};
         }
         @media (max-width: 760px) {
           .iqp-contact-grid {
@@ -738,10 +767,10 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
       {/* Connect with us — social links shown after the contact form */}
       <section style={{ padding: "48px 24px 0" }}>
         <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
-          <h2 style={{ margin: 0, fontSize: 32, fontWeight: 700, color: BRAND.ink }}>
+          <h2 style={{ margin: 0, fontSize: 32, fontWeight: 700, color: surface.ink }}>
             Connect With Us
           </h2>
-          <p style={{ margin: "16px 0 0", fontSize: 15, lineHeight: 1.7, color: BRAND.muted }}>
+          <p style={{ margin: "16px 0 0", fontSize: 15, lineHeight: 1.7, color: surface.muted }}>
             Follow us on social media for updates, inspiration, and community highlights.
           </p>
           <div style={{ marginTop: 24, display: "flex", justifyContent: "center", gap: 16 }}>
@@ -759,17 +788,17 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
                   width: 48,
                   height: 48,
                   borderRadius: "50%",
-                  background: "rgba(13,0,0,0.05)",
-                  color: BRAND.dark,
-                  border: `1px solid ${BRAND.border}`,
+                  background: surface.connectBg,
+                  color: surface.iconDark,
+                  border: `1px solid ${surface.border}`,
                   transition: "all .18s ease",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.background = BRAND.cream;
+                  e.currentTarget.style.background = surface.connectBgHover;
                   e.currentTarget.style.transform = "translateY(-2px)";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "rgba(13,0,0,0.05)";
+                  e.currentTarget.style.background = surface.connectBg;
                   e.currentTarget.style.transform = "translateY(0)";
                 }}
               >
