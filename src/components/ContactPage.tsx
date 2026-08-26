@@ -77,6 +77,13 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
       value: "Ibadan, Nigeria",
       href: null as string | null,
     },
+    ];
+
+  // Site-wide socials — rendered with Font Awesome brand icons (font-awesome is
+  // loaded globally via index.html), consistent with the site Footer.
+  const socialLinks = [
+    { icon: "fab fa-x-twitter", href: "https://x.com/iqra_pay", label: "X / Twitter" },
+    { icon: "fab fa-instagram", href: "https://www.instagram.com/iqra_pay/", label: "Instagram" },
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -725,7 +732,52 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
             align-items: stretch;
           }
         }
-      `}</style>
+            `}</style>
+      </section>
+
+      {/* Connect with us — social links shown after the contact form */}
+      <section style={{ padding: "48px 24px 0" }}>
+        <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
+          <h2 style={{ margin: 0, fontSize: 32, fontWeight: 700, color: BRAND.ink }}>
+            Connect With Us
+          </h2>
+          <p style={{ margin: "16px 0 0", fontSize: 15, lineHeight: 1.7, color: BRAND.muted }}>
+            Follow us on social media for updates, inspiration, and community highlights.
+          </p>
+          <div style={{ marginTop: 24, display: "flex", justifyContent: "center", gap: 16 }}>
+            {socialLinks.map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                aria-label={social.label}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: 48,
+                  height: 48,
+                  borderRadius: "50%",
+                  background: "rgba(13,0,0,0.05)",
+                  color: BRAND.dark,
+                  border: `1px solid ${BRAND.border}`,
+                  transition: "all .18s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = BRAND.cream;
+                  e.currentTarget.style.transform = "translateY(-2px)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "rgba(13,0,0,0.05)";
+                  e.currentTarget.style.transform = "translateY(0)";
+                }}
+              >
+                <i className={`${social.icon} text-xl`}></i>
+              </a>
+            ))}
+          </div>
+        </div>
       </section>
     </div>
   );

@@ -1,4 +1,4 @@
-import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
 import { IslamicPattern } from "./IslamicPattern";
 import { useLanguage } from "../contexts/LanguageContext";
 import logoDark from "figma:asset/95c433e7c8d7b15a23b7736bc56fc1d657934d51.png";
@@ -21,8 +21,8 @@ export function Footer({ onNavigate }: FooterProps) {
   ];
 
   const socialLinks = [
-    { icon: Twitter, href: "https://x.com/iqra_pay", label: "Twitter" },
-    { icon: Instagram, href: "https://www.instagram.com/iqra_pay/", label: "Instagram" },
+    { icon: "fab fa-x-twitter", href: "https://x.com/iqra_pay", label: "X / Twitter" },
+    { icon: "fab fa-instagram", href: "https://www.instagram.com/iqra_pay/", label: "Instagram" },
   ];
 
   return (
@@ -104,19 +104,16 @@ export function Footer({ onNavigate }: FooterProps) {
           <div>
             <h3 className="font-display font-medium text-accent dark:text-primary text-[16px] mb-3">{t('footer.connect')}</h3>
             <div className="flex gap-3 mb-6">
-              {socialLinks.map((social) => {
-                const Icon = social.icon;
-                return (
-                  <a
-                    key={social.label}
-                    href={social.href}
-                    aria-label={social.label}
-                    className="w-10 h-10 rounded-full bg-secondary-foreground/10 dark:bg-muted hover:bg-accent dark:hover:bg-primary hover:text-secondary dark:hover:text-primary-foreground flex items-center justify-center transition-all duration-200"
-                  >
-                    <Icon className="w-5 h-5" />
-                  </a>
-                );
-              })}
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  aria-label={social.label}
+                  className="w-10 h-10 rounded-full bg-secondary-foreground/10 dark:bg-muted hover:bg-accent dark:hover:bg-primary hover:text-secondary dark:hover:text-primary-foreground flex items-center justify-center transition-all duration-200"
+                >
+                  <i className={`${social.icon} text-xl`}></i>
+                </a>
+              ))}
             </div>
             <p className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/60 dark:text-muted-foreground">
               {t('footer.description')}
