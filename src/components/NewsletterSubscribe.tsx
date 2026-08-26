@@ -6,7 +6,7 @@ import { Card } from "./ui/card";
 import { useLanguage } from "../contexts/LanguageContext";
 import { motion } from "motion/react";
 import { toast } from "sonner";
-import { CONTACT_ENDPOINT, CONTACT_EMAIL } from "../config/contact";
+import { CONTACT_ENDPOINT, CONTACT_EMAIL, FORM_SUBMIT_ENDPOINT } from "../config/contact";
 
 export function NewsletterSubscribe() {
   const { t } = useLanguage();
@@ -39,43 +39,92 @@ export function NewsletterSubscribe() {
       return;
     }
 
-    // No backend configured? Fall back to mailto so the subscription still
-    // reaches iqrapay2025@gmail.com without exposing a secret.
-    if (!CONTACT_ENDPOINT) {
-      const body = `New newsletter subscription from: ${formData.email.trim()}`;
-      const link =
-        `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(formData.subject)}` +
-        `&body=${encodeURIComponent(body)}`;
-      window.location.href = link;
-      return;
-    }
+    // Build a mailto: link as a last-resort fallback — it opens the user's
+    // email client pre-addressed to iqrapay2025@gmail.com so a message can
+    // always reach us even if both backend endpoints fail.
+    const mailtoBody = `New newsletter subscription from: ${formData.email.trim()}`;
+    const mailtoLink =
+      `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(formData.subject)}` +
+      `&body=${encodeURIComponent(mailtoBody)}`;
 
     setIsSubmitting(true);
-    try {
-      const response = await fetch(CONTACT_ENDPOINT, {
-        method: "POST",
-        // text/plain is a CORS "simple" content type -> no preflight OPTIONS
-        // request (Google Apps Script web apps answer OPTIONS with 405). The
-        // body is still a JSON string the server parses via e.postData.contents.
-        headers: { "Content-Type": "text/plain" },
-        body: JSON.stringify({
-          action: "subscribe",
-          email: formData.email.trim(),
-          message: `New newsletter subscription from: ${formData.email.trim()}`,
-        }),
-      });
 
-      let result: { success?: boolean; message?: string } = {};
-      try {
-        result = await response.json();
-      } catch {
-        result = {};
+    try {
+      let success = false;
+      let serverMessage: string | undefined;
+
+      // Try Google Apps Script first, then FormSubmit as a safety net so a
+      // broken or slow Apps Script endpoint never blocks a subscription.
+      if (CONTACT_ENDPOINT) {
+        try {
+          // Preferred: Google Apps Script → GmailApp.sendEmail → iqrapay2025@gmail.com
+          const response = await fetch(CONTACT_ENDPOINT, {
+            method: "POST",
+            // text/plain is a CORS "simple" content type -> no preflight OPTIONS
+            // request (Google Apps Script web apps answer OPTIONS with 405). The
+            // body is still a JSON string the server parses via e.postData.contents.
+            headers: { "Content-Type": "text/plain" },
+            body: JSON.stringify({
+              action: "subscribe",
+              email: formData.email.trim(),
+              message: `New newsletter subscription from: ${formData.email.trim()}`,
+            }),
+          });
+
+          const result = await response.json().catch(() => ({}));
+          success =
+            result.success === true ||
+            result.success === "true" ||
+            result.ok === true;
+          serverMessage = result.message;
+        } catch {
+          success = false;
+        }
       }
 
-      if (result.success) {
+      if (!success) {
+        // Fallback: FormSubmit.co delivers directly to iqrapay2025@gmail.com
+        try {
+          const fsBody = new FormData();
+          fsBody.append("email", formData.email.trim());
+          fsBody.append("_subject", formData.subject);
+          fsBody.append("_replyto", formData.email.trim());
+          fsBody.append(
+            "message",
+            `New newsletter subscription from: ${formData.email.trim()}`
+          );
+          // Disable FormSubmit's own honeypot since we enforce our own.
+          fsBody.append("_captcha", "false");
+
+          const response = await fetch(FORM_SUBMIT_ENDPOINT, {
+            method: "POST",
+            body: fsBody,
+            headers: { Accept: "application/json" },
+          });
+
+          const text = await response.text().catch(() => "");
+          try {
+            const result = JSON.parse(text);
+            // FormSubmit AJAX API returns success as a STRING "true"/"false"
+            // (not a boolean), and may also echo `ok`. Accept any truthy form.
+            success =
+              result.ok === true ||
+              result.success === true ||
+              result.success === "true";
+            serverMessage =
+              typeof result.message === "string" ? result.message : undefined;
+          } catch {
+            success = false;
+          }
+        } catch {
+          success = false;
+        }
+      }
+
+      if (success) {
         toast.success(t('newsletter.successTitle'), {
           description: t('newsletter.successMessage'),
-          icon: <CheckCircle className="h-5 w-5" />,
+          icon: <CheckCircle className="h-5 w-5" />
         });
         setFormData({
           email: "",
@@ -83,8 +132,14 @@ export function NewsletterSubscribe() {
           website: "",
         });
       } else {
+        // Either backend rejected the submission or wasn't configured.
+        // Offer a one-click mailto: fallback so the visitor can still reach us.
         toast.error(t('common.error'), {
-          description: result.message || `Please try again or email us directly at ${CONTACT_EMAIL}.`,
+          description: serverMessage || `Could not subscribe right now. You can still email us at ${CONTACT_EMAIL}.`,
+          action: {
+            label: "Open Email",
+            onClick: () => { window.location.href = mailtoLink; },
+          },
         });
       }
     } catch {

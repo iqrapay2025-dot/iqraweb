@@ -316,7 +316,7 @@ function AppContent() {
           />
         );
       case "contact":
-        return <ContactPage darkMode={darkMode} onNavigate={handleNavigate} />;
+        return <ContactPage onNavigate={handleNavigate} />;
       case "support":
         return <SupportPage darkMode={darkMode} onNavigate={handleNavigate} />;
       case "privacy-policy":

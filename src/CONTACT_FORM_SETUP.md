@@ -1,11 +1,18 @@
-# 📧 Contact Form Setup — Google Apps Script (direct to iqrapay2025@gmail.com)
+# 📧 Contact Form Setup — direct to iqrapay2025@gmail.com
 
-The contact and newsletter forms email **directly** to `iqrapay2025@gmail.com`
-through a small Google Apps Script web app. There is **no API key in the client
-bundle**, the **recipient is fixed inside the script** (so it cannot be
-redirected by an attacker), and Google handles the traffic.
+The contact and newsletter forms email **directly** to `iqrapay2025@gmail.com`.
 
-## 1. Create the script
+There are **two delivery paths**:
+
+| | When | How | Trade-off |
+|---|---|---|---|
+| **Google Apps Script** (preferred) | `VITE_CONTACT_ENDPOINT` is set | Sends via `GmailApp.sendEmail` → your inbox | Most secure — no API key in the bundle, recipient is hardcoded in the script, spam rejected server-side |
+| **FormSubmit.co** (default fallback) | `VITE_CONTACT_ENDPOINT` is empty | POSTs a `FormData` payload to `https://formsubmit.co/iqrapay2025@gmail.com` | Works immediately with zero server-side setup (just confirm the email once). The recipient address is already public in the client bundle |
+
+If both paths fail, a `mailto:iqrapay2025@gmail.com` link is offered so the
+visitor can always reach the inbox.
+
+## 1. Create the script (Google Apps Script path)
 
 1. While logged in as **iqrapay2025@gmail.com**, open https://script.google.com.
 2. Start a new project (`+` → **New project**).
@@ -132,13 +139,19 @@ and the newsletter form (`action: "subscribe"`), and both deliver to
 ## 4. Safety net
 
 If `VITE_CONTACT_ENDPOINT` is empty, the form does **not** break: it falls back
-to a `mailto:iqrapay2025@gmail.com` link that opens the visitor's email client
-pre-addressed to the inbox. So a message always reaches us, even before the
-script is deployed.
+to **FormSubmit.co**, which delivers directly to `iqrapay2025@gmail.com` with no
+API key in the client bundle. The site owner must confirm ownership of the email
+**once** (FormSubmit.co sends a confirmation link to `iqrapay2025@gmail.com`).
+Until confirmed, the form gracefully degrades to a `mailto:iqrapay2025@gmail.com`
+link that opens the visitor's email client pre-addressed to the inbox.
 
 ## 5. Test
 
 - Fill the Contact form, click **Send Message** → a success toast appears and an
   email lands in `iqrapay2025@gmail.com` (check Spam if not in Inbox).
-- Leave the `website` honeypot blank as a human; the server should accept it.
-- Try submitting with an invalid email → server returns a validation error.
+- Leave the honeypot field blank as a human; the form should accept it.
+- Try submitting with an invalid email → the form shows a validation error
+  before any network request is made.
+- If `VITE_CONTACT_ENDPOINT` is empty and the email isn't yet confirmed with
+  FormSubmit.co, the form shows an error toast with an **Open Email** button
+  that falls back to the `mailto:` link.

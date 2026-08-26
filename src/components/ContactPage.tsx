@@ -1,177 +1,297 @@
-import { useState } from "react";
-import { Mail, MapPin, Phone, Send, MessageCircle, Twitter, Instagram } from "lucide-react";
-import { Card } from "./ui/card";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
-import { Label } from "./ui/label";
-import { IslamicPattern } from "./IslamicPattern";
+import { useState, useRef } from "react";
+import { Loader2, Mail, Phone, MapPin } from "lucide-react";
+import {
+  CONTACT_ENDPOINT,
+  FORM_SUBMIT_ENDPOINT,
+  CONTACT_EMAIL,
+  isContactConfigured,
+} from "../config/contact";
 
-import { motion } from "motion/react";
-import { toast } from "sonner";
-import { useLanguage } from "../contexts/LanguageContext";
-import { CONTACT_ENDPOINT, CONTACT_EMAIL } from "../config/contact";
+// IqraPay brand palette — matches WaitlistModal.tsx
+const BRAND = {
+  rich: "#5a0800",
+  maroon: "#360400",
+  dark: "#0d0000",
+  accent: "#f59e0b",
+  accentDark: "#d97706",
+  darkCyan: "#008B8B",
+  primary: "#009688",
+  primaryDark: "#00796b",
+  cream: "#faf6ec",
+  white: "#ffffff",
+  ink: "#151210",
+  muted: "#6f6a62",
+  border: "#e7e2d4",
+  error: "#b3541f",
+};
 
 interface ContactPageProps {
-  darkMode?: boolean;
   onNavigate?: (page: string) => void;
 }
 
-export function ContactPage({ darkMode = false, onNavigate }: ContactPageProps = {}) {
-  const { t } = useLanguage();
-    const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-    hp_field_x7d2: "", // honeypot: hidden from real users, filled by bots. Renamed from "website" so browser autofill doesn't recognize/target it.
-  });
+export function ContactPage({ onNavigate }: ContactPageProps = {}) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  const [botField, setBotField] = useState(""); // honeypot
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+  const lastSubmitRef = useRef(0);
 
-  const contactInfo = [
+  const RATE_LIMIT_MS = 5000;
+  const mailtoFallback = `mailto:${CONTACT_EMAIL}`;
+
+  const resetStatus = () => {
+    setStatus("idle");
+    setErrorMessage("");
+  };
+
+  // Navigate to the FAQ (support) page. The app has no hashchange listener
+  // (only popstate), so prefer onNavigate and fall back to a hash change.
+  const goToFaq = () => {
+    if (onNavigate) {
+      onNavigate("support");
+    } else {
+      window.location.hash = "#support";
+    }
+  };
+
+  const contactCards = [
     {
       icon: Mail,
-      title: t('contact.emailLabel'),
-            detail: CONTACT_EMAIL,
-      link: `mailto:${CONTACT_EMAIL}`,
+      label: "Email",
+      value: CONTACT_EMAIL,
+      href: `mailto:${CONTACT_EMAIL}`,
     },
     {
       icon: Phone,
-      title: t('contact.phoneLabel'),
-      detail: "+234 815 595 6187",
-      link: "tel:+2348155956187",
+      label: "Phone",
+      value: "+234 815 595 6187",
+      href: "tel:+2348155956187",
     },
     {
       icon: MapPin,
-      title: t('contact.addressLabel'),
-      detail: "Ibadan, Nigeria",
-      link: null,
+      label: "Location",
+      value: "Ibadan, Nigeria",
+      href: null as string | null,
     },
   ];
 
-  const socialLinks = [
-    { icon: Twitter, label: "Twitter", url: "https://x.com/iqra_pay", color: "hover:text-blue-400" },
-    { icon: Instagram, label: "Instagram", url: "https://www.instagram.com/iqra_pay/", color: "hover:text-pink-500" },
-  ];
-
-    const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  const validate = (): string => {
-    if (!formData.name.trim()) return "Please enter your name.";
-    if (!EMAIL_REGEX.test(formData.email.trim())) return "Please enter a valid email address.";
-    if (!formData.subject.trim()) return "Please enter a subject.";
-    if (!formData.message.trim()) return "Please enter a message.";
-    if (formData.message.trim().length > 3000)
-      return "Message is too long (max 3000 characters).";
-    return "";
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    resetStatus();
 
-    // Honeypot: bots fill it, real users cannot see it. Discard silently.
-    if (formData.hp_field_x7d2.trim() !== "") {
+    // Honeypot — bots fill this, humans never see it.
+    if (botField.trim() !== "") return;
+
+    const nowMs = Date.now();
+    if (nowMs - lastSubmitRef.current < RATE_LIMIT_MS) {
+      setStatus("error");
+      setErrorMessage("Please wait a moment before trying again.");
       return;
     }
 
-    const error = validate();
-    if (error) {
-      toast.error(t('common.error'), { description: error });
+    if (!name.trim()) {
+      setStatus("error");
+      setErrorMessage("Enter your name.");
       return;
     }
-
-    // No backend configured? Open the user's email client pre-addressed
-    // directly to iqrapay2025@gmail.com. No third-party relay, no exposed key.
-    if (!CONTACT_ENDPOINT) {
-      const body =
-        `Name: ${formData.name.trim()}\n` +
-        `Email: ${formData.email.trim()}\n` +
-        `Subject: ${formData.subject.trim()}\n\n` +
-        `${formData.message.trim()}`;
-      const link =
-        `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(formData.subject.trim())}` +
-        `&body=${encodeURIComponent(body)}`;
-      window.location.href = link;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setStatus("error");
+      setErrorMessage("Enter a valid email address.");
+      return;
+    }
+    if (!subject.trim()) {
+      setStatus("error");
+      setErrorMessage("Enter a subject.");
+      return;
+    }
+    if (!message.trim()) {
+      setStatus("error");
+      setErrorMessage("Enter a message.");
       return;
     }
 
     setIsSubmitting(true);
+    lastSubmitRef.current = Date.now();
+
     try {
-      const response = await fetch(CONTACT_ENDPOINT, {
-        method: "POST",
-        // text/plain is a CORS "simple" content type -> no preflight OPTIONS
-        // request (Google Apps Script web apps answer OPTIONS with 405). The
-        // body is still a JSON string the server parses via e.postData.contents.
-        headers: { "Content-Type": "text/plain" },
-        body: JSON.stringify({
-          action: "contact",
-          name: formData.name,
-          email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
-        }),
-      });
+      let delivered = false;
+      let serverMessage = "";
 
-      let result: { success?: boolean; message?: string } = {};
-      try {
-        result = await response.json();
-      } catch {
-        result = {};
+      // ---- Helper: try Google Apps Script (preferred path) ----
+      const tryAppsScript = async (): Promise<boolean> => {
+        if (!isContactConfigured()) return false;
+        try {
+          // text/plain avoids a CORS preflight, which the Apps Script web app
+          // can't answer (see the doPost handler in CONTACT_FORM_SETUP.md).
+          const response = await fetch(CONTACT_ENDPOINT, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain" },
+            body: JSON.stringify({
+              action: "contact",
+              name,
+              email,
+              subject,
+              message,
+              website: botField,
+            }),
+          });
+
+          let result: Record<string, unknown> = {};
+          try {
+            result = await response.json();
+          } catch {
+            result = {};
+          }
+
+          if (
+            response.ok &&
+            (result.success === true ||
+              result.success === "true" ||
+              result.ok === true)
+          ) {
+            delivered = true;
+            return true;
+          }
+          serverMessage =
+            typeof result.message === "string" ? result.message : "";
+          return false;
+        } catch {
+          // Endpoint threw (network/CORS/invalid URL) — fall through to FormSubmit.
+          return false;
+        }
+      };
+
+      // ---- Helper 2: FormSubmit.co fallback (no API key) ----
+      const tryFormSubmit = async (): Promise<boolean> => {
+        try {
+          const formData = new FormData();
+          formData.append("name", name);
+          formData.append("email", email);
+          formData.append("subject", subject);
+          formData.append("message", message);
+          formData.append("_subject", `[IqraPay] ${subject}`);
+          formData.append("_captcha", "false");
+
+          const response = await fetch(FORM_SUBMIT_ENDPOINT, {
+            method: "POST",
+            headers: { Accept: "application/json" },
+            body: formData,
+          });
+
+          // FormSubmit's /ajax/ endpoint returns a JSON body but with a
+          // `text/html` Content-Type, so parse the body directly rather than
+          // trusting the header. Success is `{ success: "true" }` or
+          // `{ success: true }`; an HTML body (email not yet activated) fails
+          // to parse and we degrade to the mailto: fallback.
+          const text = await response.text().catch(() => "");
+          try {
+            const data = JSON.parse(text);
+            if (
+              data.success === true ||
+              data.success === "true" ||
+              data.ok === true
+            ) {
+              return true;
+            }
+            serverMessage =
+              typeof data.message === "string" ? data.message : "";
+          } catch {
+            serverMessage = "";
+          }
+          return false;
+        } catch {
+          return false;
+        }
+      };
+
+      // Try Apps Script first, then FormSubmit as a safety net so a broken or
+      // slow Apps Script endpoint never blocks a message from getting through.
+      if (await tryAppsScript()) {
+        delivered = true;
+      } else if (await tryFormSubmit()) {
+        delivered = true;
       }
 
-      if (result.success) {
-        toast.success(t('contact.successTitle'), {
-          description: t('contact.successMessage'),
-        });
-        setFormData({ name: "", email: "", subject: "", message: "", hp_field_x7d2: "" });
+      if (delivered) {
+        setStatus("success");
+        setName("");
+        setEmail("");
+        setSubject("");
+        setMessage("");
+        setErrorMessage("");
       } else {
-        toast.error(t('common.error'), {
-          description: result.message || `Please try again or email us directly at ${CONTACT_EMAIL}.`,
-        });
+        setStatus("error");
+        setErrorMessage(
+          serverMessage ||
+            `We couldn't send that automatically. Please email us directly at ${CONTACT_EMAIL}.`
+        );
       }
-    } catch {
-      toast.error(t('common.error'), {
-        description: `Please try again or email us directly at ${CONTACT_EMAIL}.`,
-      });
+    } catch (err) {
+      setStatus("error");
+      setErrorMessage(
+        `Something went wrong. Please email us directly at ${CONTACT_EMAIL}.`
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const inputStyle: React.CSSProperties = {
+    width: "100%",
+    boxSizing: "border-box",
+    padding: "13px 15px",
+    borderRadius: 10,
+    border: `1px solid ${BRAND.border}`,
+    background: BRAND.cream,
+    color: BRAND.ink,
+    fontSize: 14.5,
+    outline: "none",
+    fontFamily: "inherit",
+  };
+
+  const labelStyle: React.CSSProperties = {
+    display: "block",
+    fontSize: 12.5,
+    fontWeight: 600,
+    color: BRAND.ink,
+    marginBottom: 7,
+  };
+
+  const focusHandlers = {
+    onFocus: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      e.currentTarget.style.borderColor = BRAND.accent;
+      e.currentTarget.style.boxShadow = "0 0 0 3px rgba(245,158,11,0.15)";
+    },
+    onBlur: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      e.currentTarget.style.borderColor = BRAND.border;
+      e.currentTarget.style.boxShadow = "none";
+    },
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-16">
-      {/* Hero Section */}
-      <section className="relative px-4 sm:px-6 lg:px-8 mb-20 overflow-hidden">
-        <IslamicPattern />
-        <div className="max-w-7xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-                        <h1 className="font-display font-bold text-[#1A5C38] dark:text-foreground text-[32px] sm:text-[48px] tracking-[-0.5px] leading-[1.2] mb-4 text-center max-w-[800px] mx-auto">{t('contact.title')}</h1>
-            <p className="font-sans text-[15px] sm:text-[16px] text-muted-foreground leading-[1.7] max-w-[680px] mx-auto">
-              {t('contact.subtitle')}
-            </p>
-          </motion.div>
-        </div>
-            </section>
-
-      {/* FAQ prompt above the contact form */}
-      <section className="px-4 sm:px-6 lg:px-8 mb-12">
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="text-muted-foreground">
+    <div style={{ width: "100%", boxSizing: "border-box" }}>
+      {/* Header */}
+      <section style={{ padding: "100px 24px 0", textAlign: "center" }}>
+        <div style={{ maxWidth: 640, margin: "0 auto" }}>
+          <h1 style={{ margin: 0, fontSize: 32, fontWeight: 700, color: BRAND.ink }}>
+            Get in Touch
+          </h1>
+          <p style={{ margin: "12px 0 0", fontSize: 15, lineHeight: 1.7, color: BRAND.muted }}>
+            Have questions or feedback? We'd love to hear from you. Reach out and we'll respond as soon as possible.
+          </p>
+          <p style={{ margin: "10px 0 0", fontSize: 13.5, color: BRAND.muted }}>
             Looking for answers to common questions?{" "}
             <a
               href="#support"
-              className="text-primary hover:text-primary/80 underline underline-offset-2"
+              onClick={(e) => {
+                e.preventDefault();
+                goToFaq();
+              }}
+              style={{ color: BRAND.primary, fontWeight: 600, textDecoration: "underline", textUnderlineOffset: 2, cursor: "pointer" }}
             >
               Check our FAQ
             </a>
@@ -179,197 +299,434 @@ export function ContactPage({ darkMode = false, onNavigate }: ContactPageProps =
         </div>
       </section>
 
-      {/* Contact Info Cards */}
-      <section className="px-4 sm:px-6 lg:px-8 mb-20">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-6">
-            {contactInfo.map((info, index) => (
-              <motion.div
-                key={info.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+      {/* Contact info cards */}
+      <section style={{ padding: "32px 24px 0" }}>
+        <div className="iqp-contact-cards">
+          {contactCards.map((card) => {
+            const inner = (
+              <>
+                <span className="iqp-contact-card-icon">
+                  <card.icon size={20} />
+                </span>
+                <span>
+                  <span className="iqp-contact-card-label">{card.label}</span>
+                  <span className="iqp-contact-card-value">{card.value}</span>
+                </span>
+              </>
+            );
+            return card.href ? (
+              <a key={card.label} className="iqp-contact-card" href={card.href}>
+                {inner}
+              </a>
+            ) : (
+              <div key={card.label} className="iqp-contact-card">
+                {inner}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Contact form */}
+      <section
+        style={{
+          width: "100%",
+          maxWidth: 1120,
+          margin: "0 auto",
+          padding: "48px 24px",
+          boxSizing: "border-box",
+        }}
+      >
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: 0,
+          background: BRAND.white,
+          borderRadius: 28,
+          overflow: "hidden",
+          border: `1px solid ${BRAND.border}`,
+          boxShadow: "0 20px 60px -30px rgba(13,0,0,0.35)",
+        }}
+        className="iqp-contact-grid"
+      >
+        {/* Left panel — brand statement, no stock photo */}
+        <div
+          style={{
+            position: "relative",
+            background: `linear-gradient(160deg, ${BRAND.maroon} 0%, ${BRAND.dark} 100%)`,
+            padding: "48px 40px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            minHeight: 480,
+            overflow: "hidden",
+          }}
+        >
+          {/* Signature element: a quiet geometric lattice, referencing
+              Islamic geometric pattern traditions — restrained, low-contrast,
+              not decorative noise. */}
+          <svg
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              opacity: 0.08,
+            }}
+            viewBox="0 0 400 480"
+            preserveAspectRatio="xMidYMid slice"
+          >
+            <defs>
+              <pattern
+                id="iqp-lattice"
+                width="80"
+                height="80"
+                patternUnits="userSpaceOnUse"
               >
-                <Card className="p-6 text-center hover:shadow-lg transition-shadow">
-                  <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <info.icon className="h-7 w-7 text-primary" />
-                  </div>
-                                    <h3 className="text-base font-medium text-foreground mb-1">{info.title}</h3>
-                  {info.link ? (
-                    <a href={info.link} className="text-muted-foreground hover:text-primary transition-colors">
-                      {info.detail}
-                    </a>
-                  ) : (
-                    <p className="text-muted-foreground">{info.detail}</p>
-                  )}
-                </Card>
-              </motion.div>
-            ))}
+                <path
+                  d="M40 0 L80 40 L40 80 L0 40 Z"
+                  fill="none"
+                  stroke={BRAND.accent}
+                  strokeWidth="1"
+                />
+                <circle cx="40" cy="40" r="14" fill="none" stroke={BRAND.accent} strokeWidth="1" />
+              </pattern>
+            </defs>
+            <rect width="400" height="480" fill="url(#iqp-lattice)" />
+          </svg>
+
+          <div style={{ position: "relative" }}>
+            <span
+              style={{
+                display: "inline-block",
+                fontSize: 11,
+                fontWeight: 700,
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: BRAND.accent,
+                marginBottom: 18,
+              }}
+            >
+              Read. Learn. Earn.
+            </span>
+            <h1
+              style={{
+                margin: 0,
+                fontSize: 32,
+                lineHeight: 1.2,
+                fontWeight: 700,
+                color: BRAND.cream,
+              }}
+            >
+              Get in touch
+            </h1>
+            <p
+              style={{
+                marginTop: 18,
+                fontSize: 14.5,
+                lineHeight: 1.7,
+                color: "rgba(250,246,236,0.78)",
+                maxWidth: 340,
+              }}
+            >
+              We're building a platform where Muslims are rewarded for
+              reading and understanding Islamic books — real halal rewards
+              for real knowledge. Whether it's a question, feedback, or a
+              partnership idea, we'd love to hear from you.
+            </p>
+          </div>
+
+          <div
+            style={{
+              position: "relative",
+              fontSize: 13,
+              color: "rgba(250,246,236,0.6)",
+            }}
+          >
+            {CONTACT_EMAIL}
           </div>
         </div>
-      </section>
 
-      {/* Contact Form */}
-      <section className="px-4 sm:px-6 lg:px-8 mb-20">
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <Card className="p-8">
-              <div className="text-center mb-8">
-                <MessageCircle className="h-12 w-12 text-primary mx-auto mb-4" />
-                                <h2 className="font-display font-bold text-[#1A5C38] dark:text-foreground text-[26px] sm:text-[36px] tracking-[-0.3px] leading-[1.3] mb-3">{t('contact.formTitle')}</h2>
-                <p className="text-muted-foreground">
-                  {t('contact.subtitle')}
-                </p>
+        {/* Right panel — form */}
+        <div style={{ padding: "48px 40px" }}>
+          {status === "success" ? (
+            <div style={{ textAlign: "center", padding: "40px 0" }}>
+              <div
+                style={{
+                  width: 48,
+                  height: 48,
+                  borderRadius: "50%",
+                  background: BRAND.cream,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  margin: "0 auto 16px",
+                }}
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke={BRAND.primary}
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  width="22"
+                  height="22"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </div>
+              <h2
+                style={{
+                  margin: "0 0 8px",
+                  fontSize: 18,
+                  color: BRAND.ink,
+                  fontWeight: 700,
+                }}
+              >
+                Message sent
+              </h2>
+              <p style={{ margin: 0, fontSize: 13.5, color: BRAND.muted }}>
+                JazakAllahu khayran — we'll get back to you soon.
+              </p>
+              <button
+                type="button"
+                onClick={resetStatus}
+                style={{
+                  marginTop: 24,
+                  padding: "10px 20px",
+                  borderRadius: 9,
+                  border: `1px solid ${BRAND.border}`,
+                  background: "none",
+                  color: BRAND.ink,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                }}
+              >
+                Send another message
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} noValidate>
+              {/* Honeypot — hidden off-screen, only bots fill it */}
+              <div
+                style={{ position: "absolute", left: "-9999px", top: "-9999px" }}
+                aria-hidden="true"
+              >
+                <input
+                  type="text"
+                  name="website"
+                  value={botField}
+                  onChange={(e) => setBotField(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
               </div>
 
-                            <form onSubmit={handleSubmit} className="space-y-6">
-                {/*
-                  Honeypot: hidden from real users, filled by bots only.
-                  - Field name is a random token (not "website"/"email"/"name") so
-                    browser autofill heuristics don't recognize it and offer a
-                    saved-value dropdown over it.
-                  - Clipped via `clip` + 1px box (instead of only off-canvas
-                    positioning) so it's genuinely invisible and non-interactive
-                    for real users and their browsers, while still being present
-                    in the DOM for naive bots to fill in.
-                  - aria-hidden + tabIndex=-1 + autoComplete="off" keep it out of
-                    the accessibility tree and tab order.
-                */}
-                <div
-                  aria-hidden="true"
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: 16,
+                  marginBottom: 16,
+                }}
+                className="iqp-contact-row"
+              >
+                <div>
+                  <label htmlFor="iqp-c-name" style={labelStyle}>
+                    Name*
+                  </label>
+                  <input
+                    id="iqp-c-name"
+                    type="text"
+                    placeholder="Your name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    style={inputStyle}
+                    {...focusHandlers}
+                    required
+                  />
+                </div>
+                <div>
+                  <label htmlFor="iqp-c-email" style={labelStyle}>
+                    Email*
+                  </label>
+                  <input
+                    id="iqp-c-email"
+                    type="email"
+                    placeholder="Your email address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    style={inputStyle}
+                    {...focusHandlers}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div style={{ marginBottom: 16 }}>
+                <label htmlFor="iqp-c-subject" style={labelStyle}>
+                  Subject*
+                </label>
+                <input
+                  id="iqp-c-subject"
+                  type="text"
+                  placeholder="What's this about?"
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
+                  style={inputStyle}
+                  {...focusHandlers}
+                  required
+                />
+              </div>
+
+              <div style={{ marginBottom: errorMessage ? 8 : 20 }}>
+                <label htmlFor="iqp-c-message" style={labelStyle}>
+                  Message*
+                </label>
+                <textarea
+                  id="iqp-c-message"
+                  placeholder="Your message"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  style={{ ...inputStyle, minHeight: 130, resize: "vertical" }}
+                  {...focusHandlers}
+                  required
+                />
+              </div>
+
+              {status === "error" && errorMessage && (
+                <p
                   style={{
-                    position: "absolute",
-                    width: "1px",
-                    height: "1px",
-                    overflow: "hidden",
-                    clip: "rect(0,0,0,0)",
-                    whiteSpace: "nowrap",
+                    margin: "0 0 16px",
+                    fontSize: 12.5,
+                    color: BRAND.error,
                   }}
                 >
-                  <Label htmlFor="hp_field_x7d2" className="sr-only">
-                    If you are human, leave this blank
-                  </Label>
-                  <Input
-                    id="hp_field_x7d2"
-                    name="hp_field_x7d2"
-                    value={formData.hp_field_x7d2}
-                    onChange={handleChange}
-                    tabIndex={-1}
-                    autoComplete="off"
-                  />
-                </div>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="fullName">Name</Label>
-                    <Input 
-                      id="fullName"
-                      name="name"
-                      placeholder="Full Name" 
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="email">{t('contact.email')} *</Label>
-                    <Input 
-                      id="email"
-                      name="email"
-                      type="email" 
-                      placeholder={t('contact.emailPlaceholder')} 
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="subject">{t('contact.subject')} *</Label>
-                  <Input 
-                    id="subject"
-                    name="subject"
-                    placeholder={t('contact.subject')} 
-                    value={formData.subject}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="message">{t('contact.message')} *</Label>
-                  <Textarea 
-                    id="message"
-                    name="message"
-                    placeholder={t('contact.message')} 
-                    rows={6}
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-
-                                <Button 
-                  type="submit"
-                  className="w-full bg-primary hover:bg-primary/90 text-[#FFFDD0] font-display font-bold text-[16px]"
-                  size="lg"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? (
-                    <>{t('contact.sending')}</>
-                  ) : (
-                    <>
-                      {t('contact.send')} <Send className="h-4 w-4 ml-2 text-white" />
-                    </>
-                  )}
-                </Button>
-
-                                <p className="font-sans text-sm text-center text-muted-foreground">
-                  Thank You for reaching out!
+                  {errorMessage}{" "}
+                  <a href={mailtoFallback} style={{ color: BRAND.error, fontWeight: 600 }}>
+                    Open email instead
+                  </a>
                 </p>
-              </form>
-            </Card>
-          </motion.div>
-        </div>
-      </section>
+              )}
 
-      {/* Social Media Section */}
-      <section className="px-4 sm:px-6 lg:px-8 py-20 bg-muted/30">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-                        <h2 className="font-display font-bold text-[#1A5C38] dark:text-foreground text-[26px] sm:text-[36px] tracking-[-0.3px] leading-[1.3] mb-3">Connect With Us</h2>
-            <p className="text-muted-foreground mb-8">
-              Follow us on social media for updates, inspiration, and community highlights
-            </p>
-            <div className="flex items-center justify-center gap-4">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`w-12 h-12 bg-background rounded-full flex items-center justify-center border border-border hover:shadow-lg transition-all ${social.color}`}
-                  aria-label={social.label}
-                >
-                  <social.icon className="h-5 w-5" />
-                </a>
-              ))}
-            </div>
-          </motion.div>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 9,
+                  padding: "12px 24px",
+                  borderRadius: 9,
+                  border: "none",
+                  background: isSubmitting ? BRAND.primaryDark : BRAND.primary,
+                  color: BRAND.white,
+                  fontSize: 14,
+                  fontWeight: 700,
+                  cursor: isSubmitting ? "default" : "pointer",
+                  transition: "background .15s ease",
+                }}
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 size={16} className="animate-spin" />
+                    Sending…
+                  </>
+                ) : (
+                  <>
+                    Send
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                      <polyline points="12 5 19 12 12 19" />
+                    </svg>
+                  </>
+                )}
+              </button>
+            </form>
+          )}
         </div>
-      </section>
+      </div>
 
-      
+      <style>{`
+        .iqp-contact-cards {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 16px;
+          justify-content: center;
+          max-width: 900px;
+          margin: 0 auto;
+        }
+        .iqp-contact-card {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          padding: 18px 24px;
+          border-radius: 16px;
+          border: 1px solid ${BRAND.border};
+          background: ${BRAND.white};
+          color: ${BRAND.ink};
+          text-decoration: none;
+          transition: all .18s ease;
+          box-shadow: 0 4px 14px -10px rgba(13,0,0,0.18);
+        }
+        .iqp-contact-card:hover {
+          transform: translateY(-3px);
+          border-color: ${BRAND.accent};
+          box-shadow: 0 16px 34px -16px rgba(245,158,11,0.5);
+        }
+        .iqp-contact-card-icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 42px;
+          height: 42px;
+          border-radius: 12px;
+          background: ${BRAND.cream};
+          color: ${BRAND.primary};
+          flex-shrink: 0;
+        }
+        .iqp-contact-card-label {
+          display: block;
+          font-size: 12px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          color: ${BRAND.muted};
+          margin-bottom: 2px;
+        }
+        .iqp-contact-card-value {
+          display: block;
+          font-size: 14px;
+          font-weight: 600;
+          color: ${BRAND.ink};
+        }
+        @media (max-width: 760px) {
+          .iqp-contact-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .iqp-contact-row {
+            grid-template-columns: 1fr !important;
+          }
+          .iqp-contact-cards {
+            flex-direction: column;
+            align-items: stretch;
+          }
+        }
+      `}</style>
+      </section>
     </div>
   );
 }
