@@ -240,7 +240,7 @@ export const nl = {
   },
 
 // Campus-Ambassadeurs-pagina
-  campusPage: {
+ campusPage: {
     badge: "Onze campus-ambassadeurs",
     title1: "IqraPay is al",
     title2Before: "op jouw ",
@@ -263,6 +263,7 @@ export const nl = {
     empty: "Het klassement wordt binnenkort bijgewerkt. Kom volgende week terug.",
     posts: "berichten",
     referrals: "verwijzingen",
+    points: "punten",
     champion: "Kampioen",
     first: "1e",
     second: "2e",

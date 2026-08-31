@@ -240,7 +240,7 @@ export const ig = {
   },
 
 // Peeji Ndị Nnọchiteanya Kampos
-  campusPage: {
+ campusPage: {
     badge: "Ndị Nnọchiteanya Kampos Anyị",
     title1: "IqraPay adịlarị",
     title2Before: "na ",
@@ -263,6 +263,7 @@ export const ig = {
     empty: "A ga-emelite ndepụta n'oge adịghị anya. Bịaghachi n'izu na-abịa.",
     posts: "posts",
     referrals: "ntụaka",
+    points: "akara",
     champion: "Onye mmeri",
     first: "Mbụ",
     second: "Abụọ",

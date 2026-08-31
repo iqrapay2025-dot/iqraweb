@@ -235,7 +235,7 @@ export const de = {
   },
 
 // Campus-Botschafter-Seite
-  campusPage: {
+ campusPage: {
     badge: "Unsere Campus-Botschafter",
     title1: "IqraPay ist bereits",
     title2Before: "auf deinem ",
@@ -256,6 +256,9 @@ export const de = {
     leaderboardSubtitle: "Jeden Montag aktualisiert. Neue Woche – neue Chance zum Führen.",
     loading: "Bestenliste wird geladen…",
     empty: "Die Bestenliste wird bald aktualisiert. Komm nächste Woche wieder vorbei.",
+    posts: "Beiträge",
+    referrals: "Empfehlungen",
+    points: "Punkte",
     champion: "Champion",
     first: "1.",
     second: "2.",

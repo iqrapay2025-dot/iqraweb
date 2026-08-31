@@ -263,6 +263,7 @@ export const ar = {
     empty: "سيتم تحديث لوحة الصدارة قريباً. عُد الأسبوع المقبل.",
     posts: "منشورات",
     referrals: "إحالات",
+    points: "نقطة",
     champion: "البطل",
     first: "الأول",
     second: "الثاني",

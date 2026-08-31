@@ -31,28 +31,108 @@ const CREAM = "#fff9c4";
 
 const AMBASSADORS = [
   { name: "Olahan Khadijah", school: "University of Lagos", code: "IQP-OLK01" },
-  { name: "Firdaous Ismail", school: "Lagos State University", code: "IQP-FIR02" },
-  { name: "Sanni Faatimah Omotoyosi", school: "University of Ilorin", code: "IQP-SAN03" },
-  { name: "Zaynab Adenike Hassan", school: "University of Lagos", code: "IQP-ZAY04" },
-  { name: "Maimunah Mustapha", school: "University of Ilorin", code: "IQP-MAI05" },
+  {
+    name: "Firdaous Ismail",
+    school: "Lagos State University",
+    code: "IQP-FIR02",
+  },
+  {
+    name: "Sanni Faatimah Omotoyosi",
+    school: "University of Ilorin",
+    code: "IQP-SAN03",
+  },
+  {
+    name: "Zaynab Adenike Hassan",
+    school: "University of Lagos",
+    code: "IQP-ZAY04",
+  },
+  {
+    name: "Maimunah Mustapha",
+    school: "University of Ilorin",
+    code: "IQP-MAI05",
+  },
   { name: "Adewuyi Abdulgafar", school: "FUHSI", code: "IQP-ADE06" },
-  { name: "Hadiyyatullaah Ajibola", school: "University of Medical Sciences, Ondo", code: "IQP-HAD07" },
-  { name: "Khadijah Adeniran", school: "College of Medicine UNILAG", code: "IQP-KHA08" },
-  { name: "Rofiah Abdulganiyu", school: "College of Nursing Science NOH Igbobi", code: "IQP-ROF09" },
-  { name: "Kamaldeen Uswat Hassanat", school: "Abiola Ajimobi Technical University", code: "IQP-KAM10" },
-  { name: "Toheeb Ayomide Lawal", school: "Kwara State University, Malete", code: "IQP-TOH11" },
+  {
+    name: "Hadiyyatullaah Ajibola",
+    school: "University of Medical Sciences, Ondo",
+    code: "IQP-HAD07",
+  },
+  {
+    name: "Khadijah Adeniran",
+    school: "College of Medicine UNILAG",
+    code: "IQP-KHA08",
+  },
+  {
+    name: "Rofiah Abdulganiyu",
+    school: "College of Nursing Science NOH Igbobi",
+    code: "IQP-ROF09",
+  },
+  {
+    name: "Kamaldeen Uswat Hassanat",
+    school: "Abiola Ajimobi Technical University",
+    code: "IQP-KAM10",
+  },
+  {
+    name: "Toheeb Ayomide Lawal",
+    school: "Kwara State University, Malete",
+    code: "IQP-TOH11",
+  },
   { name: "Rodiyya Ismail", school: "University of Ilorin", code: "IQP-ROD12" },
-  { name: "Sheu Salamot", school: "College of Nursing Sciences Eleyele Ibadan", code: "IQP-SHE13" },
-  { name: "Abdulkareem Rodiyah Kehinde", school: "Lagos State University of Education", code: "IQP-ABD14" },
-  { name: "Kareem Rokibah", school: "Lagos State University of Education", code: "IQP-KAR15" },
-  { name: "Aderinoye Suliyat", school: "University of Ilorin", code: "IQP-ADR16" },
-  { name: "Zainab MuhammadAwwal", school: "University of Ilorin", code: "IQP-ZAM17" },
-  { name: "Akindele Abdur-Rahman Ayomide", school: "Adekunle Ajasin University Akungba", code: "IQP-AKI18" },
-  { name: "Lawal Fawaz", school: "University of Lagos State Science and Technology", code: "IQP-LAW19" },
-  { name: "Adebayo Sekinah Asabi", school: "University of Ibadan", code: "IQP-SEK20" },
-  { name: "Amidu Balikis Omotoyosi", school: "University of Ilorin", code: "IQP-BAL21" },
-  { name: "Sulayman Faridah Kehinde", school: "University of Ilorin", code: "IQP-FAR22" },
-  { name: "Sanni Suliat Adeshubomi", school: "Federal University of Agriculture, Abeokuta", code: "IQP-SSA23" },
+  {
+    name: "Sheu Salamot",
+    school: "College of Nursing Sciences Eleyele Ibadan",
+    code: "IQP-SHE13",
+  },
+  {
+    name: "Abdulkareem Rodiyah Kehinde",
+    school: "Lagos State University of Education",
+    code: "IQP-ABD14",
+  },
+  {
+    name: "Kareem Rokibah",
+    school: "Lagos State University of Education",
+    code: "IQP-KAR15",
+  },
+  {
+    name: "Aderinoye Suliyat",
+    school: "University of Ilorin",
+    code: "IQP-ADR16",
+  },
+  {
+    name: "Zainab MuhammadAwwal",
+    school: "University of Ilorin",
+    code: "IQP-ZAM17",
+  },
+  {
+    name: "Akindele Abdur-Rahman Ayomide",
+    school: "Adekunle Ajasin University Akungba",
+    code: "IQP-AKI18",
+  },
+  {
+    name: "Lawal Fawaz",
+    school: "University of Lagos State Science and Technology",
+    code: "IQP-LAW19",
+  },
+  {
+    name: "Adebayo Sekinah Asabi",
+    school: "University of Ibadan",
+    code: "IQP-SEK20",
+  },
+  {
+    name: "Amidu Balikis Omotoyosi",
+    school: "University of Ilorin",
+    code: "IQP-BAL21",
+  },
+  {
+    name: "Sulayman Faridah Kehinde",
+    school: "University of Ilorin",
+    code: "IQP-FAR22",
+  },
+  {
+    name: "Sanni Suliat Adeshubomi",
+    school: "Federal University of Agriculture, Abeokuta",
+    code: "IQP-SSA23",
+  },
 ];
 
 // Placeholder portrait photos for the carousel cards (one per ambassador,
@@ -131,6 +211,7 @@ interface LeaderboardEntry {
   code: string;
   posts: string;
   referrals: string;
+  total: number;
   photo: string | null;
 }
 
@@ -149,7 +230,7 @@ function initials(name: string): string {
 // (repeats for lower ranks). The rank-number badges reuse the original cycle
 // (teal / cocoa / gold) to stay consistent with the rest of the page.
 const RING_CLASS = ["gold", "teal", "cocoa"] as const;
-const RING_HEX: Record<typeof RING_CLASS[number], string> = {
+const RING_HEX: Record<(typeof RING_CLASS)[number], string> = {
   gold: "#C8922B",
   teal: "#009688",
   cocoa: "#2D0A02",
@@ -313,7 +394,16 @@ const LEADERBOARD_CSS = `
     color: #4b5563;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
+    text-align: center;
     gap: 5px;
+    /* Keep the full "posts · referrals · points" line on one row when
+       there is room, but let it wrap onto a second line instead of
+       clipping/overflowing when space runs out. */
+    white-space: normal;
+    line-height: 1.35;
+    max-width: 100%;
+    min-width: 0;
   }
   .podium-base {
     font-family: "Utendo", ui-sans-serif, system-ui, sans-serif;
@@ -401,11 +491,14 @@ const LEADERBOARD_CSS = `
     font-weight: 700;
     font-size: 14px;
     color: #0f0f0f;
+    /* Long names wrap instead of bleeding into the stats column. */
+    overflow-wrap: anywhere;
   }
   .r-school {
     font-size: 12px;
     color: #6b6b6b;
     margin-top: 1px;
+    overflow-wrap: anywhere;
   }
   .r-xp {
     font-weight: 600;
@@ -413,8 +506,16 @@ const LEADERBOARD_CSS = `
     color: #0f0f0f;
     display: inline-flex;
     align-items: center;
+    justify-content: flex-end;
+    text-align: right;
     gap: 4px;
-    white-space: nowrap;
+    /* Let the longer "posts · referrals · points" line wrap onto further
+       lines instead of forcing the name column off-screen. min-width: 0
+       lets this flex item shrink so wrapped text breaks cleanly. */
+    white-space: normal;
+    line-height: 1.35;
+    flex-shrink: 1;
+    min-width: 0;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -463,7 +564,16 @@ const LEADERBOARD_CSS = `
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    .p-xp { font-size: clamp(10px, 2.9vw, 12px); }
+    .p-xp {
+      font-size: clamp(10px, 2.9vw, 12px);
+      /* Wrap onto a second line on mobile rather than clipping/overflowing,
+         and keep the wrapped text centred under the avatar. */
+      white-space: normal;
+      line-height: 1.4;
+      justify-content: center;
+      text-align: center;
+      max-width: 100%;
+    }
 
     /* — Rank rows —
        Tighten the chrome so the name/school column keeps room to breathe
@@ -471,7 +581,7 @@ const LEADERBOARD_CSS = `
     .rank-row { gap: 9px; padding: 9px 10px; }
     .r-num { width: 26px; height: 26px; font-size: 12px; }
     .r-avatar { width: 32px; height: 32px; }
-    .r-xp { font-size: 11.5px; gap: 3px; }
+    .r-xp { font-size: 11.5px; gap: 3px; white-space: normal; line-height: 1.4; justify-content: flex-end; text-align: right; }
   }
 
   /* Very narrow phones: shrink the podium further so nothing ever clips. */
@@ -480,8 +590,7 @@ const LEADERBOARD_CSS = `
     .podium-step { max-width: none; }
     .avatar-ring { width: 54px; height: 54px; }
     .podium-spot.first .avatar-ring { width: 66px; height: 66px; }
-    .p-xp { font-size: 10px; }
-    .r-xp { white-space: normal; line-height: 1.35; }
+    .p-xp { font-size: clamp(8.5px,  2.7vw, 10px); }
   }
 `;
 
@@ -907,7 +1016,7 @@ function LeaderboardContent({
               <div className="p-xp">
                 <i className="fas fa-star" aria-hidden="true" />
                 {a.posts} {t("campusPage.posts")} · {a.referrals}{" "}
-                {t("campusPage.referrals")}
+                {t("campusPage.referrals")} · {a.total} {t("campusPage.points")}
               </div>
               <div className="podium-base">{label}</div>
             </motion.div>
@@ -945,7 +1054,7 @@ function LeaderboardContent({
               <div className="r-xp">
                 <i className="fas fa-star" aria-hidden="true" />
                 {a.posts} {t("campusPage.posts")} · {a.referrals}{" "}
-                {t("campusPage.referrals")}
+                {t("campusPage.referrals")} · {a.total} {t("campusPage.points")}
               </div>
             </motion.div>
           );
@@ -958,11 +1067,13 @@ function LeaderboardContent({
 export function CampusAmbassadorsPage({
   onNavigate,
 }: CampusAmbassadorsPageProps) {
-    const { t } = useLanguage();
-    const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[] | null>(null);
-    // Remembers the data instance the leaderboard UI is currently showing, so
-    // TTL cache hits don't replay the same animation on every focus event.
-    const appliedLeaderboardRef = useRef<LeaderboardEntry[] | null>(null);
+  const { t } = useLanguage();
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[] | null>(
+    null,
+  );
+  // Remembers the data instance the leaderboard UI is currently showing, so
+  // TTL cache hits don't replay the same animation on every focus event.
+  const appliedLeaderboardRef = useRef<LeaderboardEntry[] | null>(null);
 
   // Load the weekly leaderboard from the published Google Sheet.
   useEffect(() => {
@@ -1006,29 +1117,31 @@ export function CampusAmbassadorsPage({
         const rows = csv.trim().split("\n").slice(1);
 
         const data: LeaderboardEntry[] = rows
-          .map((row, index) => {
+          .map((row) => {
             const cols = row.split(",");
             const code = cols[3]?.trim() || "";
             const name = cols[1]?.trim() || "—";
-            const parsedRank = parseInt(cols[0], 10);
+            const posts = parseInt(cols[4], 10) || 0;
+            const referrals = parseInt(cols[5], 10) || 0;
             return {
-              rank:
-                Number.isFinite(parsedRank) && parsedRank > 0
-                  ? parsedRank
-                  : index + 1,
+              rank: 0, // assigned after sorting below
               name,
               school: cols[2]?.trim() || "—",
               code,
-              posts: cols[4]?.trim() || "0",
-              referrals: cols[5]?.trim() || "0",
+              posts: String(posts),
+              referrals: String(referrals),
+              total: posts + referrals,
               photo: code ? photoForCode(code) : null,
             };
           })
           // Drop blank/placeholder rows (e.g. the trailing editor note).
           .filter((a) => a.name && a.name !== "—")
-          // Keep the ranking faithful to the sheet's Rank column in case rows
-          // are reordered or written out of sequence.
-          .sort((a, b) => a.rank - b.rank);
+          // Rank by combined score (posts + referrals); ties broken by posts.
+          .sort((a, b) => {
+            if (b.total !== a.total) return b.total - a.total;
+            return parseInt(b.posts, 10) - parseInt(a.posts, 10);
+          })
+          .map((a, index) => ({ ...a, rank: index + 1 }));
 
         leaderboardCache = {
           url: SHEET_URL,
@@ -1144,8 +1257,7 @@ export function CampusAmbassadorsPage({
               {t("campusPage.badge")}
             </div>
             <h1>
-              {t("campusPage.title1")}{" "}
-              <br className="hidden sm:block" />
+              {t("campusPage.title1")} <br className="hidden sm:block" />
               {t("campusPage.title2Before")}
               <span className="accent">{t("campusPage.title2Accent")}</span>
               {t("campusPage.title2After")}
@@ -1163,7 +1275,7 @@ export function CampusAmbassadorsPage({
               ))}
             </div>
           </motion.div>
-{/* Ambassador carousel — swipable cards with arrows + dots */}
+          {/* Ambassador carousel — swipable cards with arrows + dots */}
           <div className="ambassador-carousel">
             <div
               className="ambassador-track"
@@ -1273,8 +1385,6 @@ export function CampusAmbassadorsPage({
           </div>
         </div>
       </section>
-
-      
 
       <style>{LEADERBOARD_CSS}</style>
       <style>{HERO_CSS}</style>

@@ -240,7 +240,7 @@ export const ha = {
   },
 
 // Shafin Jakadun Kampas
-  campusPage: {
+ campusPage: {
     badge: "Jakadun Kampas Mu",
     title1: "IqraPay ya riga ya",
     title2Before: "a ",
@@ -263,6 +263,7 @@ export const ha = {
     empty: "Za a sabunta jerin sunayen nan ba da jimawa ba. Dawo mako mai zuwa.",
     posts: "karɓa",
     referrals: "tufkoki",
+    points: "maki",
     champion: "Champion",
     first: "Na 1",
     second: "Na 2",

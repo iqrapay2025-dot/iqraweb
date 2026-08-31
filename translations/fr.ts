@@ -240,7 +240,7 @@ export const fr = {
   },
 
 // Page des ambassadeurs de campus
-  campusPage: {
+ campusPage: {
     badge: "Nos ambassadeurs de campus",
     title1: "IqraPay est déjà",
     title2Before: "sur votre ",
@@ -261,6 +261,9 @@ export const fr = {
     leaderboardSubtitle: "Mis à jour chaque lundi. Nouvelle semaine — nouvelle chance de se démarquer.",
     loading: "Chargement du classement…",
     empty: "Le classement sera bientôt mis à jour. Revenez la semaine prochaine.",
+    posts: "publications",
+    referrals: "recommandations",
+    points: "points",
     champion: "Champion",
     first: "1er",
     second: "2e",

@@ -240,7 +240,7 @@ export const zh = {
   },
 
 // 校园大使页面
-  campusPage: {
+ campusPage: {
     badge: "我们的校园大使",
     title1: "IqraPay 已经",
     title2Before: "在你的",
@@ -263,6 +263,7 @@ export const zh = {
     empty: "排行榜即将更新。请下周再来查看。",
     posts: "帖子",
     referrals: "推荐",
+    points: "积分",
     champion: "冠军",
     first: "第1名",
     second: "第2名",

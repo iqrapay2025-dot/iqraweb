@@ -263,6 +263,7 @@ export const yo = {
     empty: "Àkójọ orúkọ yóò jáde láìpẹ́. Padà wá ní ọ̀sẹ̀ tó ń bọ̀.",
     posts: "ìgbérò",
     referrals: "ìtọ́kasí",
+    points: "àmì",
     champion: "Aṣojú Ẹ̀kan",
     first: "Kìn-ín-ní",
     second: "Kejì",

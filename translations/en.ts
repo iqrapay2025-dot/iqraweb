@@ -268,6 +268,7 @@ export const en = {
     empty: "Leaderboard updating soon. Check back Monday.",
     posts: "posts",
     referrals: "referrals",
+    points: "points",
     champion: "Champion",
     first: "1st",
     second: "2nd",
