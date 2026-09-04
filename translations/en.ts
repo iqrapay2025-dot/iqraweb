@@ -20,7 +20,7 @@ export const en = {
     heroDisclosure: "A small operational fee (10–15%) is deducted from every contribution before it enters the reward pool, covering the cost of running the platform. The rest goes entirely to rewarding readers — full transparency, always.",
 
     // Stats strip
-    stat1Value: "100%",
+    stat1Value: "85-90%",
     stat1Label: "of contributions go to the reward pool",
     stat2Value: "3",
     stat2Label: "sponsorship tiers to fit any budget",
