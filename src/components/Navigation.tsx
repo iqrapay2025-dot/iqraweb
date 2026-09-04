@@ -48,7 +48,7 @@ export function Navigation({ currentPage, onNavigate, darkMode, toggleDarkMode }
     { name: t('nav.about'), id: "about" },
     { name: t('nav.howItWorks'), id: "how-it-works" },
     { name: t('nav.ambassadors'), id: "ambassadors" },
-    { name: t('nav.campusAmbassadors'), id: "campus-ambassadors" },
+    { name: t('nav.sponsors'), id: "sponsors" },
     { name: t('nav.contact'), id: "contact" },
   ];
 

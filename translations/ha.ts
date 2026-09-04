@@ -6,7 +6,6 @@ export const ha = {
     about: "Game da Mu",
     howItWorks: "Yadda Yake Aiki",
     ambassadors: "Jakadun",
-    campusAmbassadors: "Campus Ambassadors",
     blog: "Bulogi",
     contact: "Tuntube Mu",
   },

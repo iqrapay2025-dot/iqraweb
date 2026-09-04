@@ -9,6 +9,8 @@ import { CampusAmbassadorsPage } from "./components/CampusAmbassadorsPage";
 import { BlogPage } from "./components/BlogPage";
 import { ContactPage } from "./components/ContactPage";
 import {SupportPage} from "./components/SupportPage"
+import { SponsorshipPage } from "./components/SponsorshipPage";
+import { InstitutionalLicensingPage } from "./components/InstitutionalLicensingPage";
 import { PrivacyPolicyPage } from "./components/PrivacyPolicyPage";
 import { TermsOfServicePage } from "./components/TermsOfServicePage";
 import { ScrollToTop } from "./components/ScrollToTop";
@@ -33,11 +35,29 @@ import { Button } from "./components/ui/button";
 import { Menu } from "lucide-react";
 import { Analytics } from "@vercel/analytics/react";
 
+/**
+ * Backward-compatibility route aliases.
+ * Old paths shared via social media bios, WhatsApp, QR codes and email
+ * campaigns (e.g. `#campus-ambassadors`, `#sponsorship`) keep working by
+ * redirecting to the new canonical hash routes. This is the project's
+ * "redirect pattern": the app uses hash-based client-side routing, so
+ * redirects are normalised here on initial load and on back/forward.
+ */
+const ROUTE_ALIASES: Record<string, string> = {
+  "campus-ambassadors": "ambassadors/campus",
+  "sponsorship": "sponsors",
+};
+
+const normalizeRoute = (route: string): string =>
+  ROUTE_ALIASES[route] ?? route;
+
 function AppContent() {
   const [currentPage, setCurrentPage] = useState(() => {
-    // Initialize from URL hash or default to home
+    // Initialize from URL hash or default to home.
+    // Legacy shared links are normalised on first paint so the correct
+    // page renders immediately (e.g. #campus-ambassadors -> #ambassadors/campus).
     const hash = window.location.hash.slice(1) || "home";
-    return hash;
+    return normalizeRoute(hash);
   });
   const [darkMode, setDarkMode] = useState(false);
   const [currentBlogSlug, setCurrentBlogSlug] = useState<string | null>(null);
@@ -77,10 +97,21 @@ function AppContent() {
       window.removeEventListener("iqrapay:open-waitlist", handleWaitlistEvent);
   }, []);
 
-  // Handle browser back/forward buttons
+    // Handle browser back/forward buttons
   useEffect(() => {
     const handlePopState = () => {
-      const hash = window.location.hash.slice(1) || "home";
+      let hash = window.location.hash.slice(1) || "home";
+
+      // Redirect any legacy shared links to their canonical route
+      const normalized = normalizeRoute(hash);
+      if (normalized !== hash) {
+        window.history.replaceState(
+          { page: normalized },
+          "",
+          `#${normalized}`
+        );
+        hash = normalized;
+      }
 
       // Check if it's a blog post URL (format: blog-post/slug)
       if (hash.startsWith("blog-post/")) {
@@ -95,6 +126,20 @@ function AppContent() {
 
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  // On initial load, rewrite the address bar for legacy shared links
+  // (#campus-ambassadors, #sponsorship) so the URL reflects the new route.
+  useEffect(() => {
+    const hash = window.location.hash.slice(1) || "home";
+    const normalized = normalizeRoute(hash);
+    if (normalized !== hash) {
+      window.history.replaceState(
+        { page: normalized },
+        "",
+        `#${normalized}`
+      );
+    }
   }, []);
 
   // Hidden keyboard shortcut to access admin: Ctrl+Shift+A
@@ -290,7 +335,7 @@ function AppContent() {
         return <HowItWorksPage onNavigate={handleNavigate} />;
       case "ambassadors":
         return <AmbassadorsPage onNavigate={handleNavigate} />;
-      case "campus-ambassadors":
+      case "ambassadors/campus":
         return <CampusAmbassadorsPage onNavigate={handleNavigate} />;
       case "blog":
         return <BlogPage onNavigate={handleNavigate} />;
@@ -319,6 +364,10 @@ function AppContent() {
         return <ContactPage darkMode={darkMode} onNavigate={handleNavigate} />;
       case "support":
         return <SupportPage darkMode={darkMode} onNavigate={handleNavigate} />;
+      case "sponsors":
+        return <SponsorshipPage darkMode={darkMode} onNavigate={handleNavigate} />;
+      case "institutional-licensing":
+        return <InstitutionalLicensingPage darkMode={darkMode} />;
       case "privacy-policy":
         return <PrivacyPolicyPage onNavigate={handleNavigate} />;
       case "terms-of-service":

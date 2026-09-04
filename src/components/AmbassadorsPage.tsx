@@ -252,6 +252,49 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
         </div>
       </section>
 
+            {/* Campus Ambassador Funnel — funnels university students to the
+          dedicated Campus track (parent/child IA split) */}
+      <section className="px-4 sm:px-6 lg:px-8 py-20">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <Card className="p-8 sm:p-12 border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-secondary/5">
+              <div className="grid lg:grid-cols-2 gap-8 items-center">
+                <div>
+                  <h2 className="text-3xl sm:text-4xl mb-4">
+                    {t("ambassadors.campusFunnelTitle")}
+                  </h2>
+                  <p className="text-lg text-muted-foreground mb-6 max-w-xl">
+                    {t("ambassadors.campusFunnelDesc")}
+                  </p>
+                  <Button
+                    size="lg"
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground px-8"
+                    onClick={() => {
+                      if (onNavigate) {
+                        onNavigate("ambassadors/campus");
+                      } else {
+                        window.location.hash = "#ambassadors/campus";
+                      }
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
+                  >
+                    {t("ambassadors.campusFunnelCta")}
+                  </Button>
+                </div>
+                <div className="flex justify-center lg:justify-end">
+                  <Users className="h-24 w-24 text-primary opacity-25" />
+                </div>
+              </div>
+            </Card>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Benefits Grid */}
       <section className="px-4 sm:px-6 lg:px-8 py-20 bg-muted/30">
         <div className="max-w-7xl mx-auto">

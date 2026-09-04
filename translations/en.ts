@@ -6,10 +6,128 @@ export const en = {
     about: "About",
     howItWorks: "How It Works",
     ambassadors: "Ambassadors",
-    campusAmbassadors: "Campus Ambassadors",
+    sponsors: "Sponsors",
     blog: "Blog",
     contact: "Contact",
     support: "Support",
+  },
+
+  // Sponsorship Page
+  sponsorship: {
+    eyebrow: "SPONSORSHIP",
+    heroTitle: "Become a Sponsor",
+    heroBody: "Every contribution funds the halal reward pool that pays readers for genuinely engaging with Islamic books on IqraPay — Learn. Build Skills. Earn with Purpose.",
+    heroDisclosure: "A small operational fee (10–15%) is deducted from every contribution before it enters the reward pool, covering the cost of running the platform. The rest goes entirely to rewarding readers — full transparency, always.",
+
+    // Stats strip
+    stat1Value: "100%",
+    stat1Label: "of contributions go to the reward pool",
+    stat2Value: "3",
+    stat2Label: "sponsorship tiers to fit any budget",
+    stat3Value: "Every",
+    stat3Label: "sponsor receives an impact report",
+
+    // How it works
+    stepsTitle: "How your sponsorship works",
+    stepsSubtitle: "From contribution to impact, in three simple steps.",
+    step1Title: "Choose a tier",
+    step1Text: "Pick the level of support that fits you, from a one-off gift to a full book sponsorship.",
+    step2Title: "We put it to work",
+    step2Text: "Your contribution funds the halal reward pool that pays readers for genuinely finishing Islamic books.",
+    step3Title: "You see the impact",
+    step3Text: "Every sponsor gets a report showing exactly how their support reached real readers.",
+
+    // Tiers heading
+    tiersTitle: "Choose your tier",
+    tiersSubtitle: "Start wherever feels right — every tier funds real readers, real impact.",
+
+    // Tier: Sadaqah
+    tierSadaqahName: "Sadaqah Sponsor",
+    tierSadaqahPrice: "₦5,000",
+    tierSadaqahPriceNote: "one-time · suggested ₦10,000",
+    tierSadaqahTagline: "For anyone who wants to give — no commitment required.",
+    tierSadaqahFeat0: "Name listed on our Supporters page",
+    tierSadaqahFeat1: "Thank-you shoutout on social media",
+    tierSadaqahFeat2: "Quarterly report on platform-wide impact",
+    tierSadaqahCta: "Become a Sponsor",
+
+    // Tier: Knowledge
+    tierKnowledgeName: "Knowledge Sponsor",
+    tierKnowledgePrice: "₦50,000",
+    tierKnowledgePriceNote: "/month · or one-time per book by arrangement",
+    tierKnowledgeTagline: "Fund the reward pool for one specific book.",
+    tierKnowledgeFeat0: "Everything in Sadaqah, plus:",
+    tierKnowledgeFeat1: "Name/logo shown on that book's page",
+    tierKnowledgeFeat2: "Dedicated social media post announcing your sponsorship",
+    tierKnowledgeFeat3: "Book-specific report — reads, completions, rewards paid out",
+    tierKnowledgeFeat4: "First option to renew that book's pool",
+    tierKnowledgeCta: "Sponsor a Book",
+    tierKnowledgeBadge: "Most Popular",
+
+    // Tier: Waqf
+    tierWaqfName: "Waqf Partner",
+    tierWaqfPrice: "Custom",
+    tierWaqfPriceNote: "from ₦250,000",
+    tierWaqfTagline: "Become a founding partner of IqraPay's mission.",
+    tierWaqfFeat0: "Everything in Knowledge, plus:",
+    tierWaqfFeat1: "Logo on homepage & every book page",
+    tierWaqfFeat2: "Joint founding-partner announcement",
+    tierWaqfFeat3: "Full quarterly platform-wide report",
+    tierWaqfFeat4: "Early access to platform insights and impact data",
+    tierWaqfFeat5: "Direct line to the IqraPay team",
+    tierWaqfCta: "Contact Us",
+
+    // FAQ
+    faqTitle: "Common questions",
+    faq1Q: "Where does my contribution actually go?",
+    faq1A: "After a small operational fee (10–15%) that covers running the platform, the rest goes directly into the halal reward pool that pays readers for completing and engaging with Islamic books on IqraPay.",
+    faq2Q: "Can I sponsor more than one book?",
+    faq2A: "Yes. Knowledge Sponsors can back multiple titles over time, and each book is sponsored by one sponsor at a time so your support stays visible and personal.",
+    faq3Q: "How often will I hear from IqraPay?",
+    faq3A: "Every sponsor, at every tier, receives a report — scoped to what you're funding. Sadaqah Sponsors get a quarterly platform summary; Knowledge Sponsors get a report on their book; Waqf Partners get the full quarterly picture.",
+    faq4Q: "Is this a one-time gift or a subscription?",
+    faq4A: "Either. Most tiers can be given as a one-time contribution or as a recurring monthly amount, whichever suits you better.",
+
+    // Institutional licensing callout
+    institutionCalloutTitle: "Represent an institution?",
+    institutionCalloutBody: "Mosques, Islamic schools, and NGOs can bring IqraPay to their community with a branded dashboard and member reports — that's a different program.",
+    institutionCalloutCta: "See Institutional Licensing →",
+
+    // Closing CTA
+    ctaTitle: "Ready to sponsor a reader's journey?",
+    ctaBody: "Every tier — big or small — funds the same mission: readers being rewarded for engaging with Islamic knowledge.",
+    ctaButton: "Sponsor a Book",
+
+    // Modal
+    modalInstruction: "Enter your name and we'll open WhatsApp with your message ready.",
+    modalNameLabel: "Your name",
+    modalNamePlaceholder: "e.g. Aisha Bello",
+    modalContinue: "Continue to WhatsApp",
+    modalClose: "Close",
+
+    // Modal WhatsApp message verbiage
+    modalVerbWaqf: "become a Waqf Partner",
+    modalVerbTier: "become a",
+    modalMessagePrefix: "Hi IqraPay! My name is",
+    modalMessageSuffix: "and I'd like to",
+  },
+
+  // Institutional Licensing Page
+  institutional: {
+    eyebrow: "FOR INSTITUTIONS",
+    headline: "Bring IqraPay to your community",
+    body: "IqraPay partners with mosques, Islamic schools, and NGOs to reward your community members for genuinely engaging with Islamic books — with a branded dashboard, progress reports, and the option to fund a dedicated reward pool for your members.",
+    bulletAdmin: "Admin dashboard to monitor all community members in one place",
+    bulletReports: "Progress reports — who read, who passed quizzes, who's engaging",
+    bulletPool: "Fund your own dedicated reward pool for your members",
+    bulletBranded: "Optional branded/white-label version of the platform",
+    bulletSupport: "Priority support and onboarding assistance",
+    closing: "We're onboarding our first institutional partners now — get in touch to learn more.",
+    cta: "Get in Touch",
+    modalInstruction: "Enter your institution's name and we'll open WhatsApp with your message ready.",
+    modalNameLabel: "Institution name",
+    modalNamePlaceholder: "e.g. Jami'uyyin Mosque",
+    modalContinue: "Continue to WhatsApp",
   },
 
   // Home Page
@@ -242,6 +360,11 @@ export const en = {
     
     currentTitle: "Our Ambassadors",
     currentDesc: "Meet some of our dedicated community leaders from around the world",
+
+    // Campus Ambassador funnel (parent page → /ambassadors/campus)
+    campusFunnelTitle: "Are you a university student?",
+    campusFunnelDesc: "Join our Campus Ambassador Program — refer, earn, and grow with IqraPay on your campus.",
+    campusFunnelCta: "Explore Campus Ambassadors",
   },
 
 // Campus Ambassadors Page

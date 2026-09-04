@@ -6,7 +6,6 @@ export const ig = {
     about: "Banyere Anyị",
     howItWorks: "Otu Ọ Si Arụ Ọrụ",
     ambassadors: "Ndị Nnọchiteanya",
-    campusAmbassadors: "Campus Ambassadors",
     blog: "Blog",
     contact: "Kpọtụrụ Anyị",
   },

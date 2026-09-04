@@ -6,7 +6,6 @@ export const yo = {
     about: "Nípa Wa",
     howItWorks: "Bí Ó Ṣe Ń Ṣiṣẹ́",
     ambassadors: "Àwọn Aṣojú",
-    campusAmbassadors: "Campus Ambassadors",
     blog: "Bùlọ́ọ̀gù",
     contact: "Kàn Sí Wa",
   },
