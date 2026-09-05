@@ -78,7 +78,6 @@ interface Tier {
   id: string;
   name: string;
   price: string;
-  priceNote: string;
   tagline: string;
   features: string[];
   cta: string;
@@ -282,16 +281,6 @@ function Card({ tier, onOpen, theme }: { tier: Tier; onOpen: (tier: Tier) => voi
 
       <div style={{ marginBottom: 6 }}>
         <span style={{ fontFamily: FONT_HEAD, fontSize: 34, fontWeight: 700 }}>{tier.price}</span>
-        <span
-          style={{
-            fontFamily: FONT_BODY,
-            fontSize: 13,
-            marginLeft: 6,
-            color: featured ? "rgba(255,255,255,0.8)" : theme.inkMuted,
-          }}
-        >
-          {tier.priceNote}
-        </span>
       </div>
 
       <p
@@ -365,7 +354,17 @@ function Card({ tier, onOpen, theme }: { tier: Tier; onOpen: (tier: Tier) => voi
 /* ---------------- Modal ---------------- */
 function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => void; theme: Theme; t: (key: string) => string }) {
   const [name, setName] = useState("");
+  const [copiedField, setCopiedField] = useState<string | null>(null);
+  const [closeHover, setCloseHover] = useState(false);
+  const [submitHover, setSubmitHover] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const accountDetails = [
+    { label: "ACCOUNT NUMBER", value: "8155956187" },
+    { label: "BANK NAME", value: "MONIEPOINT MFB" },
+    { label: "ACCOUNT NAME", value: "IQRAPAY LIMITED" },
+  ];
+  const isAmountTier = tier.id === "sadaqah" || tier.id === "knowledge";
 
   useEffect(() => {
     inputRef.current && inputRef.current.focus();
@@ -374,9 +373,25 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
 
+  const copyAccountDetail = async (label: string, value: string) => {
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopiedField(label);
+      window.setTimeout(() => setCopiedField(null), 1800);
+    } catch {
+      // Clipboard access can be unavailable outside a secure browser context.
+    }
+  };
+
     const submit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) return;
+      if (isAmountTier) {
+        const message = `i sent '${name.trim()}', Baarakallahu Fiikum!`;
+        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
+        onClose();
+        return;
+      }
     const verb =
       tier.id === "waqf" ? t("sponsorship.modalVerbWaqf") : `${t("sponsorship.modalVerbTier")} ${tier.name}`;
     const message = `${t("sponsorship.modalMessagePrefix")} ${name.trim()} ${t("sponsorship.modalMessageSuffix")} ${verb}.`;
@@ -409,21 +424,29 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
           maxWidth: 380,
           boxShadow: "0 24px 48px rgba(0,0,0,0.25)",
           position: "relative",
+          animation: "sponsorModalEnter .32s ease-out both",
         }}
       >
         <button
           type="button"
           onClick={onClose}
           aria-label="Close"
+          onMouseEnter={() => setCloseHover(true)}
+          onMouseLeave={() => setCloseHover(false)}
           style={{
             position: "absolute",
             top: 16,
             right: 18,
-            background: "none",
+            background: closeHover ? theme.tint : "none",
             border: "none",
             fontSize: 18,
             color: theme.inkMuted,
             cursor: "pointer",
+            width: 30,
+            height: 30,
+            borderRadius: "50%",
+            transition: "background .2s ease, color .2s ease, transform .2s ease",
+            transform: closeHover ? "rotate(90deg)" : "rotate(0deg)",
           }}
         >
           ✕
@@ -434,15 +457,72 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
         <p style={{ fontFamily: FONT_BODY, fontSize: 13.5, color: theme.inkMuted, margin: "0 0 22px" }}>
           {t("sponsorship.modalInstruction")}
         </p>
+        <div
+          style={{
+            background: theme.tint,
+            border: `1px solid ${C.teal}33`,
+            borderRadius: 14,
+            padding: "14px 16px",
+            marginBottom: 22,
+          }}
+        >
+          <div style={{ fontFamily: FONT_BODY, fontSize: 11, fontWeight: 700, color: C.teal, letterSpacing: 0.5, marginBottom: 10 }}>
+            PAYMENT DETAILS
+          </div>
+          {accountDetails.map((detail) => (
+            <button
+              key={detail.label}
+              type="button"
+              onClick={() => copyAccountDetail(detail.label, detail.value)}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "100%",
+                gap: 12,
+                padding: "8px 0",
+                background: "none",
+                border: "none",
+                borderBottom: detail.label === "ACCOUNT NAME" ? "none" : `1px solid ${C.teal}22`,
+                color: theme.ink,
+                cursor: "pointer",
+                textAlign: "left",
+                transition: "color .2s ease, transform .2s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = C.tealDark;
+                e.currentTarget.style.transform = "translateX(3px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = theme.ink;
+                e.currentTarget.style.transform = "translateX(0)";
+              }}
+            >
+              <span>
+                <span style={{ display: "block", fontFamily: FONT_BODY, fontSize: 10, color: theme.inkMuted, letterSpacing: 0.35 }}>
+                  {detail.label}
+                </span>
+                <span style={{ display: "block", fontFamily: FONT_HEAD, fontSize: 14, fontWeight: 700, marginTop: 2 }}>
+                  {detail.value}
+                </span>
+              </span>
+              <span style={{ fontFamily: FONT_BODY, fontSize: 11, fontWeight: 700, color: C.teal, whiteSpace: "nowrap" }}>
+                {copiedField === detail.label ? "Copied" : "Copy"}
+              </span>
+            </button>
+          ))}
+        </div>
         <label style={{ fontFamily: FONT_BODY, fontSize: 11, textTransform: "uppercase", letterSpacing: 0.4, color: theme.inkMuted }}>
-          {t("sponsorship.modalNameLabel")}
+          {isAmountTier ? "Amount transferred" : t("sponsorship.modalNameLabel")}
         </label>
         <input
           ref={inputRef}
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
-          placeholder={t("sponsorship.modalNamePlaceholder")}
+          type={isAmountTier ? "text" : "text"}
+          inputMode={isAmountTier ? "decimal" : undefined}
+          placeholder={isAmountTier ? "How much you transfered" : t("sponsorship.modalNamePlaceholder")}
           style={{
             width: "100%",
             marginTop: 6,
@@ -459,9 +539,11 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
         />
         <button
           type="submit"
+          onMouseEnter={() => setSubmitHover(true)}
+          onMouseLeave={() => setSubmitHover(false)}
           style={{
             width: "100%",
-            background: C.teal,
+            background: submitHover ? C.tealDark : C.teal,
             color: C.white,
             border: "none",
             borderRadius: 12,
@@ -470,11 +552,15 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
             fontWeight: 700,
             fontSize: 14,
             cursor: "pointer",
+            transform: submitHover ? "translateY(-2px)" : "translateY(0)",
+            boxShadow: submitHover ? "0 8px 18px rgba(0,150,136,0.28)" : "none",
+            transition: "background .2s ease, transform .2s ease, box-shadow .2s ease",
           }}
         >
-          {t("sponsorship.modalContinue")}
+          {isAmountTier ? "I have paid" : t("sponsorship.modalContinue")}
         </button>
       </form>
+      <style>{`@keyframes sponsorModalEnter { from { opacity: 0; transform: translateY(14px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }`}</style>
     </div>
   );
 }
@@ -638,7 +724,6 @@ export function SponsorshipPage({
       id: "sadaqah",
       name: t("sponsorship.tierSadaqahName"),
       price: t("sponsorship.tierSadaqahPrice"),
-      priceNote: t("sponsorship.tierSadaqahPriceNote"),
       tagline: t("sponsorship.tierSadaqahTagline"),
       features: [
         t("sponsorship.tierSadaqahFeat0"),
@@ -652,7 +737,6 @@ export function SponsorshipPage({
       id: "knowledge",
       name: t("sponsorship.tierKnowledgeName"),
       price: t("sponsorship.tierKnowledgePrice"),
-      priceNote: t("sponsorship.tierKnowledgePriceNote"),
       tagline: t("sponsorship.tierKnowledgeTagline"),
       features: [
         t("sponsorship.tierKnowledgeFeat0"),
@@ -668,7 +752,6 @@ export function SponsorshipPage({
       id: "waqf",
       name: t("sponsorship.tierWaqfName"),
       price: t("sponsorship.tierWaqfPrice"),
-      priceNote: t("sponsorship.tierWaqfPriceNote"),
       tagline: t("sponsorship.tierWaqfTagline"),
       features: [
         t("sponsorship.tierWaqfFeat0"),

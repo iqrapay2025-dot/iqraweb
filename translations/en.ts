@@ -44,7 +44,6 @@ export const en = {
     // Tier: Sadaqah
     tierSadaqahName: "Sadaqah Sponsor",
     tierSadaqahPrice: "₦5,000",
-    tierSadaqahPriceNote: "one-time · suggested ₦10,000",
     tierSadaqahTagline: "For anyone who wants to give — no commitment required.",
     tierSadaqahFeat0: "Name listed on our Supporters page",
     tierSadaqahFeat1: "Thank-you shoutout on social media",
@@ -54,7 +53,6 @@ export const en = {
     // Tier: Knowledge
     tierKnowledgeName: "Knowledge Sponsor",
     tierKnowledgePrice: "₦50,000",
-    tierKnowledgePriceNote: "/month · or one-time per book by arrangement",
     tierKnowledgeTagline: "Fund the reward pool for one specific book.",
     tierKnowledgeFeat0: "Everything in Sadaqah, plus:",
     tierKnowledgeFeat1: "Name/logo shown on that book's page",
@@ -67,7 +65,6 @@ export const en = {
     // Tier: Waqf
     tierWaqfName: "Waqf Partner",
     tierWaqfPrice: "Custom",
-    tierWaqfPriceNote: "from ₦250,000",
     tierWaqfTagline: "Become a founding partner of IqraPay's mission.",
     tierWaqfFeat0: "Everything in Knowledge, plus:",
     tierWaqfFeat1: "Logo on homepage & every book page",
