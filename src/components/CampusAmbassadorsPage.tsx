@@ -1117,31 +1117,33 @@ export function CampusAmbassadorsPage({
         const rows = csv.trim().split("\n").slice(1);
 
         const data: LeaderboardEntry[] = rows
-          .map((row) => {
+          .map((row, index) => {
             const cols = row.split(",");
             const code = cols[3]?.trim() || "";
             const name = cols[1]?.trim() || "—";
             const posts = parseInt(cols[4], 10) || 0;
             const referrals = parseInt(cols[5], 10) || 0;
+            const parsedRank = parseInt(cols[0], 10);
             return {
-              rank: 0, // assigned after sorting below
+              // Rank comes directly from the sheet's Rank column — the Ops Lead's
+              // manual entry is the source of truth, never recalculated here.
+              rank:
+                Number.isFinite(parsedRank) && parsedRank > 0
+                  ? parsedRank
+                  : index + 1,
               name,
               school: cols[2]?.trim() || "—",
               code,
               posts: String(posts),
               referrals: String(referrals),
-              total: posts + referrals,
+              total: posts + referrals, // shown for context only, not used for ordering
               photo: code ? photoForCode(code) : null,
             };
           })
           // Drop blank/placeholder rows (e.g. the trailing editor note).
           .filter((a) => a.name && a.name !== "—")
-          // Rank by combined score (posts + referrals); ties broken by posts.
-          .sort((a, b) => {
-            if (b.total !== a.total) return b.total - a.total;
-            return parseInt(b.posts, 10) - parseInt(a.posts, 10);
-          })
-          .map((a, index) => ({ ...a, rank: index + 1 }));
+          // Display order follows the sheet's Rank column exactly.
+          .sort((a, b) => a.rank - b.rank);
 
         leaderboardCache = {
           url: SHEET_URL,
