@@ -2,6 +2,7 @@ import { Target, Eye, Sparkles, CheckCircle } from "lucide-react";
 import { Card } from "./ui/card";
 import { IslamicPattern } from "./IslamicPattern";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import aboutHeroImage from "../assets/rawdah3.jpg";
 
 import { motion } from "motion/react";
 import { TeamCarousel, TeamMember } from "./TeamCarousel";
@@ -128,7 +129,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
             >
               <div className="relative rounded-2xl overflow-hidden shadow-xl">
                 <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1609599006353-e629aaabfeae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtdXNsaW0lMjBjb21tdW5pdHklMjBtb3NxdWV8ZW58MXx8fHwxNzYwMzMzNTI5fDA&ixlib=rb-4.1.0&q=80&w=1080"
+                  src={aboutHeroImage}
                   alt="Muslim Community"
                   className="w-full h-[500px] object-cover"
                 />

@@ -3,6 +3,7 @@ import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { IslamicPattern } from "./IslamicPattern";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import heroImage from "../assets/rawdah-book.jpg";
 
 import { TestimonialCarousel } from "./TestimonialCarousel";
 import { motion } from "motion/react";
@@ -113,9 +114,9 @@ export function HomePage({ onNavigate }: HomePageProps) {
             >
               <div className="relative rounded-2xl overflow-hidden shadow-2xl">
                 <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1721744687343-788d031da8b9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxxdXJhbiUyMGJvb2slMjBpc2xhbWljfGVufDF8fHx8MTc2MDQ5MDI1NXww&ixlib=rb-4.1.0&q=80&w=760"
+                  src={heroImage}
                   alt="Quran and Islamic learning"
-                  className="w-full h-[500px] object-cover"
+                  className="w-full h-[420px] object-cover object-center"
                   width="570"
                   height="760"
                   // fetchpriority="high"
