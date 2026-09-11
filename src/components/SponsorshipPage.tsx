@@ -361,8 +361,8 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
 
   const accountDetails = [
     { label: "ACCOUNT NUMBER", value: "8155956187" },
-    { label: "BANK NAME", value: "MONIEPOINT MFB" },
-    { label: "ACCOUNT NAME", value: "IQRAPAY LIMITED" },
+    { label: "BANK NAME", value: "OPAY" },
+    { label: "ACCOUNT NAME", value: "MUHAMMED JUMAH" },
   ];
   const isAmountTier = tier.id === "sadaqah" || tier.id === "knowledge";
 
@@ -511,6 +511,19 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
               </span>
             </button>
           ))}
+          <div
+            style={{
+              marginTop: 14,
+              paddingTop: 12,
+              borderTop: `1px solid ${C.teal}22`,
+              fontFamily: FONT_BODY,
+              fontSize: 11.5,
+              lineHeight: 1.6,
+              color: theme.inkMuted,
+            }}
+          >
+            <strong style={{ color: C.teal, fontWeight: 700 }}>Note:</strong> We are in the process of registering our CAC so we can open a properly registered business bank account in the company’s name. For now, we are using Opay as displayed above.
+          </div>
         </div>
         <label style={{ fontFamily: FONT_BODY, fontSize: 11, textTransform: "uppercase", letterSpacing: 0.4, color: theme.inkMuted }}>
           {isAmountTier ? "Amount transferred" : t("sponsorship.modalNameLabel")}
