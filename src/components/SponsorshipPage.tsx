@@ -870,7 +870,7 @@ function FaqItem({ faq, theme }: { faq: Faq; theme: Theme }) {
       </button>
       <div
         style={{
-          maxHeight: open ? 200 : 0,
+          maxHeight: open ? 1000 : 0,
           overflow: "hidden",
           transition: "max-height .3s ease",
         }}
