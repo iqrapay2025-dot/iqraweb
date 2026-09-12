@@ -36,6 +36,7 @@ const FONT_BODY = "'Manrope', sans-serif";
 
 // Real IqraPay WhatsApp number, international format, no "+" or leading "0".
 const WHATSAPP_NUMBER = "2349043609339";
+const GOOGLE_SHEET_WEBHOOK = "https://script.google.com/macros/s/AKfycbxmz1LFfnQFCdPVR6P9nv1QgfmtVKj24cYttCo2x-F_LxqDgKaVDLeeI-hr2q8jvhltag/exec";
 
 /* ---------------- Theme (light/dark) ---------------- */
 interface Theme {
@@ -354,6 +355,10 @@ function Card({ tier, onOpen, theme }: { tier: Tier; onOpen: (tier: Tier) => voi
 /* ---------------- Modal ---------------- */
 function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => void; theme: Theme; t: (key: string) => string }) {
   const [name, setName] = useState("");
+  const [amount, setAmount] = useState("");
+  const [amountError, setAmountError] = useState("");
+  const [submitState, setSubmitState] = useState<"idle" | "success" | "blocked">("idle");
+  const [copyError, setCopyError] = useState<string | null>(null);
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [closeHover, setCloseHover] = useState(false);
   const [submitHover, setSubmitHover] = useState(false);
@@ -377,26 +382,94 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
     try {
       await navigator.clipboard.writeText(value);
       setCopiedField(label);
+      setCopyError(null);
       window.setTimeout(() => setCopiedField(null), 1800);
     } catch {
-      // Clipboard access can be unavailable outside a secure browser context.
+      try {
+        const textarea = document.createElement("textarea");
+        textarea.value = value;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+        setCopiedField(label);
+        setCopyError(null);
+        window.setTimeout(() => setCopiedField(null), 1800);
+      } catch {
+        setCopyError(label);
+        window.setTimeout(() => setCopyError(null), 2000);
+      }
     }
   };
 
-    const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim()) return;
-      if (isAmountTier) {
-        const message = `i sent '${name.trim()}', Baarakallahu Fiikum!`;
-        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
-        onClose();
+
+    if (isAmountTier) {
+      if (!name.trim() || !amount.trim()) return;
+
+      const isValidAmount = /^\d+(\.\d+)?$/.test(amount.trim());
+      if (!isValidAmount) {
+        setAmountError("Please enter a valid number");
         return;
       }
+      setAmountError("");
+
+      if (GOOGLE_SHEET_WEBHOOK) {
+        fetch(GOOGLE_SHEET_WEBHOOK, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            timestamp: new Date().toISOString(),
+            name: name.trim(),
+            amount: amount.trim(),
+          }),
+        }).catch(() => {});
+      }
+
+      const message = `I sent ${amount.trim()} from ${name.trim()}, Baarakallahu Fiikum!`;
+      const newWindow = window.open(
+        `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
+        "_blank"
+      );
+
+      if (newWindow === null) {
+        setSubmitState("blocked");
+        window.setTimeout(() => {
+          setSubmitState("idle");
+          onClose();
+        }, 3000);
+      } else {
+        setSubmitState("success");
+        window.setTimeout(() => onClose(), 2000);
+      }
+      return;
+    }
+
+    if (!name.trim()) return;
     const verb =
-      tier.id === "waqf" ? t("sponsorship.modalVerbWaqf") : `${t("sponsorship.modalVerbTier")} ${tier.name}`;
+      tier.id === "waqf"
+        ? t("sponsorship.modalVerbWaqf")
+        : `${t("sponsorship.modalVerbTier")} ${tier.name}`;
     const message = `${t("sponsorship.modalMessagePrefix")} ${name.trim()} ${t("sponsorship.modalMessageSuffix")} ${verb}.`;
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
-    onClose();
+    const newWindow = window.open(
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
+      "_blank"
+    );
+    if (newWindow === null) {
+      setSubmitState("blocked");
+      window.setTimeout(() => {
+        setSubmitState("idle");
+        onClose();
+      }, 3000);
+    } else {
+      setSubmitState("success");
+      window.setTimeout(() => onClose(), 2000);
+    }
   };
 
   return (
@@ -422,6 +495,9 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
           padding: 30,
           width: "100%",
           maxWidth: 380,
+          maxHeight: "88vh",
+          overflowY: "auto",
+          scrollbarWidth: "thin",
           boxShadow: "0 24px 48px rgba(0,0,0,0.25)",
           position: "relative",
           animation: "sponsorModalEnter .32s ease-out both",
@@ -507,7 +583,11 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
                 </span>
               </span>
               <span style={{ fontFamily: FONT_BODY, fontSize: 11, fontWeight: 700, color: C.teal, whiteSpace: "nowrap" }}>
-                {copiedField === detail.label ? "Copied" : "Copy"}
+                {copyError === detail.label
+                  ? <span style={{ color: "#D32F2F" }}>Could not copy</span>
+                  : copiedField === detail.label
+                  ? "Copied"
+                  : "Copy"}
               </span>
             </button>
           ))}
@@ -525,53 +605,164 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
             <strong style={{ color: C.teal, fontWeight: 700 }}>Note:</strong> We are in the process of registering our CAC so we can open a properly registered business bank account in the company’s name. For now, we are using Opay as displayed above.
           </div>
         </div>
-        <label style={{ fontFamily: FONT_BODY, fontSize: 11, textTransform: "uppercase", letterSpacing: 0.4, color: theme.inkMuted }}>
-          {isAmountTier ? "Amount transferred" : t("sponsorship.modalNameLabel")}
-        </label>
-        <input
-          ref={inputRef}
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-          type={isAmountTier ? "text" : "text"}
-          inputMode={isAmountTier ? "decimal" : undefined}
-          placeholder={isAmountTier ? "How much you transfered" : t("sponsorship.modalNamePlaceholder")}
-          style={{
-            width: "100%",
-            marginTop: 6,
-            marginBottom: 22,
-            border: `1px solid ${theme.cardBorder}`,
-            borderRadius: 10,
-            padding: "10px 12px",
+        {isAmountTier ? (
+          <>
+            <label style={{ fontFamily: FONT_BODY, fontSize: 11, textTransform: "uppercase", letterSpacing: 0.4, color: theme.inkMuted }}>
+              Your name
+            </label>
+            <input
+              ref={inputRef}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              type="text"
+              placeholder="Enter your name"
+              style={{
+                width: "100%",
+                marginTop: 6,
+                marginBottom: 16,
+                border: `1px solid ${theme.cardBorder}`,
+                borderRadius: 10,
+                padding: "10px 12px",
+                fontFamily: FONT_BODY,
+                fontSize: 14,
+                boxSizing: "border-box",
+                background: theme.inputBg,
+                color: theme.ink,
+              }}
+            />
+            <label style={{ fontFamily: FONT_BODY, fontSize: 11, textTransform: "uppercase", letterSpacing: 0.4, color: theme.inkMuted }}>
+              Amount transferred
+            </label>
+            <input
+              value={amount}
+              onChange={(e) => {
+                setAmount(e.target.value);
+                if (amountError) setAmountError("");
+              }}
+              required
+              type="text"
+              inputMode="decimal"
+              placeholder="How much did you transfer?"
+              style={{
+                width: "100%",
+                marginTop: 6,
+                marginBottom: 14,
+                border: `1px solid ${theme.cardBorder}`,
+                borderRadius: 10,
+                padding: "10px 12px",
+                fontFamily: FONT_BODY,
+                fontSize: 14,
+                boxSizing: "border-box",
+                background: theme.inputBg,
+                color: theme.ink,
+              }}
+            />
+            {amountError && (
+              <p style={{
+                fontFamily: FONT_BODY,
+                fontSize: 12,
+                color: "#D32F2F",
+                margin: "-4px 0 14px",
+              }}>
+                {amountError}
+              </p>
+            )}
+          </>
+        ) : (
+          <>
+            <label style={{ fontFamily: FONT_BODY, fontSize: 11, textTransform: "uppercase", letterSpacing: 0.4, color: theme.inkMuted }}>
+              {t("sponsorship.modalNameLabel")}
+            </label>
+            <input
+              ref={inputRef}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              type="text"
+              placeholder={t("sponsorship.modalNamePlaceholder")}
+              style={{
+                width: "100%",
+                marginTop: 6,
+                marginBottom: 22,
+                border: `1px solid ${theme.cardBorder}`,
+                borderRadius: 10,
+                padding: "10px 12px",
+                fontFamily: FONT_BODY,
+                fontSize: 14,
+                boxSizing: "border-box",
+                background: theme.inputBg,
+                color: theme.ink,
+              }}
+            />
+          </>
+        )}
+        {submitState === "success" && (
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 8,
+            padding: "12px 0",
+            marginBottom: 12,
             fontFamily: FONT_BODY,
             fontSize: 14,
-            boxSizing: "border-box",
-            background: theme.inputBg,
-            color: theme.ink,
-          }}
-        />
-        <button
-          type="submit"
-          onMouseEnter={() => setSubmitHover(true)}
-          onMouseLeave={() => setSubmitHover(false)}
-          style={{
-            width: "100%",
-            background: submitHover ? C.tealDark : C.teal,
-            color: C.white,
-            border: "none",
-            borderRadius: 12,
-            padding: "13px 0",
+            color: C.teal,
+            fontWeight: 600,
+          }}>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <circle cx="9" cy="9" r="9" fill={C.teal} opacity="0.12" />
+              <path d="M5 9.2L7.5 11.7L13 6" stroke={C.teal} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Redirecting to WhatsApp...
+          </div>
+        )}
+
+        {submitState === "blocked" && (
+          <p style={{
             fontFamily: FONT_BODY,
-            fontWeight: 700,
-            fontSize: 14,
-            cursor: "pointer",
-            transform: submitHover ? "translateY(-2px)" : "translateY(0)",
-            boxShadow: submitHover ? "0 8px 18px rgba(0,150,136,0.28)" : "none",
-            transition: "background .2s ease, transform .2s ease, box-shadow .2s ease",
-          }}
-        >
-          {isAmountTier ? "I have paid" : t("sponsorship.modalContinue")}
-        </button>
+            fontSize: 13,
+            color: "#D32F2F",
+            textAlign: "center",
+            marginBottom: 12,
+            lineHeight: 1.5,
+          }}>
+            WhatsApp did not open. Please message us directly at{" "}
+            <a
+              href={`https://wa.me/${WHATSAPP_NUMBER}`}
+              target="_blank"
+              rel="noreferrer"
+              style={{ color: C.teal, fontWeight: 700 }}
+            >
+              {WHATSAPP_NUMBER}
+            </a>
+          </p>
+        )}
+
+        {submitState === "idle" && (
+          <button
+            type="submit"
+            onMouseEnter={() => setSubmitHover(true)}
+            onMouseLeave={() => setSubmitHover(false)}
+            style={{
+              width: "100%",
+              background: submitHover ? C.tealDark : C.teal,
+              color: C.white,
+              border: "none",
+              borderRadius: 12,
+              padding: "13px 0",
+              fontFamily: FONT_BODY,
+              fontWeight: 700,
+              fontSize: 14,
+              cursor: "pointer",
+              transform: submitHover ? "translateY(-2px)" : "translateY(0)",
+              boxShadow: submitHover ? "0 8px 18px rgba(0,150,136,0.28)" : "none",
+              transition: "background .2s ease, transform .2s ease, box-shadow .2s ease",
+            }}
+          >
+            {isAmountTier ? "I have paid" : t("sponsorship.modalContinue")}
+          </button>
+        )}
       </form>
       <style>{`@keyframes sponsorModalEnter { from { opacity: 0; transform: translateY(14px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }`}</style>
     </div>
