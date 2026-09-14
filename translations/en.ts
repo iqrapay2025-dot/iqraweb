@@ -382,7 +382,7 @@ export const en = {
     prevAmbassadors: "Previous ambassadors",
     nextAmbassadors: "Next ambassadors",
     goTo: "Go to",
-    leaderboardTitle: "This Week's Top Ambassadors",
+    leaderboardTitle: "This Month's Top Ambassadors",
     leaderboardSubtitle: "Updated every Monday. New week — new chance to lead.",
     loading: "Loading leaderboard…",
     empty: "Leaderboard updating soon. Check back Monday.",

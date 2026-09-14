@@ -1074,7 +1074,7 @@ export function SponsorshipPage({
       </section>
 
       {/* Tiers */}
-      <section style={{ maxWidth: 1000, margin: "0 auto", padding: "56px 24px 24px" }}>
+      <section id="sponsorship-tiers" style={{ maxWidth: 1000, margin: "0 auto", padding: "56px 24px 24px" }}>
         <Reveal style={{ textAlign: "center", marginBottom: 40 }}>
           <h2 style={{ fontFamily: FONT_HEAD, fontSize: 26, color: theme.ink, margin: "0 0 8px" }}>
             {t("sponsorship.tiersTitle")}
@@ -1156,7 +1156,15 @@ export function SponsorshipPage({
           <p style={{ fontFamily: FONT_BODY, fontSize: 14.5, color: "rgba(255,255,255,0.9)", lineHeight: 1.6, margin: "0 0 24px" }}>
             {t("sponsorship.ctaBody")}
           </p>
-          <CtaButton onClick={() => setActiveTier(tiers[1])} t={t} />
+          <CtaButton
+            onClick={() => {
+              document.getElementById("sponsorship-tiers")?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            }}
+            t={t}
+          />
         </Reveal>
       </section>
 
