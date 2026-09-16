@@ -11,6 +11,7 @@ import sekinahPhoto from "../assets/ambassador-sekinah.jpeg";
 import balikisPhoto from "../assets/ambassador-balikis.jpeg";
 import far21Photo from "../assets/download (5).jpeg";
 import ssa23Photo from "../assets/🌙 Covered with Dignity, Blessed with Iman🖤🌷.jpeg";
+import sofiyyahPhoto from "../assets/sofiyyah.jpg";
 // Locally-imported uploads reused (cycled) across the cards that don't have a
 // dedicated photo. (Remote hot-links were avoided so the images reliably render.)
 import campus1 from "../assets/campus-photo-1.jpg";
@@ -133,6 +134,11 @@ const AMBASSADORS = [
     school: "Federal University of Agriculture, Abeokuta",
     code: "IQP-SSA23",
   },
+  {
+    name: "Sofiyyah Ajibola Ibrahim",
+    school: "Federal University of Technology, Akure",
+    code: "IQP-SOF24",
+  },
 ];
 
 // Placeholder portrait photos for the carousel cards (one per ambassador,
@@ -190,10 +196,11 @@ const AMBASSADOR_PHOTOS: Record<string, string> = {
   "IQP-BAL21": balikisPhoto,
   "IQP-FAR21": far21Photo,
   "IQP-SSA23": ssa23Photo,
+  "IQP-SOF24": sofiyyahPhoto,
 };
 
 const STATS = [
-  { value: "23", key: "campusPage.statAmbassadors" },
+  { value: "24", key: "campusPage.statAmbassadors" },
   { value: "14", key: "campusPage.statSchools" },
   { value: "1", key: "campusPage.statMission" },
 ];
