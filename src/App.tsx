@@ -51,112 +51,6 @@ const ROUTE_ALIASES: Record<string, string> = {
 const normalizeRoute = (route: string): string =>
   ROUTE_ALIASES[route] ?? route;
 
-function EngagementContestBanner() {
-  const [timeLeft, setTimeLeft] = useState("00:00:00");
-
-  useEffect(() => {
-    const getDeadline = () => {
-      const now = new Date();
-      return new Date(
-        now.getFullYear(),
-        now.getMonth(),
-        now.getDate(),
-        17,
-        0,
-        0,
-      );
-    };
-
-    const updateCountdown = () => {
-      const deadline = getDeadline();
-      const diff = deadline.getTime() - Date.now();
-
-      if (diff <= 0) {
-        setTimeLeft("00:00:00");
-        return;
-      }
-
-      const hours = Math.floor(diff / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-      setTimeLeft(
-        [hours, minutes, seconds]
-          .map((value) => String(value).padStart(2, "0"))
-          .join(":"),
-      );
-    };
-
-    updateCountdown();
-    const intervalId = window.setInterval(updateCountdown, 1000);
-
-    return () => window.clearInterval(intervalId);
-  }, []);
-
-  return (
-    <div
-      style={{
-        position: "fixed",
-        top: "64px",
-        left: 0,
-        right: 0,
-        zIndex: 49,
-        width: "100%",
-        background: "#009688",
-        color: "#F9F9F9",
-        fontFamily: "'Manrope', sans-serif",
-        padding: "10px 16px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "12px",
-        flexWrap: "wrap",
-        fontSize: "14px",
-        borderBottom: "2px solid #2D0A02",
-      }}
-    >
-      <span style={{ fontWeight: 700 }}>IqraPay Engagement Contest</span>
-      <span style={{ opacity: 0.9 }}>Win cash for sharing our posts</span>
-      <span
-        style={{
-          background: "#2D0A02",
-          color: "#F9F9F9",
-          padding: "3px 10px",
-          borderRadius: 20,
-          fontWeight: 700,
-          fontVariantNumeric: "tabular-nums",
-          display: "inline-flex",
-          alignItems: "center",
-          justifyContent: "center",
-          minWidth: "88px",
-          letterSpacing: "0.04em",
-        }}
-      >
-        {timeLeft}
-      </span>
-      <a
-        href="https://bit.ly/iqrapay-contest"
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          background: "#F9F9F9",
-          color: "#009688",
-          padding: "5px 14px",
-          borderRadius: 20,
-          fontWeight: 700,
-          textDecoration: "none",
-          whiteSpace: "nowrap",
-          display: "inline-flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        Enter now →
-      </a>
-    </div>
-  );
-}
-
 function AppContent() {
   const [currentPage, setCurrentPage] = useState(() => {
     // Initialize from URL hash or default to home.
@@ -502,8 +396,7 @@ function AppContent() {
           toggleDarkMode={toggleDarkMode}
         />
       )}
-      {!isAdminPage && !isLoginPage && <EngagementContestBanner />}
-      <main className="flex-1" style={{ paddingTop: !isAdminPage && !isLoginPage ? "112px" : "0" }}>{renderPage()}</main>
+      <main className="flex-1">{renderPage()}</main>
       {!isAdminPage && !isLoginPage && <Footer onNavigate={handleNavigate} />}
       {!isAdminPage && !isLoginPage && <ScrollToTop />}
       <WaitlistModal
