@@ -83,7 +83,8 @@ export function ContactPage({ onNavigate, darkMode = false }: ContactPageProps =
     if (onNavigate) {
       onNavigate("support");
     } else {
-      window.location.hash = "#support";
+      window.history.pushState({ page: "support" }, "", "/support");
+      window.dispatchEvent(new PopStateEvent("popstate"));
     }
   };
 
@@ -322,7 +323,7 @@ export function ContactPage({ onNavigate, darkMode = false }: ContactPageProps =
           <p style={{ margin: "10px 0 0", fontSize: 13.5, color: surface.muted }}>
             Looking for answers to common questions?{" "}
             <a
-              href="#support"
+              href="/support"
               onClick={(e) => {
                 e.preventDefault();
                 goToFaq();

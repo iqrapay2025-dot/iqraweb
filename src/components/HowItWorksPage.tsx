@@ -239,7 +239,9 @@ export function HowItWorksPage({ onNavigate }: HowItWorksPageProps) {
                   onNavigate("support");
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 } else {
-                  window.location.hash = "#support";
+                  window.history.pushState({ page: "support" }, "", "/support");
+                  window.dispatchEvent(new PopStateEvent("popstate"));
+                  window.scrollTo({ top: 0, behavior: "smooth" });
                 }
               }}
             >

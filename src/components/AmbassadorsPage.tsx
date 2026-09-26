@@ -278,7 +278,12 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
                       if (onNavigate) {
                         onNavigate("ambassadors/campus");
                       } else {
-                        window.location.hash = "#ambassadors/campus";
+                        window.history.pushState(
+                          { page: "ambassadors/campus" },
+                          "",
+                          "/ambassadors/campus"
+                        );
+                        window.dispatchEvent(new PopStateEvent("popstate"));
                       }
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}

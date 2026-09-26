@@ -88,7 +88,7 @@ export function SupportPage({
             <p className="text-muted-foreground">
               Can&#39;t find what you&#39;re looking for?{" "}
               <a
-                href="#contact"
+                href="/contact"
                 className="text-primary hover:text-primary/80 underline underline-offset-2"
               >
                 Contact us directly

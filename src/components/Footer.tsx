@@ -151,10 +151,10 @@ export function Footer({ onNavigate }: FooterProps) {
                 </>
               ) : (
                 <>
-                  <a href="#privacy-policy" className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/60 dark:text-muted-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200">
+                  <a href="/privacy-policy" className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/60 dark:text-muted-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200">
                     {t('footer.privacyPolicy')}
                   </a>
-                  <a href="#terms-of-service" className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/60 dark:text-muted-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200">
+                  <a href="/terms-of-service" className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/60 dark:text-muted-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200">
                     {t('footer.termsOfService')}
                   </a>
                 </>

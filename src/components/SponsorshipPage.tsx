@@ -1100,7 +1100,7 @@ export function SponsorshipPage({
             {t("sponsorship.institutionCalloutBody")}
           </p>
           <a
-            href="#institutional-licensing"
+            href="/institutional-licensing"
             onClick={(e) => {
               e.preventDefault();
               if (onNavigate) onNavigate("institutional-licensing");

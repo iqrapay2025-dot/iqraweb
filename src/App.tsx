@@ -37,13 +37,13 @@ import { Analytics } from "@vercel/analytics/react";
 
 /**
  * Backward-compatibility route aliases.
- * Old paths shared via social media bios, WhatsApp, QR codes and email
- * campaigns (e.g. `#campus-ambassadors`, `#sponsorship`) keep working by
- * redirecting to the new canonical hash routes. This is the project's
- * "redirect pattern": the app uses hash-based client-side routing, so
- * redirects are normalised here on initial load and on back/forward.
+ * Old shared links and legacy hash URLs are normalised to the canonical
+ * clean-path routes used by the website. This ensures older bookmarks or
+ * external links still land on the correct page without using # fragments.
  */
 const ROUTE_ALIASES: Record<string, string> = {
+  "": "home",
+  "home": "home",
   "campus-ambassadors": "ambassadors/campus",
   "sponsorship": "sponsors",
 };
@@ -51,13 +51,35 @@ const ROUTE_ALIASES: Record<string, string> = {
 const normalizeRoute = (route: string): string =>
   ROUTE_ALIASES[route] ?? route;
 
+const routeToPath = (page: string, slug?: string): string => {
+  const normalized = normalizeRoute(page);
+  if (normalized === "home") return "/";
+  if (normalized === "blog-post" && slug) {
+    return `/blog-post/${encodeURIComponent(slug)}`;
+  }
+  if (normalized === "blog-list") return "/blog-list";
+  return `/${normalized}`;
+};
+
+const getRouteFromLocation = (): { page: string; slug: string | null } => {
+  const pathname = window.location.pathname || "/";
+  const segments = pathname.split("/").filter(Boolean);
+
+  if (segments[0] === "blog-post" && segments[1]) {
+    return {
+      page: "blog-post",
+      slug: decodeURIComponent(segments.slice(1).join("/")),
+    };
+  }
+
+  const rawPath = segments.join("/") || "home";
+  const normalized = normalizeRoute(rawPath);
+  return { page: normalized, slug: null };
+};
+
 function AppContent() {
   const [currentPage, setCurrentPage] = useState(() => {
-    // Initialize from URL hash or default to home.
-    // Legacy shared links are normalised on first paint so the correct
-    // page renders immediately (e.g. #campus-ambassadors -> #ambassadors/campus).
-    const hash = window.location.hash.slice(1) || "home";
-    return normalizeRoute(hash);
+    return getRouteFromLocation().page;
   });
   const [darkMode, setDarkMode] = useState(false);
   const [currentBlogSlug, setCurrentBlogSlug] = useState<string | null>(null);
@@ -100,45 +122,36 @@ function AppContent() {
     // Handle browser back/forward buttons
   useEffect(() => {
     const handlePopState = () => {
-      let hash = window.location.hash.slice(1) || "home";
-
-      // Redirect any legacy shared links to their canonical route
-      const normalized = normalizeRoute(hash);
-      if (normalized !== hash) {
-        window.history.replaceState(
-          { page: normalized },
-          "",
-          `#${normalized}`
-        );
-        hash = normalized;
-      }
-
-      // Check if it's a blog post URL (format: blog-post/slug)
-      if (hash.startsWith("blog-post/")) {
-        const slug = hash.split("/")[1];
-        setCurrentPage("blog-post");
-        setCurrentBlogSlug(slug);
-      } else {
-        setCurrentPage(hash);
-        setCurrentBlogSlug(null);
-      }
+      const { page, slug } = getRouteFromLocation();
+      setCurrentPage(page);
+      setCurrentBlogSlug(slug);
+      setMobileMenuOpen(false);
     };
 
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
 
-  // On initial load, rewrite the address bar for legacy shared links
-  // (#campus-ambassadors, #sponsorship) so the URL reflects the new route.
+  // Redirect legacy hash-based bookmarks to clean HTML5 paths without changing
+  // the page content or layout. Example: #campus-ambassadors -> /ambassadors/campus.
   useEffect(() => {
-    const hash = window.location.hash.slice(1) || "home";
-    const normalized = normalizeRoute(hash);
-    if (normalized !== hash) {
-      window.history.replaceState(
-        { page: normalized },
-        "",
-        `#${normalized}`
-      );
+    const hash = window.location.hash;
+    if (!hash) return;
+
+    const legacyRoute = hash.startsWith("#!/")
+      ? hash.slice(3)
+      : hash.startsWith("#/")
+        ? hash.slice(2)
+        : hash.slice(1);
+
+    const normalized = normalizeRoute(legacyRoute || "home");
+    const targetPath = routeToPath(normalized);
+
+    if (targetPath !== window.location.pathname) {
+      window.history.replaceState({ page: normalized }, "", targetPath);
+      const { page, slug } = getRouteFromLocation();
+      setCurrentPage(page);
+      setCurrentBlogSlug(slug);
     }
   }, []);
 
@@ -160,37 +173,33 @@ function AppContent() {
   };
 
   const handleNavigate = (page: string) => {
-    // Update browser history
-    window.history.pushState({ page }, "", `#${page}`);
+    const routePath = routeToPath(page);
+    window.history.pushState({ page }, "", routePath);
     setCurrentPage(page);
     setCurrentBlogSlug(null);
-    setMobileMenuOpen(false); // Close mobile menu when navigating
+    setMobileMenuOpen(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleNavigateToBlogPost = (slug: string) => {
-    // Update browser history with blog post slug
-    window.history.pushState(
-      { page: "blog-post", slug },
-      "",
-      `#blog-post/${slug}`
-    );
+    const routePath = routeToPath("blog-post", slug);
+    window.history.pushState({ page: "blog-post", slug }, "", routePath);
     setCurrentBlogSlug(slug);
     setCurrentPage("blog-post");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleBackToBlog = () => {
-    // Update browser history
-    window.history.pushState({ page: "blog-list" }, "", "#blog-list");
+    const routePath = routeToPath("blog-list");
+    window.history.pushState({ page: "blog-list" }, "", routePath);
     setCurrentBlogSlug(null);
     setCurrentPage("blog-list");
   };
 
   const handleLogout = () => {
     logout();
-    // Update browser history
-    window.history.pushState({ page: "home" }, "", "#home");
+    const routePath = routeToPath("home");
+    window.history.pushState({ page: "home" }, "", routePath);
     setCurrentPage("home");
   };
 
