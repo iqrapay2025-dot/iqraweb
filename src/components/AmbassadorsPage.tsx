@@ -134,7 +134,7 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
           >
             <div className="inline-block px-4 py-2 bg-accent rounded-full mb-6">
               <span className="text-accent-foreground">
-                🌟 Join Our Mission
+                Join Our Mission
               </span>
             </div>
             <h1 className="text-4xl sm:text-5xl mb-6">
