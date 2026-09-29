@@ -23,6 +23,7 @@ export function Footer({ onNavigate }: FooterProps) {
   const socialLinks = [
     { icon: "fab fa-x-twitter", href: "https://x.com/iqra_pay", label: "X / Twitter" },
     { icon: "fab fa-instagram", href: "https://www.instagram.com/iqra_pay/", label: "Instagram" },
+    { icon: "fab fa-linkedin-in", href: "https://www.linkedin.com/company/iqrapay", label: "LinkedIn" },
   ];
 
   return (
