@@ -27,7 +27,7 @@ export function Footer({ onNavigate }: FooterProps) {
   ];
 
   return (
-    <footer className="relative border-t border-secondary-foreground/10 bg-secondary text-secondary-foreground dark:bg-card dark:border-border">
+    <footer className="relative border-t border-secondary-foreground/10 bg-secondary text-secondary-foreground dark:border-border dark:bg-card dark:text-foreground">
       <IslamicPattern opacity={0.05} />
 
       <div className="relative z-10 mx-auto max-w-6xl px-5 py-12 md:px-8">
@@ -41,17 +41,17 @@ export function Footer({ onNavigate }: FooterProps) {
               width="618"
               height="404"
             />
-            <p className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-foreground/80 mb-4">
+            <p className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-foreground mb-4">
               {t('footer.tagline')}
             </p>
-            <p className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/60 dark:text-muted-foreground">
+            <p className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/70 dark:text-muted-foreground">
               {t('footer.description')}
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-display font-medium text-accent dark:text-white text-[16px] mb-3">{t('footer.quickLinks')}</h3>
+            <h3 className="font-display font-medium text-accent dark:text-foreground text-[16px] mb-3">{t('footer.quickLinks')}</h3>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.page}>
@@ -61,14 +61,14 @@ export function Footer({ onNavigate }: FooterProps) {
                         onNavigate(link.page);
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                       }}
-                      className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-white hover:text-accent dark:hover:text-white transition-colors duration-200 text-left"
+                      className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200 text-left"
                     >
                       {link.name}
                     </button>
                   ) : (
                     <a
                       href={`#${link.page}`}
-                      className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-white hover:text-accent dark:hover:text-white transition-colors duration-200"
+                      className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200"
                     >
                       {link.name}
                     </a>
@@ -80,23 +80,23 @@ export function Footer({ onNavigate }: FooterProps) {
 
           {/* Contact Info */}
           <div>
-            <h3 className="font-display font-medium text-accent dark:text-white text-[16px] mb-3">{t('footer.connect')}</h3>
+            <h3 className="font-display font-medium text-accent dark:text-foreground text-[16px] mb-3">{t('footer.connect')}</h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-2">
-                <Mail className="w-5 h-5 mt-0.5 flex-shrink-0 text-accent dark:text-white" />
-                <a href="mailto:support@iqrapay.com.ng" className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-white hover:text-accent dark:hover:text-white transition-colors duration-200">
+                <Mail className="w-5 h-5 mt-0.5 flex-shrink-0 text-accent dark:text-primary" />
+                <a href="mailto:support@iqrapay.com.ng" className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200">
                   support@iqrapay.com.ng
                 </a>
               </li>
               <li className="flex items-start gap-2">
-                <Phone className="w-5 h-5 mt-0.5 flex-shrink-0 text-accent dark:text-white" />
-                <a href="tel:+2348155956187" className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-white hover:text-accent dark:hover:text-white transition-colors duration-200">
+                <Phone className="w-5 h-5 mt-0.5 flex-shrink-0 text-accent dark:text-primary" />
+                <a href="tel:+2348155956187" className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200">
                   +234 815 595 6187
                 </a>
               </li>
               <li className="flex items-start gap-2">
-                <MapPin className="w-5 h-5 mt-0.5 flex-shrink-0 text-accent dark:text-white" />
-                <span className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-white">Ibadan, Nigeria</span>
+                <MapPin className="w-5 h-5 mt-0.5 flex-shrink-0 text-accent dark:text-primary" />
+                <span className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-foreground">Ibadan, Nigeria</span>
               </li>
             </ul>
             <div className="flex gap-3 mt-5">
@@ -107,7 +107,7 @@ export function Footer({ onNavigate }: FooterProps) {
                   aria-label={social.label}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-10 w-10 items-center justify-center rounded-sm bg-secondary-foreground/10 text-secondary-foreground transition-colors duration-200 hover:bg-accent hover:text-accent-foreground dark:bg-muted dark:text-white dark:hover:bg-primary dark:hover:text-white"
+                  className="flex h-10 w-10 items-center justify-center rounded-sm bg-secondary-foreground/10 text-secondary-foreground transition-colors duration-200 hover:bg-accent hover:text-accent-foreground dark:bg-muted dark:text-foreground dark:hover:bg-primary dark:hover:text-primary-foreground"
                 >
                   <i className={`${social.icon} text-xl text-inherit`} aria-hidden="true"></i>
                 </a>
@@ -119,7 +119,7 @@ export function Footer({ onNavigate }: FooterProps) {
         {/* Bottom Bar */}
         <div className="border-t border-secondary-foreground/20 dark:border-border pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="font-sans text-[15px] text-secondary-foreground/60 dark:text-muted-foreground">
+            <p className="font-sans text-[15px] text-secondary-foreground/70 dark:text-muted-foreground">
               © {currentYear} IqraPay. {t('footer.rights')}
             </p>
             <div className="flex gap-6">
@@ -130,7 +130,7 @@ export function Footer({ onNavigate }: FooterProps) {
                       onNavigate('privacy-policy');
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
-                    className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/60 dark:text-muted-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200"
+                    className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/70 dark:text-muted-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200"
                   >
                     {t('footer.privacyPolicy')}
                   </button>
@@ -139,17 +139,17 @@ export function Footer({ onNavigate }: FooterProps) {
                       onNavigate('terms-of-service');
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
-                    className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/60 dark:text-muted-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200"
+                    className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/70 dark:text-muted-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200"
                   >
                     {t('footer.termsOfService')}
                   </button>
                 </>
               ) : (
                 <>
-                  <a href="/privacy-policy" className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/60 dark:text-muted-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200">
+                  <a href="/privacy-policy" className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/70 dark:text-muted-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200">
                     {t('footer.privacyPolicy')}
                   </a>
-                  <a href="/terms-of-service" className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/60 dark:text-muted-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200">
+                  <a href="/terms-of-service" className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/70 dark:text-muted-foreground hover:text-accent dark:hover:text-primary transition-colors duration-200">
                     {t('footer.termsOfService')}
                   </a>
                 </>
@@ -157,7 +157,7 @@ export function Footer({ onNavigate }: FooterProps) {
             </div>
           </div>
           <div className="text-center mt-6">
-            <p className="font-sans text-[15px] text-secondary-foreground/50 dark:text-muted-foreground/70 italic">
+            <p className="font-sans text-[15px] text-secondary-foreground/70 dark:text-muted-foreground italic">
               {t("footer.quote")}
             </p>
           </div>
