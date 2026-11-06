@@ -94,18 +94,18 @@ export function BlogPage({ onNavigate }: BlogPageProps) {
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-16">
+    <div className="min-h-screen pb-16">
       {/* Hero Section */}
-      <section className="px-4 sm:px-6 lg:px-8 mb-12">
-        <div className="max-w-7xl mx-auto">
+      <section className="bg-muted px-5 py-14 md:px-8 md:py-20">
+        <div className="mx-auto max-w-6xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="text-center"
           >
-            <h1 className="text-4xl sm:text-5xl mb-4">Blog & Updates</h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <h1 className="mb-4 text-4xl font-bold leading-[1.18] tracking-tight sm:text-5xl">Blog & Updates</h1>
+            <p className="mx-auto max-w-2xl text-[15px] leading-relaxed text-muted-foreground">
               Stay informed with the latest insights, announcements, and stories from the IqraPay community
             </p>
           </motion.div>
@@ -113,8 +113,8 @@ export function BlogPage({ onNavigate }: BlogPageProps) {
       </section>
 
       {/* Tabs Filter */}
-      <section className="px-4 sm:px-6 lg:px-8 mb-12">
-        <div className="max-w-7xl mx-auto">
+      <section className="px-5 py-12 md:px-8 md:py-16">
+        <div className="mx-auto max-w-6xl">
           <Tabs defaultValue="all" className="w-full">
             <div className="flex items-center justify-center mb-8">
               <TabsList className="inline-flex">

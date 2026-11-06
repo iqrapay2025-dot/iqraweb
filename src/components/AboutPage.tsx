@@ -98,19 +98,19 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
   ];
 
   return (
-    <div className="min-h-screen pt-24 pb-16">
+    <div className="min-h-screen pb-16">
       {/* Hero Section */}
-      <section className="relative px-4 sm:px-6 lg:px-8 mb-20 overflow-hidden">
+      <section className="relative overflow-hidden bg-muted px-5 py-14 md:px-8 md:py-20">
         <IslamicPattern />
-        <div className="max-w-7xl mx-auto">
+        <div className="mx-auto max-w-6xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-12"
+            className="text-center"
           >
-            <h1 className="text-4xl sm:text-5xl mb-6">{t("about.title")}</h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            <h1 className="mb-5 text-balance text-4xl font-bold leading-[1.18] tracking-tight sm:text-5xl">{t("about.title")}</h1>
+            <p className="mx-auto max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
               {t("about.subtitle")}
             </p>
           </motion.div>

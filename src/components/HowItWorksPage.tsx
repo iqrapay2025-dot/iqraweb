@@ -75,18 +75,18 @@ export function HowItWorksPage({ onNavigate }: HowItWorksPageProps) {
   ];
 
   return (
-    <div className="min-h-screen pt-24 pb-16">
+    <div className="min-h-screen pb-16">
       {/* Hero Section */}
-      <section className="relative px-4 sm:px-6 lg:px-8 mb-20 overflow-hidden">
+      <section className="relative overflow-hidden bg-background px-5 py-14 md:px-8 md:py-20">
         <IslamicPattern />
-        <div className="max-w-7xl mx-auto text-center">
+        <div className="mx-auto max-w-6xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-4xl sm:text-5xl mb-6">{t('howItWorks.title')}</h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            <h1 className="mb-5 text-balance text-4xl font-bold leading-[1.18] tracking-tight sm:text-5xl">{t('howItWorks.title')}</h1>
+            <p className="mx-auto max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
               {t('howItWorks.subtitle')}
             </p>
           </motion.div>
@@ -94,51 +94,39 @@ export function HowItWorksPage({ onNavigate }: HowItWorksPageProps) {
       </section>
 
       {/* Step-by-Step Process */}
-      <section className="px-4 sm:px-6 lg:px-8 mb-20">
+      <section className="px-4 py-12 sm:px-6 lg:px-8 md:py-16">
         <div className="max-w-6xl mx-auto">
-          <div className="space-y-12">
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {steps.map((step, index) => (
               <motion.div
                 key={step.title}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
               >
-                <div className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-8 items-center`}>
-                  <div className="flex-1">
-                    <Card className="p-8 hover:shadow-xl transition-shadow">
-                      <div className="flex items-start gap-4">
-                        <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center flex-shrink-0">
-                          <step.icon className="h-8 w-8 text-primary-foreground" />
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-center gap-3 mb-3">
-                            <div className="w-8 h-8 bg-secondary rounded-full flex items-center justify-center text-secondary-foreground">
-                              {index + 1}
-                            </div>
-                            <h3 className="text-2xl">{step.title}</h3>
-                          </div>
-                          <p className="text-muted-foreground mb-4">{step.description}</p>
-                          <ul className="space-y-2">
-                            {step.details.map((detail) => (
-                              <li key={detail} className="flex items-center gap-2 text-sm text-muted-foreground">
-                                <CheckCircle2 className="h-4 w-4 text-primary flex-shrink-0" />
-                                {detail}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    </Card>
+                <Card className="h-full p-6 transition-all hover:-translate-y-1 hover:shadow-lg sm:p-7">
+                  <div className="mb-5 flex items-center justify-between">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-action">
+                      <step.icon className="h-6 w-6 text-action-foreground" />
+                    </div>
+                    <span className="text-sm font-semibold text-muted-foreground">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
                   </div>
-                  <div className="md:w-24 flex items-center justify-center">
-                    {index < steps.length - 1 && (
-                      <div className="hidden md:block w-0.5 h-12 bg-gradient-to-b from-primary to-secondary" />
-                    )}
-                  </div>
-                  <div className="flex-1 md:flex hidden" />
-                </div>
+                  <h3 className="mb-3 text-xl font-semibold">{step.title}</h3>
+                  <p className="mb-5 text-sm leading-relaxed text-muted-foreground">
+                    {step.description}
+                  </p>
+                  <ul className="space-y-2.5">
+                    {step.details.map((detail) => (
+                      <li key={detail} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
+                        {detail}
+                      </li>
+                    ))}
+                  </ul>
+                </Card>
               </motion.div>
             ))}
           </div>
@@ -146,7 +134,7 @@ export function HowItWorksPage({ onNavigate }: HowItWorksPageProps) {
       </section>
 
       {/* Why We Verify Learning */}
-      <section className="px-4 sm:px-6 lg:px-8 py-20 bg-muted/30">
+      <section className="px-4 sm:px-6 lg:px-8 py-20 bg-background">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -219,7 +207,7 @@ export function HowItWorksPage({ onNavigate }: HowItWorksPageProps) {
       </section>
 
       {/* For Donors */}
-      <section className="px-4 sm:px-6 lg:px-8 py-20 bg-muted/30">
+      <section className="px-4 sm:px-6 lg:px-8 py-20 bg-background">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -233,7 +221,7 @@ export function HowItWorksPage({ onNavigate }: HowItWorksPageProps) {
             </p>
             <Button
               size="lg"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 transition-all hover:scale-105 hover:shadow-lg"
+              className="bg-action hover:bg-action/90 text-action-foreground px-8 transition-all hover:scale-105 hover:shadow-lg"
               onClick={() => {
                 if (onNavigate) {
                   onNavigate("support");
@@ -252,7 +240,7 @@ export function HowItWorksPage({ onNavigate }: HowItWorksPageProps) {
       </section>
 
       {/* FAQ */}
-      <section className="px-4 sm:px-6 lg:px-8 py-20 bg-muted/30">
+      <section className="px-4 sm:px-6 lg:px-8 py-20 bg-background">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl mb-4">{t('howItWorks.faqTitle')}</h2>
@@ -310,7 +298,7 @@ export function HowItWorksPage({ onNavigate }: HowItWorksPageProps) {
             </p>
             <Button
               size="lg"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 transition-all hover:scale-105 hover:shadow-lg"
+              className="bg-action hover:bg-action/90 text-action-foreground px-8 transition-all hover:scale-105 hover:shadow-lg"
               onClick={() => openWaitlist("how-it-works")}
             >
               Join Waitlist Now

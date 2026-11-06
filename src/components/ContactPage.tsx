@@ -9,20 +9,19 @@ import {
 
 // IqraPay brand palette — matches WaitlistModal.tsx
 const BRAND = {
-  rich: "#5a0800",
-  maroon: "#360400",
-  dark: "#0d0000",
-  accent: "#f59e0b",
-  accentDark: "#d97706",
-  darkCyan: "#008B8B",
-  primary: "#009688",
-  primaryDark: "#00796b",
-  cream: "#faf6ec",
-  white: "#ffffff",
-  ink: "#151210",
-  muted: "#6f6a62",
-  border: "#e7e2d4",
-  error: "#b3541f",
+  rich: "var(--secondary)",
+  maroon: "var(--secondary)",
+  dark: "var(--foreground)",
+  accent: "var(--accent)",
+  accentDark: "var(--accent-foreground)",
+  darkCyan: "var(--chart-4)",
+  primary: "var(--primary)",
+  cream: "var(--muted)",
+  white: "var(--card)",
+  ink: "var(--foreground)",
+  muted: "var(--muted-foreground)",
+  border: "var(--border)",
+  error: "var(--destructive)",
 };
 
 interface ContactPageProps {
@@ -30,34 +29,18 @@ interface ContactPageProps {
   darkMode?: boolean;
 }
 
-export function ContactPage({ onNavigate, darkMode = false }: ContactPageProps = {}) {
-  // Theme-aware surfaces: light theme uses the brand palette, dark theme swaps
-  // the light surfaces for dark equivalents so every area of the page stays
-  // readable when dark mode is toggled on. Brand colours (teal, maroon, accent)
-  // and the intentionally-dark left panel gradient are kept constant.
-  const surface = darkMode
-    ? {
-        cardBg: "#26231f", // was BRAND.white — card + form grid background
-        inputBg: "#2b2823", // was BRAND.cream — inputs + soft accents
-        softBg: "#2b2823", // success check circle
-        ink: "#f2efe7", // was BRAND.ink — primary text
-        muted: "#b3aea2", // was BRAND.muted — secondary text
-        border: "#3b372f", // was BRAND.border — borders/seams
-        connectBg: "#26231f", // social button background
-        connectBgHover: "#37332b", // social button hover
-        iconDark: "#faf6ec", // social icon colour (light on dark)
-      }
-    : {
-        cardBg: BRAND.white,
-        inputBg: BRAND.cream,
-        softBg: BRAND.cream,
-        ink: BRAND.ink,
-        muted: BRAND.muted,
-        border: BRAND.border,
-        connectBg: "rgba(13,0,0,0.05)",
-        connectBgHover: BRAND.cream,
-        iconDark: BRAND.dark,
-      };
+export function ContactPage({ onNavigate }: ContactPageProps = {}) {
+  const surface = {
+    cardBg: "var(--card)",
+    inputBg: "var(--input-background)",
+    softBg: "var(--muted)",
+    ink: "var(--foreground)",
+    muted: "var(--muted-foreground)",
+    border: "var(--border)",
+    connectBg: "color-mix(in srgb, var(--secondary) 10%, transparent)",
+    connectBgHover: "var(--muted)",
+    iconDark: "var(--foreground)",
+  };
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -157,6 +140,7 @@ export function ContactPage({ onNavigate, darkMode = false }: ContactPageProps =
     try {
       let delivered = false;
       let serverMessage = "";
+      let appsScriptResponseInvalid = false;
 
       // ---- Helper: try Google Apps Script (preferred path) ----
       const tryAppsScript = async (): Promise<boolean> => {
@@ -181,7 +165,7 @@ export function ContactPage({ onNavigate, darkMode = false }: ContactPageProps =
           try {
             result = await response.json();
           } catch {
-            result = {};
+            appsScriptResponseInvalid = true;
           }
 
           if (
@@ -195,6 +179,9 @@ export function ContactPage({ onNavigate, darkMode = false }: ContactPageProps =
           }
           serverMessage =
             typeof result.message === "string" ? result.message : "";
+          if (!response.ok || appsScriptResponseInvalid) {
+            appsScriptResponseInvalid = true;
+          }
           return false;
         } catch {
           // Endpoint threw (network/CORS/invalid URL) — fall through to FormSubmit.
@@ -262,9 +249,13 @@ export function ContactPage({ onNavigate, darkMode = false }: ContactPageProps =
         setErrorMessage("");
       } else {
         setStatus("error");
-        setErrorMessage(
+        const deliveryError =
           serverMessage ||
-            `We couldn't send that automatically. Please email us directly at ${CONTACT_EMAIL}.`
+          `We couldn't send that automatically. Please email us directly at ${CONTACT_EMAIL}.`;
+        setErrorMessage(
+          appsScriptResponseInvalid
+            ? `The configured email service returned an invalid response. Redeploy the Google Apps Script using the updated contact form setup instructions. ${deliveryError}`
+            : deliveryError
         );
       }
     } catch (err) {
@@ -301,7 +292,7 @@ export function ContactPage({ onNavigate, darkMode = false }: ContactPageProps =
   const focusHandlers = {
     onFocus: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       e.currentTarget.style.borderColor = BRAND.accent;
-      e.currentTarget.style.boxShadow = "0 0 0 3px rgba(245,158,11,0.15)";
+      e.currentTarget.style.boxShadow = "0 0 0 3px color-mix(in srgb, var(--ring) 20%, transparent)";
     },
     onBlur: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       e.currentTarget.style.borderColor = surface.border;
@@ -312,7 +303,7 @@ export function ContactPage({ onNavigate, darkMode = false }: ContactPageProps =
   return (
     <div style={{ width: "100%", boxSizing: "border-box" }}>
       {/* Header */}
-      <section style={{ padding: "100px 24px 0", textAlign: "center" }}>
+      <section style={{ padding: "56px 20px 0", textAlign: "center" }}>
         <div style={{ maxWidth: 640, margin: "0 auto" }}>
           <h1 style={{ margin: 0, fontSize: 32, fontWeight: 700, color: surface.ink }}>
             Get in Touch
@@ -380,7 +371,7 @@ export function ContactPage({ onNavigate, darkMode = false }: ContactPageProps =
           gridTemplateColumns: "1fr 1fr",
           gap: 0,
           background: surface.cardBg,
-          borderRadius: 28,
+          borderRadius: 6,
           overflow: "hidden",
           border: `1px solid ${surface.border}`,
           boxShadow: "0 20px 60px -30px rgba(13,0,0,0.35)",
@@ -391,7 +382,7 @@ export function ContactPage({ onNavigate, darkMode = false }: ContactPageProps =
         <div
           style={{
             position: "relative",
-            background: `linear-gradient(160deg, ${BRAND.maroon} 0%, ${BRAND.dark} 100%)`,
+            background: BRAND.maroon,
             padding: "48px 40px",
             display: "flex",
             flexDirection: "column",
@@ -442,7 +433,7 @@ export function ContactPage({ onNavigate, darkMode = false }: ContactPageProps =
                 fontWeight: 700,
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
-                color: BRAND.accent,
+                color: "var(--secondary-foreground)",
                 marginBottom: 18,
               }}
             >
@@ -454,7 +445,7 @@ export function ContactPage({ onNavigate, darkMode = false }: ContactPageProps =
                 fontSize: 32,
                 lineHeight: 1.2,
                 fontWeight: 700,
-                color: BRAND.cream,
+                color: "var(--secondary-foreground)",
               }}
             >
               Get in touch
@@ -464,7 +455,7 @@ export function ContactPage({ onNavigate, darkMode = false }: ContactPageProps =
                 marginTop: 18,
                 fontSize: 14.5,
                 lineHeight: 1.7,
-                color: "rgba(250,246,236,0.78)",
+                color: "color-mix(in srgb, var(--secondary-foreground) 82%, transparent)",
                 maxWidth: 340,
               }}
             >
@@ -479,7 +470,7 @@ export function ContactPage({ onNavigate, darkMode = false }: ContactPageProps =
             style={{
               position: "relative",
               fontSize: 13,
-              color: "rgba(250,246,236,0.6)",
+              color: "color-mix(in srgb, var(--secondary-foreground) 72%, transparent)",
             }}
           >
             {CONTACT_EMAIL}
@@ -660,8 +651,8 @@ export function ContactPage({ onNavigate, darkMode = false }: ContactPageProps =
                   padding: "12px 24px",
                   borderRadius: 9,
                   border: "none",
-                  background: isSubmitting ? BRAND.primaryDark : BRAND.primary,
-                  color: BRAND.white,
+                  background: "var(--action)",
+                  color: "var(--action-foreground)",
                   fontSize: 14,
                   fontWeight: 700,
                   cursor: isSubmitting ? "default" : "pointer",
@@ -722,7 +713,7 @@ export function ContactPage({ onNavigate, darkMode = false }: ContactPageProps =
         .iqp-contact-card:hover {
           transform: translateY(-3px);
           border-color: ${BRAND.accent};
-          box-shadow: 0 16px 34px -16px rgba(245,158,11,0.5);
+          box-shadow: 0 16px 34px -16px color-mix(in srgb, var(--ring) 40%, transparent);
         }
         .iqp-contact-card-icon {
           display: flex;
@@ -750,6 +741,9 @@ export function ContactPage({ onNavigate, darkMode = false }: ContactPageProps =
           font-weight: 600;
           color: ${surface.ink};
         }
+        .dark .iqp-contact-social {
+          color: var(--secondary-foreground) !important;
+        }
         @media (max-width: 760px) {
           .iqp-contact-grid {
             grid-template-columns: 1fr !important;
@@ -766,7 +760,7 @@ export function ContactPage({ onNavigate, darkMode = false }: ContactPageProps =
       </section>
 
       {/* Connect with us — social links shown after the contact form */}
-      <section style={{ padding: "48px 24px 0" }}>
+      <section style={{ padding: "48px 24px 72px" }}>
         <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
           <h2 style={{ margin: 0, fontSize: 32, fontWeight: 700, color: surface.ink }}>
             Connect With Us
@@ -794,6 +788,7 @@ export function ContactPage({ onNavigate, darkMode = false }: ContactPageProps =
                   border: `1px solid ${surface.border}`,
                   transition: "all .18s ease",
                 }}
+                className="iqp-contact-social"
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = surface.connectBgHover;
                   e.currentTarget.style.transform = "translateY(-2px)";

@@ -53,9 +53,9 @@ export function Navigation({ currentPage, onNavigate, darkMode, toggleDarkMode }
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+    <nav className="relative z-50 border-b border-border bg-background">
+      <div className="mx-auto max-w-6xl px-5 md:px-8">
+        <div className="flex h-16 items-center justify-between md:h-[4.5rem]">
           {/* Logo */}
           <div 
             className="flex items-center cursor-pointer" 
@@ -82,15 +82,15 @@ export function Navigation({ currentPage, onNavigate, darkMode, toggleDarkMode }
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden items-center gap-8 text-sm font-medium md:flex">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => onNavigate(item.id)}
-                className={`px-4 py-2 rounded-lg transition-colors ${
+                className={`rounded-sm py-2 transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring ${
                   currentPage === item.id
-                    ? "bg-primary text-primary-foreground"
-                    : "text-foreground hover:bg-muted"
+                    ? "text-primary"
+                    : "text-foreground"
                 }`}
               >
                 {item.name}
@@ -106,15 +106,17 @@ export function Navigation({ currentPage, onNavigate, darkMode, toggleDarkMode }
               variant="ghost"
               size="icon"
               onClick={toggleDarkMode}
-              className="rounded-lg"
+              className="rounded-sm"
             >
               {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </Button>
 
             <button
-              className="md:hidden p-2 rounded-lg hover:bg-muted"
+              className="md:hidden rounded-sm p-2 transition-colors hover:bg-muted"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="iqrapay-mobile-navigation"
             >
               {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -124,8 +126,8 @@ export function Navigation({ currentPage, onNavigate, darkMode, toggleDarkMode }
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-border bg-background">
-          <div className="px-4 py-4 space-y-2">
+        <div id="iqrapay-mobile-navigation" className="border-t border-border bg-background px-5 py-3 md:hidden">
+          <div className="mx-auto flex max-w-6xl flex-col">
             {navItems.map((item) => (
               <button
                 key={item.id}
@@ -133,10 +135,10 @@ export function Navigation({ currentPage, onNavigate, darkMode, toggleDarkMode }
                   onNavigate(item.id);
                   setMobileMenuOpen(false);
                 }}
-                className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
+                className={`w-full rounded-sm px-3 py-3 text-left text-sm font-medium transition-colors hover:bg-muted ${
                   currentPage === item.id
                     ? "bg-primary text-primary-foreground"
-                    : "text-foreground hover:bg-muted"
+                    : "text-foreground"
                 }`}
               >
                 {item.name}

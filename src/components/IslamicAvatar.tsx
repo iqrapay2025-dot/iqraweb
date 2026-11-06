@@ -12,17 +12,17 @@ export function IslamicAvatar({ name, size = 'md' }: IslamicAvatarProps) {
     xl: 'w-full h-full text-6xl',
   };
 
-  // Array of beautiful gradient combinations
+  // Brand gradients vary by name while staying within IqraPay's palette.
   const gradients = [
-    'from-[#009688] via-[#00796b] to-[#004d40]', // Deep green tones
-    'from-[#360400] via-[#5d1a13] to-[#7d2620]', // Burgundy tones
-    'from-[#009688] via-[#360400] to-[#009688]', // Primary to secondary
-    'from-[#00bfa5] via-[#009688] to-[#00796b]', // Teal gradient
-    'from-[#5d1a13] via-[#360400] to-[#000000]', // Dark burgundy
-    'from-[#4db6ac] via-[#009688] to-[#00695c]', // Light to dark teal
-    'from-[#00897b] via-[#00796b] to-[#004d40]', // Ocean greens
-    'from-[#7d2620] via-[#5d1a13] to-[#360400]', // Warm burgundy
-    'from-[#009688] via-[#00897b] to-[#4db6ac]', // Bright teal
+    'linear-gradient(135deg, var(--primary), color-mix(in srgb, var(--primary) 65%, var(--secondary)), var(--secondary))',
+    'linear-gradient(135deg, var(--secondary), color-mix(in srgb, var(--secondary) 65%, var(--primary)), var(--primary))',
+    'linear-gradient(135deg, var(--primary), var(--secondary), var(--primary))',
+    'linear-gradient(135deg, color-mix(in srgb, var(--primary) 75%, var(--background)), var(--primary), var(--secondary))',
+    'linear-gradient(135deg, var(--secondary), color-mix(in srgb, var(--secondary) 55%, var(--foreground)), var(--foreground))',
+    'linear-gradient(135deg, color-mix(in srgb, var(--primary) 45%, var(--background)), var(--primary), var(--secondary))',
+    'linear-gradient(135deg, var(--primary), color-mix(in srgb, var(--primary) 65%, var(--secondary)), var(--secondary))',
+    'linear-gradient(135deg, var(--secondary), color-mix(in srgb, var(--secondary) 72%, var(--primary)), var(--primary))',
+    'linear-gradient(135deg, var(--primary), color-mix(in srgb, var(--primary) 75%, var(--background)), var(--secondary))',
   ];
 
   // Generate consistent gradient selection based on name
@@ -84,8 +84,9 @@ export function IslamicAvatar({ name, size = 'md' }: IslamicAvatarProps) {
     <div className={`${sizeClasses[size]} overflow-hidden relative`}>
       {/* Animated gradient background */}
       <div 
-        className={`absolute inset-0 bg-gradient-to-br ${gradient} animate-gradient-shift`}
+        className="absolute inset-0 animate-gradient-shift"
         style={{
+          backgroundImage: gradient,
           backgroundSize: '200% 200%',
         }}
       />

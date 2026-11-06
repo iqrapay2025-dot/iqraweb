@@ -40,7 +40,7 @@ export function NewsletterSubscribe() {
     }
 
     // Build a mailto: link as a last-resort fallback — it opens the user's
-    // email client pre-addressed to iqrapay2025@gmail.com so a message can
+    // email client pre-addressed to support@iqrapay.com.ng so a message can
     // always reach us even if both backend endpoints fail.
     const mailtoBody = `New newsletter subscription from: ${formData.email.trim()}`;
     const mailtoLink =
@@ -57,7 +57,7 @@ export function NewsletterSubscribe() {
       // broken or slow Apps Script endpoint never blocks a subscription.
       if (CONTACT_ENDPOINT) {
         try {
-          // Preferred: Google Apps Script → GmailApp.sendEmail → iqrapay2025@gmail.com
+          // Preferred: Google Apps Script → GmailApp.sendEmail → support@iqrapay.com.ng
           const response = await fetch(CONTACT_ENDPOINT, {
             method: "POST",
             // text/plain is a CORS "simple" content type -> no preflight OPTIONS
@@ -83,7 +83,7 @@ export function NewsletterSubscribe() {
       }
 
       if (!success) {
-        // Fallback: FormSubmit.co delivers directly to iqrapay2025@gmail.com
+        // Fallback: FormSubmit.co delivers directly to support@iqrapay.com.ng
         try {
           const fsBody = new FormData();
           fsBody.append("email", formData.email.trim());
@@ -162,7 +162,7 @@ export function NewsletterSubscribe() {
         >
           <Card className="p-8 md:p-12 text-center bg-background/80 backdrop-blur-sm border-2">
             <Mail className="h-12 w-12 text-primary mx-auto mb-4" />
-            <h2 className="font-display font-bold text-[#1A5C38] dark:text-foreground text-[26px] sm:text-[36px] tracking-[-0.3px] leading-[1.3] mb-3">
+            <h2 className="font-display font-bold text-secondary text-[26px] sm:text-[36px] tracking-[-0.3px] leading-[1.3] mb-3">
               {t('newsletter.title')}
             </h2>
             <p className="font-sans text-[15px] sm:text-[16px] text-muted-foreground leading-[1.7] mb-8 max-w-[680px] mx-auto">
@@ -196,7 +196,7 @@ export function NewsletterSubscribe() {
                 <Button
                   type="submit"
                   size="lg"
-                  className="bg-primary hover:bg-primary/90 text-[#FFFDD0] font-display font-bold text-[16px] h-12 px-8"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground font-display font-bold text-[16px] h-12 px-8"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (

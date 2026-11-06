@@ -10,7 +10,7 @@
  * key was registered to.
  *
  * Google Apps Script removes that risk entirely: the recipient
- * (`iqrapay2025@gmail.com`) is hardcoded INSIDE the server-side script, so the
+ * (`support@iqrapay.com.ng`) is hardcoded INSIDE the server-side script, so the
  * client never holds a secret, cannot redirect submissions, and spam is rejected
  * server-side (field validation + a hidden honeypot). Google handles the traffic,
  * so it scales with the site.
@@ -19,7 +19,7 @@
  * waitlist modal.
  *
  * Setup:
- * 1. Open https://script.google.com while logged in as iqrapay2025@gmail.com.
+ * 1. Open https://script.google.com while logged in to the Google account that owns the deployment.
  * 2. Create a new project and paste the code from `src/CONTACT_FORM_SETUP.md`.
  * 3. Deploy -> New deployment -> Web app:
  *       Execute as: "Me"
@@ -29,18 +29,18 @@
  *
  * If the Google Apps Script endpoint is left blank/unconfigured, both the
  * contact and newsletter forms fall back to FormSubmit.co, which delivers
- * directly to iqrapay2025@gmail.com with no API key embedded in the client
- * bundle. If FormSubmit.co also fails, a `mailto:iqrapay2025@gmail.com`
+ * directly to support@iqrapay.com.ng with no API key embedded in the client
+ * bundle. If FormSubmit.co also fails, a `mailto:support@iqrapay.com.ng`
  * link is offered so a message can always reach the inbox.
  */
-export const CONTACT_EMAIL = "iqrapay2025@gmail.com";
+export const CONTACT_EMAIL = "support@iqrapay.com.ng";
 
 /**
  * FormSubmit.co fallback endpoint.
  *
  * Used when CONTACT_ENDPOINT (VITE_CONTACT_ENDPOINT) is not configured.
  * FormSubmit.co delivers submissions directly to CONTACT_EMAIL
- * (iqrapay2025@gmail.com) with NO API key embedded in the client bundle —
+ * (support@iqrapay.com.ng) with NO API key embedded in the client bundle —
  * the recipient address is already public via the mailto: fallback and the
  * contact-info display.
  *
@@ -52,7 +52,7 @@ export const CONTACT_EMAIL = "iqrapay2025@gmail.com";
  *
  * If the email is not yet confirmed, FormSubmit.co returns an HTML page
  * (not JSON). The form detects this and gracefully degrades to a
- * mailto:iqrapay2025@gmail.com link.
+ * mailto:support@iqrapay.com.ng link.
  */
 export const FORM_SUBMIT_ENDPOINT: string = `https://formsubmit.co/ajax/${CONTACT_EMAIL}`;
 

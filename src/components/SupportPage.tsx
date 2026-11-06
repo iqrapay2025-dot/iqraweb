@@ -14,7 +14,6 @@ interface SupportPageProps {
 }
 
 export function SupportPage({
-  darkMode = false,
   onNavigate,
 }: SupportPageProps = {}) {
   const { t } = useLanguage();
@@ -30,27 +29,17 @@ export function SupportPage({
   ];
 
   return (
-    <div
-      className="min-h-screen text-foreground"
-      style={{
-        backgroundColor: darkMode ? "#1a1a1a" : "var(--background)",
-      }}
-    >
+    <div className="min-h-screen text-foreground">
       {/* FAQ Section */}
-      <section
-        className="py-20"
-        style={{
-          backgroundColor: darkMode ? "#1a1a1a" : "var(--background)",
-        }}
-      >
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-background px-5 py-16 md:px-8 md:py-24">
+        <div className="mx-auto max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-center mb-14"
           >
-            <h2 className="font-display font-bold text-[#1A5C38] dark:text-foreground text-[26px] sm:text-[36px] tracking-[-0.3px] leading-[1.3] mb-3">
+            <h2 className="mb-3 text-3xl font-bold leading-tight tracking-tight text-foreground sm:text-4xl">
               {t("support.faqTitle")}
             </h2>
           </motion.div>
@@ -61,7 +50,7 @@ export function SupportPage({
                 <AccordionItem
                   key={faq.id}
                   value={faq.id}
-                  className="px-4 rounded-xl border bg-card shadow-sm mb-8 last:mb-0"
+                  className="mb-6 rounded-md border bg-card px-4 shadow-sm last:mb-0"
                 >
                   <AccordionTrigger
                     className="font-display text-left text-[16px] font-semibold gap-4 py-4 hover:no-underline"

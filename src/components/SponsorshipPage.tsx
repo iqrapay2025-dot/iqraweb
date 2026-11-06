@@ -22,17 +22,17 @@ import { useLanguage } from "../contexts/LanguageContext";
 
 /* ---------------- Brand tokens ---------------- */
 const C = {
-  teal: "#009688", // Deep Teal (primary)
-  tealDark: "#00786D", // Teal Dark (hover/gradient)
-  tealTint: "#E4F3F1", // Teal Tint (light backgrounds)
-  cocoa: "#2D0A02", // Cocoa Brown (headings/text)
-  white: "#FFFFFF",
-  snow: "#F9F9F9", // page background
-  border: "#E7E7E5",
-  textMuted: "#6B6B68",
+  teal: "var(--primary)",
+  tealDark: "color-mix(in srgb, var(--primary) 88%, var(--secondary))",
+  tealTint: "color-mix(in srgb, var(--primary) 12%, var(--background))",
+  cocoa: "var(--secondary)",
+  white: "var(--card)",
+  snow: "var(--background)",
+  border: "var(--border)",
+  textMuted: "var(--muted-foreground)",
 };
-const FONT_HEAD = "'Utendo','Manrope',sans-serif";
-const FONT_BODY = "'Manrope', sans-serif";
+const FONT_HEAD = "var(--font-display)";
+const FONT_BODY = "var(--font-sans)";
 
 // Real IqraPay WhatsApp number, international format, no "+" or leading "0".
 const WHATSAPP_NUMBER = "2349043609339";
@@ -50,28 +50,17 @@ interface Theme {
   inputBg: string; // form input background
 }
 
-function buildTheme(darkMode: boolean): Theme {
-  return darkMode
-    ? {
-        pageBg: "#1a1a1a",
-        cardBg: "#242424",
-        cardBorder: "#3a3a3a",
-        ink: "#f5f5f5",
-        inkMuted: "#a0a0a0",
-        softBg: "#2a2a2a",
-        tint: "#1e2c2a",
-        inputBg: "#2a2a2a",
-      }
-    : {
-        pageBg: C.snow,
-        cardBg: C.white,
-        cardBorder: C.border,
-        ink: C.cocoa,
-        inkMuted: C.textMuted,
-        softBg: C.snow,
-        tint: C.tealTint,
-        inputBg: C.white,
-      };
+function buildTheme(): Theme {
+  return {
+    pageBg: "var(--background)",
+    cardBg: "var(--card)",
+    cardBorder: "var(--border)",
+    ink: "var(--foreground)",
+    inkMuted: "var(--muted-foreground)",
+    softBg: "var(--muted)",
+    tint: C.tealTint,
+    inputBg: "var(--background)",
+  };
 }
 
 /* ---------------- Types ---------------- */
@@ -157,7 +146,7 @@ function useIsMobile() {
 /* ---------------- Illustrations (inline SVG, brand-colored) ---------------- */
 function IllustrationBook() {
   return (
-    <svg width="120" height="120" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+    <svg width="64" height="64" viewBox="0 0 120 120" fill="none" aria-hidden="true">
       <circle cx="60" cy="60" r="56" fill={C.tealTint} />
       <path
         d="M30 38c0 0 22-7 30 4 8-11 30-4 30-4v46c0 0-22-7-30 4-8-11-30-4-30-4Z"
@@ -173,7 +162,7 @@ function IllustrationBook() {
 
 function IllustrationCoin() {
   return (
-    <svg width="120" height="120" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+    <svg width="64" height="64" viewBox="0 0 120 120" fill="none" aria-hidden="true">
       <circle cx="60" cy="60" r="56" fill={C.tealTint} />
       <circle cx="60" cy="60" r="28" fill="none" stroke={C.teal} strokeWidth="3" />
       <circle cx="60" cy="60" r="19" fill="none" stroke={C.teal} strokeWidth="2" opacity="0.5" />
@@ -194,7 +183,7 @@ function IllustrationCoin() {
 
 function IllustrationChart() {
   return (
-    <svg width="120" height="120" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+    <svg width="64" height="64" viewBox="0 0 120 120" fill="none" aria-hidden="true">
       <circle cx="60" cy="60" r="56" fill={C.tealTint} />
       <rect x="38" y="60" width="10" height="24" rx="2" fill={C.teal} />
       <rect x="55" y="48" width="10" height="36" rx="2" fill={C.teal} opacity="0.75" />
@@ -233,9 +222,9 @@ function Card({ tier, onOpen, theme }: { tier: Tier; onOpen: (tier: Tier) => voi
         transform: visible ? (hover ? "translateY(-6px)" : "translateY(0)") : "translateY(16px)",
         transition: "opacity .5s ease, transform .2s ease, box-shadow .2s ease",
         background: featured
-          ? `linear-gradient(180deg, ${C.teal} 0%, ${C.tealDark} 100%)`
+          ? "var(--action)"
           : theme.cardBg,
-        color: featured ? C.white : theme.ink,
+        color: featured ? "var(--action-foreground)" : theme.ink,
         border: featured ? "none" : `1px solid ${theme.cardBorder}`,
         borderRadius: 20,
         padding: "28px 26px",
@@ -243,11 +232,11 @@ function Card({ tier, onOpen, theme }: { tier: Tier; onOpen: (tier: Tier) => voi
         flexDirection: "column",
         boxShadow: featured
           ? hover
-            ? "0 20px 40px rgba(0,150,136,0.35)"
-            : "0 12px 28px rgba(0,150,136,0.22)"
+            ? "0 20px 40px color-mix(in srgb, var(--primary) 35%, transparent)"
+            : "0 12px 28px color-mix(in srgb, var(--primary) 22%, transparent)"
           : hover
-          ? "0 12px 24px rgba(0,0,0,0.08)"
-          : "0 2px 8px rgba(0,0,0,0.03)",
+          ? "0 12px 24px color-mix(in srgb, var(--foreground) 8%, transparent)"
+          : "0 2px 8px color-mix(in srgb, var(--foreground) 3%, transparent)",
       }}
     >
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 18 }}>
@@ -258,7 +247,7 @@ function Card({ tier, onOpen, theme }: { tier: Tier; onOpen: (tier: Tier) => voi
             fontWeight: 700,
             letterSpacing: 0.4,
             textTransform: "uppercase",
-            color: featured ? "rgba(255,255,255,0.85)" : theme.inkMuted,
+            color: featured ? "var(--action-foreground)" : theme.inkMuted,
           }}
         >
           {tier.name}
@@ -269,8 +258,8 @@ function Card({ tier, onOpen, theme }: { tier: Tier; onOpen: (tier: Tier) => voi
               fontFamily: FONT_BODY,
               fontSize: 11,
               fontWeight: 700,
-              background: "rgba(255,255,255,0.2)",
-              color: C.white,
+              background: "color-mix(in srgb, var(--action-foreground) 20%, transparent)",
+              color: "var(--action-foreground)",
               padding: "4px 10px",
               borderRadius: 999,
             }}
@@ -290,13 +279,13 @@ function Card({ tier, onOpen, theme }: { tier: Tier; onOpen: (tier: Tier) => voi
           fontSize: 13.5,
           lineHeight: 1.5,
           margin: "8px 0 22px",
-          color: featured ? "rgba(255,255,255,0.9)" : theme.inkMuted,
+          color: featured ? "var(--action-foreground)" : theme.inkMuted,
         }}
       >
         {tier.tagline}
       </p>
 
-      <div style={{ height: 1, background: featured ? "rgba(255,255,255,0.2)" : theme.cardBorder, margin: "0 0 22px" }} />
+      <div style={{ height: 1, background: featured ? "color-mix(in srgb, var(--action-foreground) 20%, transparent)" : theme.cardBorder, margin: "0 0 22px" }} />
 
       <ul style={{ listStyle: "none", padding: 0, margin: "0 0 26px", flex: 1, display: "flex", flexDirection: "column", gap: 12 }}>
         {tier.features.map((f, i) => (
@@ -307,7 +296,7 @@ function Card({ tier, onOpen, theme }: { tier: Tier; onOpen: (tier: Tier) => voi
                   width: 16,
                   height: 16,
                   borderRadius: "50%",
-                  background: "rgba(255,255,255,0.9)",
+                  background: "color-mix(in srgb, var(--action-foreground) 90%, transparent)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -536,7 +525,7 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
         <div
           style={{
             background: theme.tint,
-            border: `1px solid ${C.teal}33`,
+            border: "1px solid color-mix(in srgb, var(--primary) 20%, transparent)",
             borderRadius: 14,
             padding: "14px 16px",
             marginBottom: 22,
@@ -559,7 +548,7 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
                 padding: "8px 0",
                 background: "none",
                 border: "none",
-                borderBottom: detail.label === "ACCOUNT NAME" ? "none" : `1px solid ${C.teal}22`,
+                borderBottom: detail.label === "ACCOUNT NAME" ? "none" : "1px solid color-mix(in srgb, var(--primary) 13%, transparent)",
                 color: theme.ink,
                 cursor: "pointer",
                 textAlign: "left",
@@ -584,7 +573,7 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
               </span>
               <span style={{ fontFamily: FONT_BODY, fontSize: 11, fontWeight: 700, color: C.teal, whiteSpace: "nowrap" }}>
                 {copyError === detail.label
-                  ? <span style={{ color: "#D32F2F" }}>Could not copy</span>
+                  ? <span style={{ color: "var(--destructive)" }}>Could not copy</span>
                   : copiedField === detail.label
                   ? "Copied"
                   : "Copy"}
@@ -595,7 +584,7 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
             style={{
               marginTop: 14,
               paddingTop: 12,
-              borderTop: `1px solid ${C.teal}22`,
+              borderTop: "1px solid color-mix(in srgb, var(--primary) 13%, transparent)",
               fontFamily: FONT_BODY,
               fontSize: 11.5,
               lineHeight: 1.6,
@@ -662,7 +651,7 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
               <p style={{
                 fontFamily: FONT_BODY,
                 fontSize: 12,
-                color: "#D32F2F",
+                color: "var(--destructive)",
                 margin: "-4px 0 14px",
               }}>
                 {amountError}
@@ -722,7 +711,7 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
           <p style={{
             fontFamily: FONT_BODY,
             fontSize: 13,
-            color: "#D32F2F",
+            color: "var(--destructive)",
             textAlign: "center",
             marginBottom: 12,
             lineHeight: 1.5,
@@ -746,8 +735,8 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
             onMouseLeave={() => setSubmitHover(false)}
             style={{
               width: "100%",
-              background: submitHover ? C.tealDark : C.teal,
-              color: C.white,
+              background: submitHover ? "color-mix(in srgb, var(--action) 90%, black)" : "var(--action)",
+              color: "var(--action-foreground)",
               border: "none",
               borderRadius: 12,
               padding: "13px 0",
@@ -756,7 +745,7 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
               fontSize: 14,
               cursor: "pointer",
               transform: submitHover ? "translateY(-2px)" : "translateY(0)",
-              boxShadow: submitHover ? "0 8px 18px rgba(0,150,136,0.28)" : "none",
+              boxShadow: submitHover ? "0 8px 18px color-mix(in srgb, var(--primary) 28%, transparent)" : "none",
               transition: "background .2s ease, transform .2s ease, box-shadow .2s ease",
             }}
           >
@@ -782,11 +771,11 @@ function StepCard({ step, index, theme }: { step: Step; index: number; theme: Th
         background: theme.cardBg,
         border: `1px solid ${theme.cardBorder}`,
         borderRadius: 20,
-        padding: "32px 22px",
+        padding: "24px 20px",
         opacity: visible ? 1 : 0,
         transform: visible ? (hover ? "translateY(-6px)" : "translateY(0)") : "translateY(16px)",
         transition: `opacity .55s ease ${index * 120}ms, transform .25s ease, box-shadow .25s ease`,
-        boxShadow: hover ? "0 14px 28px rgba(0,0,0,0.08)" : "0 2px 8px rgba(0,0,0,0.03)",
+        boxShadow: hover ? "0 14px 28px color-mix(in srgb, var(--foreground) 8%, transparent)" : "0 2px 8px color-mix(in srgb, var(--foreground) 3%, transparent)",
       }}
     >
       <div style={{ display: "flex", justifyContent: "center", marginBottom: 12 }}>
@@ -902,7 +891,7 @@ function CtaButton({ onClick, t }: { onClick: () => void; t: (key: string) => st
         background: C.white,
         color: C.teal,
         transform: hover ? "translateY(-2px)" : "translateY(0)",
-        boxShadow: hover ? "0 10px 24px rgba(0,0,0,0.18)" : "0 2px 8px rgba(0,0,0,0.1)",
+        boxShadow: hover ? "0 10px 24px color-mix(in srgb, var(--foreground) 18%, transparent)" : "0 2px 8px color-mix(in srgb, var(--foreground) 10%, transparent)",
         transition: "transform .2s ease, box-shadow .2s ease",
       }}
     >
@@ -912,14 +901,13 @@ function CtaButton({ onClick, t }: { onClick: () => void; t: (key: string) => st
 }
 /* ---------------- Page ---------------- */
 export function SponsorshipPage({
-  darkMode = false,
   onNavigate,
 }: {
   darkMode?: boolean;
   onNavigate?: (page: string) => void;
 }) {
   const [activeTier, setActiveTier] = useState<Tier | null>(null);
-  const theme = buildTheme(darkMode);
+  const theme = buildTheme();
   const { t } = useLanguage();
 
   // Build translated data from the language context.
@@ -1145,15 +1133,15 @@ export function SponsorshipPage({
           style={{
             maxWidth: 620,
             margin: "0 auto",
-            background: `linear-gradient(180deg, ${C.teal} 0%, ${C.tealDark} 100%)`,
+            background: "var(--action)",
             borderRadius: 24,
             padding: "40px 24px",
           }}
         >
-          <h2 style={{ fontFamily: FONT_HEAD, fontSize: "clamp(20px, 5vw, 24px)", color: C.white, margin: "0 0 10px" }}>
+          <h2 style={{ fontFamily: FONT_HEAD, fontSize: "clamp(20px, 5vw, 24px)", color: "var(--action-foreground)", margin: "0 0 10px" }}>
             {t("sponsorship.ctaTitle")}
           </h2>
-          <p style={{ fontFamily: FONT_BODY, fontSize: 14.5, color: "rgba(255,255,255,0.9)", lineHeight: 1.6, margin: "0 0 24px" }}>
+          <p style={{ fontFamily: FONT_BODY, fontSize: 14.5, color: "var(--action-foreground)", lineHeight: 1.6, margin: "0 0 24px" }}>
             {t("sponsorship.ctaBody")}
           </p>
           <CtaButton

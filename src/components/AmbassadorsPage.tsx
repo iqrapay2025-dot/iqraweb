@@ -121,33 +121,33 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
   ];
 
   return (
-    <div className="min-h-screen pt-24 pb-16">
+    <div className="min-h-screen pb-16">
       {/* Hero Section */}
-      <section className="relative px-4 sm:px-6 lg:px-8 mb-20 overflow-hidden">
+      <section className="relative overflow-hidden bg-background px-5 py-14 md:px-8 md:py-20">
         <IslamicPattern />
-        <div className="max-w-7xl mx-auto">
+        <div className="mx-auto max-w-6xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="text-center"
           >
-            <div className="inline-block px-4 py-2 bg-accent rounded-full mb-6">
-              <span className="text-accent-foreground">
+            <div className="mb-5 inline-block rounded-sm border border-border bg-background px-3 py-1.5 text-sm">
+              <span className="text-foreground">
                 Join Our Mission
               </span>
             </div>
-            <h1 className="text-4xl sm:text-5xl mb-6">
+            <h1 className="mb-5 text-balance text-4xl font-bold leading-[1.18] tracking-tight sm:text-5xl">
               {t("ambassadors.title")}
             </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+            <p className="mx-auto mb-7 max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
               {t("ambassadors.subtitle")}
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <a href="https://bit.ly/IqraPayCampusAmbassador–ApplicationForm">
                 <Button
                   size="lg"
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground px-8"
+                  className="rounded-sm px-7 text-sm font-semibold shadow-md transition hover:brightness-95"
                 >
                   {t("ambassadors.applyNow")}
                 </Button>
@@ -213,8 +213,8 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
                 <h3 className="text-2xl mb-6">Program Highlights</h3>
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Users className="h-5 w-5 text-primary-foreground" />
+                    <div className="w-10 h-10 bg-action rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Users className="h-5 w-5 text-action-foreground" />
                     </div>
                     <div>
                       <h4 className="mb-1">Growing Community</h4>
@@ -235,8 +235,8 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Award className="h-5 w-5 text-primary-foreground" />
+                    <div className="w-10 h-10 bg-action rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Award className="h-5 w-5 text-action-foreground" />
                     </div>
                     <div>
                       <h4 className="mb-1">Monthly Bonuses</h4>
@@ -273,7 +273,7 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
                   </p>
                   <Button
                     size="lg"
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground px-8"
+                    className="bg-action hover:bg-action/90 text-action-foreground px-8"
                     onClick={() => {
                       if (onNavigate) {
                         onNavigate("ambassadors/campus");
@@ -301,7 +301,7 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
       </section>
 
       {/* Benefits Grid */}
-      <section className="px-4 sm:px-6 lg:px-8 py-20 bg-muted/30">
+      <section className="px-4 sm:px-6 lg:px-8 py-20 bg-background">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -328,8 +328,8 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
                 viewport={{ once: true }}
               >
                 <Card className="p-6 h-full hover:shadow-lg transition-shadow">
-                  <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mb-4">
-                    <benefit.icon className="h-6 w-6 text-primary-foreground" />
+                  <div className="w-12 h-12 bg-action rounded-xl flex items-center justify-center mb-4">
+                    <benefit.icon className="h-6 w-6 text-action-foreground" />
                   </div>
                   <h3 className="text-xl mb-3">{benefit.title}</h3>
                   <p className="text-muted-foreground">{benefit.description}</p>
@@ -370,7 +370,7 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
       </section>
 
       {/* Requirements Section */}
-      <section className="px-4 sm:px-6 lg:px-8 py-20 bg-muted/30">
+      <section className="px-4 sm:px-6 lg:px-8 py-20 bg-background">
         <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -400,8 +400,8 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
               <div className="space-y-4">
                 {requirements.map((requirement, index) => (
                   <div key={index} className="flex items-start gap-3">
-                    <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <span className="text-primary-foreground text-sm">
+                    <div className="w-6 h-6 bg-action rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-action-foreground text-sm">
                         {index + 1}
                       </span>
                     </div>
@@ -415,7 +415,7 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
       </section>
 
       {/* CTA Section */}
-      <section className="px-4 sm:px-6 lg:px-8 py-20 bg-gradient-to-br from-secondary via-secondary/90 to-primary text-white relative overflow-hidden">
+      <section className="px-4 sm:px-6 lg:px-8 py-20 bg-gradient-to-br from-secondary via-secondary/90 to-action text-white relative overflow-hidden">
         <IslamicPattern />
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.div
@@ -443,7 +443,7 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-white text-primary hover:bg-white/10"
+                className="border-white text-white hover:bg-white/10"
                 asChild
               >
                 <a href={publicPdfPath} onClick={handleDownload}>
@@ -452,7 +452,7 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
               </Button>
             </div>
                           <p className="text-sm mt-6 opacity-75">
-              Have questions? Contact us at <a href="mailto:iqrapay2025@gmail.com" className="text-primary hover:underline">iqrapay2025@gmail.com</a>
+              Have questions? Contact us at <a href="mailto:support@iqrapay.com.ng" className="text-white underline underline-offset-2">support@iqrapay.com.ng</a>
             </p>
           </motion.div>
         </div>

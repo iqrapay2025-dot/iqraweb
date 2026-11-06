@@ -16,17 +16,17 @@ import { useLanguage } from "../contexts/LanguageContext";
 
 /* ---------------- Brand tokens (same as SponsorshipPage) ---------------- */
 const C = {
-  teal: "#009688",
-  tealDark: "#00786D",
-  tealTint: "#E4F3F1",
-  cocoa: "#2D0A02",
-  white: "#FFFFFF",
-  snow: "#F9F9F9",
-  border: "#E7E7E5",
-  textMuted: "#6B6B68",
+  teal: "var(--primary)",
+  tealDark: "color-mix(in srgb, var(--primary) 88%, var(--secondary))",
+  tealTint: "color-mix(in srgb, var(--primary) 12%, var(--background))",
+  cocoa: "var(--secondary)",
+  white: "var(--card)",
+  snow: "var(--background)",
+  border: "var(--border)",
+  textMuted: "var(--muted-foreground)",
 };
-const FONT_HEAD = "'Utendo','Manrope',sans-serif";
-const FONT_BODY = "'Manrope', sans-serif";
+const FONT_HEAD = "var(--font-display)";
+const FONT_BODY = "var(--font-sans)";
 
 // Same WhatsApp number wired in on the Sponsorship page.
 const WHATSAPP_NUMBER = "2349043609339";
@@ -40,24 +40,15 @@ interface Theme {
   inputBg: string;
 }
 
-function buildTheme(darkMode: boolean): Theme {
-  return darkMode
-    ? {
-        pageBg: "#1a1a1a",
-        cardBg: "#242424",
-        cardBorder: "#3a3a3a",
-        ink: "#f5f5f5",
-        inkMuted: "#a5a5a2",
-        inputBg: "#2a2a2a",
-      }
-    : {
-        pageBg: C.snow,
-        cardBg: C.white,
-        cardBorder: C.border,
-        ink: C.cocoa,
-        inkMuted: C.textMuted,
-        inputBg: C.white,
-      };
+function buildTheme(): Theme {
+  return {
+    pageBg: "var(--background)",
+    cardBg: "var(--card)",
+    cardBorder: "var(--border)",
+    ink: "var(--foreground)",
+    inkMuted: "var(--muted-foreground)",
+    inputBg: "var(--background)",
+  };
 }
 
 /* ---------------- Reveal (same scroll-animation pattern as SponsorshipPage) ---------------- */
@@ -224,7 +215,7 @@ function InstitutionalModal({
           style={{
             width: "100%",
             background: C.teal,
-            color: C.white,
+            color: "var(--primary-foreground)",
             border: "none",
             borderRadius: 12,
             padding: "13px 0",
@@ -242,9 +233,9 @@ function InstitutionalModal({
 }
 
 /* ---------------- Page ---------------- */
-export function InstitutionalLicensingPage({ darkMode = false }: { darkMode?: boolean }) {
+export function InstitutionalLicensingPage(_props: { darkMode?: boolean }) {
   const [modalOpen, setModalOpen] = useState(false);
-  const theme = buildTheme(darkMode);
+  const theme = buildTheme();
   const { t } = useLanguage();
 
   const bullets: string[] = [
@@ -338,7 +329,7 @@ export function InstitutionalLicensingPage({ darkMode = false }: { darkMode?: bo
               border: "none",
               cursor: "pointer",
               background: C.teal,
-              color: C.white,
+              color: "var(--primary-foreground)",
               transition: "opacity .2s ease",
             }}
             onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}

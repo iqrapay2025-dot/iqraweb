@@ -26,9 +26,9 @@ interface CampusAmbassadorsPageProps {
 }
 
 // Brand palette (per brief)
-const DEEP_TEAL = "#009688";
-const COCOA = "#2D0A02";
-const CREAM = "#fff9c4";
+const DEEP_TEAL = "var(--primary)";
+const COCOA = "var(--secondary)";
+const CREAM = "var(--accent)";
 
 const AMBASSADORS = [
   { name: "Olahan Khadijah", school: "University of Lagos", code: "IQP-OLK01" },
@@ -238,9 +238,9 @@ function initials(name: string): string {
 // (teal / cocoa / gold) to stay consistent with the rest of the page.
 const RING_CLASS = ["gold", "teal", "cocoa"] as const;
 const RING_HEX: Record<(typeof RING_CLASS)[number], string> = {
-  gold: "#C8922B",
-  teal: "#009688",
-  cocoa: "#2D0A02",
+  gold: "var(--accent-foreground)",
+  teal: "var(--primary)",
+  cocoa: "var(--secondary)",
 };
 function ringForRank(rank: number): (typeof RING_CLASS)[number] {
   return RING_CLASS[(rank - 1) % 3];
@@ -289,7 +289,7 @@ let leaderboardCache: {
 
 const LEADERBOARD_CSS = `
     .iqrapay-leaderboard {
-    font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
     max-width: 840px;
     margin: 0 auto;
     padding: 0 8px;
@@ -297,7 +297,7 @@ const LEADERBOARD_CSS = `
   .lb-empty,
   .lb-loading {
     text-align: center;
-    color: #6b6b6b;
+    color: var(--muted-foreground);
     padding: 2.5rem 1rem;
     font-size: 15px;
   }
@@ -324,14 +324,14 @@ const LEADERBOARD_CSS = `
   .podium-step {
     width: 130px;
     border-radius: 10px 10px 0 0;
-    background: linear-gradient(180deg, #ececec 0%, #c8c4bf 100%);
+    background: var(--muted);
   }
   .podium-spot.first  .podium-step { height: 48px; }
   .podium-spot.second .podium-step { height: 32px; }
   .podium-spot.third  .podium-step { height: 18px; }
 
   .avatar-ring {
-    --ring: #aeb2b0;
+    --ring: var(--border);
     --ring-w: 6px;
     width: 96px;
     height: 96px;
@@ -348,9 +348,9 @@ const LEADERBOARD_CSS = `
     height: 108px;
     --ring-w: 7px;
   }
-  .avatar-ring.gold   { --ring: #C8922B; }
-  .avatar-ring.teal  { --ring: #009688; }
-  .avatar-ring.cocoa { --ring: #2D0A02; }
+  .avatar-ring.gold   { --ring: var(--accent-foreground); }
+  .avatar-ring.teal  { --ring: var(--primary); }
+  .avatar-ring.cocoa { --ring: var(--secondary); }
   .avatar-ring img {
     width: calc(100% - var(--ring-w));
     height: calc(100% - var(--ring-w));
@@ -360,11 +360,11 @@ const LEADERBOARD_CSS = `
     display: block;
   }
   .avatar-ring .init {
-    font-family: "Utendo", ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-display);
     font-weight: 800;
     font-size: 30px;
     letter-spacing: 1px;
-    color: #ffffff;
+    color: var(--secondary-foreground);
   }
 
   .crown {
@@ -373,8 +373,8 @@ const LEADERBOARD_CSS = `
     left: 50%;
     transform: translateX(-50%);
     font-size: 26px;
-    color: #C8922B;
-    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.18));
+    color: var(--accent-foreground);
+    filter: drop-shadow(0 3px 6px color-mix(in srgb, var(--foreground) 18%, transparent));
     animation: crown-bob 2.4s ease-in-out infinite;
     z-index: 2;
   }
@@ -388,17 +388,17 @@ const LEADERBOARD_CSS = `
   }
 
   .p-name {
-    font-family: "Utendo", ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-display);
     font-weight: 700;
     font-size: 15px;
-    color: #0f0f0f;
+    color: var(--foreground);
     text-align: center;
     white-space: nowrap;
   }
   .p-xp {
     font-size: 13px;
     font-weight: 600;
-    color: #4b5563;
+    color: var(--muted-foreground);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -413,11 +413,11 @@ const LEADERBOARD_CSS = `
     min-width: 0;
   }
   .podium-base {
-    font-family: "Utendo", ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-display);
     font-weight: 800;
     font-size: 15px;
     letter-spacing: 0.6px;
-    color: #6b6b6b;
+    color: var(--muted-foreground);
   }
     /* ===== Full ranking list ===== */
   .rank-list {
@@ -431,28 +431,28 @@ const LEADERBOARD_CSS = `
     display: flex;
     align-items: center;
     gap: 13px;
-    background: #ffffff;
-    border: 1px solid #ececec;
+    background: var(--card);
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 10px 14px;
-    box-shadow: 0 1px 6px rgba(45, 10, 2, 0.04);
+    box-shadow: 0 1px 6px color-mix(in srgb, var(--secondary) 4%, transparent);
     transition: box-shadow 0.18s ease;
   }
   .rank-row:hover {
-    box-shadow: 0 8px 20px rgba(45, 10, 2, 0.08);
+    box-shadow: 0 8px 20px color-mix(in srgb, var(--secondary) 8%, transparent);
   }
   .r-num {
-    --bg: #9da3a0;
+    --bg: var(--muted-foreground);
     width: 30px;
     height: 30px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: "Utendo", ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-display);
     font-weight: 800;
     font-size: 13px;
-    color: #ffffff;
+    color: var(--secondary-foreground);
     background: var(--bg);
     flex-shrink: 0;
   }
@@ -460,7 +460,7 @@ const LEADERBOARD_CSS = `
   .rank-2 .r-num { --bg: ${COCOA}; }       /* cocoa */
   .rank-3 .r-num { --bg: ${RING_HEX.gold}; } /* gold */
   .r-avatar {
-    --ring: #aeb2b0;
+    --ring: var(--border);
     --ring-w: 2px;
     width: 42px;
     height: 42px;
@@ -484,33 +484,33 @@ const LEADERBOARD_CSS = `
     display: block;
   }
   .r-avatar .init {
-    font-family: "Utendo", ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-display);
     font-weight: 800;
     font-size: 15px;
-    color: #ffffff;
+    color: var(--secondary-foreground);
   }
   .r-info {
     flex: 1 1 auto;
     min-width: 0;
   }
   .r-name {
-    font-family: "Utendo", ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-display);
     font-weight: 700;
     font-size: 14px;
-    color: #0f0f0f;
+    color: var(--foreground);
     /* Long names wrap instead of bleeding into the stats column. */
     overflow-wrap: anywhere;
   }
   .r-school {
     font-size: 12px;
-    color: #6b6b6b;
+    color: var(--muted-foreground);
     margin-top: 1px;
     overflow-wrap: anywhere;
   }
   .r-xp {
     font-weight: 600;
     font-size: 13px;
-    color: #0f0f0f;
+    color: var(--foreground);
     display: inline-flex;
     align-items: center;
     justify-content: flex-end;
@@ -624,11 +624,11 @@ const CAROUSEL_CSS = `
     flex: 0 0 auto;
     width: 270px;
     scroll-snap-align: start;
-    background: #ffffff;
+    background: var(--card);
     border-radius: 18px;
-    border: 1px solid #ececec;
+    border: 1px solid var(--border);
     overflow: hidden;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--foreground) 5%, transparent);
   }
   .ambassador-card .photo {
     width: 100%;
@@ -636,16 +636,16 @@ const CAROUSEL_CSS = `
     object-fit: cover;
     object-position: center;
     display: block;
-    background-color: #e0f2f1;
+    background-color: color-mix(in srgb, var(--primary) 12%, var(--background));
   }
   .ambassador-card .card-body {
     padding: 22px 22px 24px;
-    font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-sans);
   }
   .ambassador-card .quote-mark {
     font-family: Georgia, "Times New Roman", serif;
     font-size: 38px;
-    color: #009688;
+    color: var(--primary);
     line-height: 1;
     margin-bottom: 8px;
     display: block;
@@ -653,7 +653,7 @@ const CAROUSEL_CSS = `
   }
   .ambassador-card .code {
     font-size: 12.5px;
-    color: #0f0f0f;
+    color: var(--foreground);
     line-height: 1.5;
     margin: 0 0 16px;
   }
@@ -663,12 +663,12 @@ const CAROUSEL_CSS = `
   .ambassador-card .name {
     margin: 0;
     font-size: 13px;
-    color: #6b6b6b;
-    border-top: 1px solid #f0f0f0;
+    color: var(--muted-foreground);
+    border-top: 1px solid var(--border);
     padding-top: 14px;
   }
   .ambassador-card .name strong {
-    color: #0f0f0f;
+    color: var(--foreground);
     font-weight: 700;
   }
   .ambassador-ctrls {
@@ -681,8 +681,8 @@ const CAROUSEL_CSS = `
     width: 46px;
     height: 46px;
     border-radius: 50%;
-    border: 1px solid #dddddd;
-    background: #ffffff;
+    border: 1px solid var(--border);
+    background: var(--card);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -691,11 +691,11 @@ const CAROUSEL_CSS = `
     transition: background 0.15s, border-color 0.15s;
   }
   .ambassador-ctrl-btn:hover {
-    background: #009688;
-    border-color: #009688;
+    background: var(--primary);
+    border-color: var(--primary);
   }
   .ambassador-ctrl-btn:hover svg path {
-    stroke: #ffffff;
+    stroke: var(--primary-foreground);
   }
   .ambassador-ctrl-btn svg path {
     stroke: ${COCOA};
@@ -712,14 +712,14 @@ const CAROUSEL_CSS = `
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #dadada;
+    background: var(--muted);
     border: none;
     padding: 0;
     cursor: pointer;
     transition: width 0.2s, background 0.2s, border-radius 0.2s;
   }
   .ambassador-dot.active {
-    background: #009688;
+    background: var(--primary);
     width: 18px;
     border-radius: 3px;
   }
@@ -758,15 +758,15 @@ const CAROUSEL_CSS = `
 const DARK_MODE_CSS = `
   /* ===== Hero / stats ===== */
   .dark .hero .badge {
-    border-color: rgba(216, 165, 2, 0.28);
-    background: rgba(216, 165, 2, 0.13);
-    color: #fbbf24;
+    border-color: color-mix(in srgb, var(--accent-foreground) 28%, var(--border));
+    background: color-mix(in srgb, var(--accent) 60%, var(--background));
+    color: var(--accent-foreground);
   }
   .dark .hero h1 { color: var(--foreground); }
   .dark .hero h1 .accent { color: var(--primary); }
   .dark .hero .lede { color: var(--muted-foreground); }
   .dark .stat-pill {
-    background: rgba(0, 171, 171, 0.14);
+    background: color-mix(in srgb, var(--primary) 14%, var(--background));
     color: var(--primary);
   }
   .dark .stat-pill .num { color: var(--primary); }
@@ -775,9 +775,9 @@ const DARK_MODE_CSS = `
   .dark .ambassador-card {
     background: var(--card);
     border-color: var(--border);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.34);
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--foreground) 20%, transparent);
   }
-  .dark .ambassador-card .photo { background-color: rgba(0, 171, 171, 0.15); }
+  .dark .ambassador-card .photo { background-color: color-mix(in srgb, var(--primary) 15%, var(--background)); }
   .dark .ambassador-card .quote-mark { color: var(--primary); }
   .dark .ambassador-card .code { color: var(--foreground); }
   .dark .ambassador-card .name {
@@ -790,35 +790,35 @@ const DARK_MODE_CSS = `
     background: var(--card);
   }
   .dark .ambassador-ctrl-btn svg path { stroke: var(--foreground); }
-  .dark .ambassador-dot { background: rgba(255, 255, 255, 0.3); }
+  .dark .ambassador-dot { background: color-mix(in srgb, var(--foreground) 30%, transparent); }
   .dark .ambassador-dot.active { background: var(--primary); }
 
   /* ===== Leaderboard ===== */
   .dark .lb-empty,
   .dark .lb-loading { color: var(--muted-foreground); }
   .dark .podium-step {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--foreground) 7%, transparent) 0%, color-mix(in srgb, var(--foreground) 2%, transparent) 100%);
   }
-  .dark .avatar-ring { --ring: #6b7280; }
-  .dark .avatar-ring.gold   { --ring: #C8922B; }
+  .dark .avatar-ring { --ring: var(--border); }
+  .dark .avatar-ring.gold   { --ring: var(--accent-foreground); }
   .dark .avatar-ring.teal   { --ring: var(--primary); }
   .dark .avatar-ring.cocoa  { --ring: var(--secondary); }
-  .dark .crown { filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.55)); }
+  .dark .crown { filter: drop-shadow(0 3px 8px color-mix(in srgb, var(--foreground) 35%, transparent)); }
   .dark .p-name { color: var(--foreground); }
   .dark .p-xp { color: var(--muted-foreground); }
   .dark .podium-base { color: var(--muted-foreground); }
   .dark .rank-row {
     background: var(--card);
     border-color: var(--border);
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.32);
+    box-shadow: 0 1px 6px color-mix(in srgb, var(--foreground) 20%, transparent);
   }
-  .dark .rank-row:hover { box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); }
-  .dark .r-num { --bg: #6b7280; }
+  .dark .rank-row:hover { box-shadow: 0 8px 20px color-mix(in srgb, var(--foreground) 35%, transparent); }
+  .dark .r-num { --bg: var(--muted-foreground); }
   .dark .rank-1 .r-num { --bg: var(--primary); }
   .dark .rank-2 .r-num { --bg: var(--secondary); }
-  .dark .rank-3 .r-num { --bg: #C8922B; }
-  .dark .r-avatar { --ring: #6b7280; }
-  .dark .r-avatar.gold   { --ring: #C8922B; }
+  .dark .rank-3 .r-num { --bg: var(--accent-foreground); }
+  .dark .r-avatar { --ring: var(--border); }
+  .dark .r-avatar.gold   { --ring: var(--accent-foreground); }
   .dark .r-avatar.teal   { --ring: var(--primary); }
   .dark .r-avatar.cocoa  { --ring: var(--secondary); }
   .dark .r-name { color: var(--foreground); }
@@ -838,36 +838,36 @@ const HERO_CSS = `
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    border: 1px solid #EADFC8;
-    background: #FBF6EA;
-    color: #B9862A;
+    border: 1px solid color-mix(in srgb, var(--accent-foreground) 25%, var(--border));
+    background: color-mix(in srgb, var(--accent) 45%, var(--background));
+    color: var(--accent-foreground);
     font-size: 13px;
     font-weight: 600;
     padding: 7px 16px;
     border-radius: 100px;
     margin-bottom: 26px;
     white-space: nowrap;
-    font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-sans);
   }
   .hero h1 {
-    font-family: "Utendo", "Manrope", ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-display);
     font-weight: 800;
     font-size: 52px;
     line-height: 1.12;
     margin: 0 0 22px;
-    color: #0f0f0f;
+    color: var(--foreground);
     letter-spacing: -1.2px;
   }
   .hero h1 .accent {
-    color: #009688;
+    color: var(--primary);
   }
   .hero .lede {
     max-width: 560px;
     margin: 0 auto 12px;
-    color: #6b6b6b;
+    color: var(--muted-foreground);
     font-size: 16px;
     line-height: 1.6;
-    font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-sans);
   }
   .stats-row {
     display: flex;
@@ -877,25 +877,25 @@ const HERO_CSS = `
     flex-wrap: wrap;
   }
   .stat-pill {
-    background: #e3f4f2;
-    color: #009688;
+    background: color-mix(in srgb, var(--primary) 12%, var(--background));
+    color: var(--primary);
     border-radius: 14px;
     padding: 18px 30px;
     text-align: center;
     min-width: 130px;
   }
   .stat-pill .num {
-    font-family: "Utendo", "Manrope", ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-display);
     font-weight: 800;
     font-size: 26px;
-    color: #009688;
+    color: var(--primary);
     line-height: 1.1;
   }
   .stat-pill .label {
-    font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-sans);
     font-size: 12.5px;
     font-weight: 600;
-    color: #009688;
+    color: var(--primary);
     opacity: 0.85;
     margin-top: 2px;
   }
@@ -1251,7 +1251,7 @@ export function CampusAmbassadorsPage({
   return (
     <div className="min-h-screen pt-24 pb-16">
       {/* ===== Section 1 — Our Campus Ambassadors ===== */}
-      <section className="relative px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 pb-14 sm:pb-20 bg-[#F9F9F9] dark:bg-background overflow-hidden">
+      <section className="relative px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 pb-14 sm:pb-20 bg-background overflow-hidden">
         <IslamicPattern />
         <div className="max-w-7xl mx-auto relative z-10">
           {/* ===== Hero ===== */}
@@ -1373,7 +1373,7 @@ export function CampusAmbassadorsPage({
       <section className="px-4 sm:px-6 lg:px-8 py-16 sm:py-20 bg-muted/30">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12 sm:mb-14">
-            <h2 className="font-display font-bold text-[#2D0A02] dark:text-foreground text-3xl sm:text-4xl mb-4">
+            <h2 className="font-display font-bold text-foreground text-3xl sm:text-4xl mb-4">
               {t("campusPage.leaderboardTitle")}
             </h2>
             <p className="font-sans text-lg text-muted-foreground">

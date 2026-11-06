@@ -130,7 +130,7 @@ export const en = {
   // Home Page
   home: {
     tagline: "Read. Learn. Earn.",
-    heroDescription: "IqraPay rewards Muslims for genuinely studying the deen — halal cash for verified Islamic learning.",
+    heroDescription: "Learn from trusted Islamic books and earn halal rewards for what you learn.",
     getStarted: "Get Started",
     learnMore: "Learn More",
 
@@ -471,7 +471,7 @@ export const en = {
     faq3Q: "I signed up for the waitlist — what happens next?",
     faq3A: "You will receive a confirmation and be notified by email or WhatsApp when your spot on the platform is ready.",
     faq4Q: "I am interested in funding the reward pool — who do I contact?",
-    faq4A: "We would love to hear from you. Send us a message using the contact form below or email us directly at iqrapay2025@gmail.com.",
+    faq4A: "We would love to hear from you. Send us a message using the contact form below or email us directly at support@iqrapay.com.ng.",
     faq5Q: "I want to become a Campus Ambassador — how do I apply?",
     faq5A: "Visit our Ambassadors page and click Apply. We will get back to you within 48 hours.",
     faq6Q: "I have a technical issue with the website — who do I contact?",

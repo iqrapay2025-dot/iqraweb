@@ -5,7 +5,7 @@ interface IslamicPatternProps {
 export function IslamicPattern({ opacity = 0.03 }: IslamicPatternProps) {
   return (
     <svg 
-      className="absolute inset-0 w-full h-full pointer-events-none" 
+      className="islamic-pattern absolute inset-0 w-full h-full pointer-events-none"
       style={{ opacity }}
       xmlns="http://www.w3.org/2000/svg"
     >

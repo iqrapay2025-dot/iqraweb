@@ -23,15 +23,15 @@ export function Footer({ onNavigate }: FooterProps) {
   const socialLinks = [
     { icon: "fab fa-x-twitter", href: "https://x.com/iqra_pay", label: "X / Twitter" },
     { icon: "fab fa-instagram", href: "https://www.instagram.com/iqra_pay/", label: "Instagram" },
-    { icon: "fab fa-linkedin-in", href: "https://www.linkedin.com/company/iqrapay", label: "LinkedIn" },
+    { icon: "fi-brands-linkedin", href: "https://www.linkedin.com/company/iqrapay", label: "LinkedIn" },
   ];
 
   return (
-    <footer className="relative bg-secondary text-secondary-foreground mt-20 dark:bg-card dark:border-t dark:border-border">
+    <footer className="relative border-t border-secondary-foreground/10 bg-secondary text-secondary-foreground dark:bg-card dark:border-border">
       <IslamicPattern opacity={0.05} />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+      <div className="relative z-10 mx-auto max-w-6xl px-5 py-12 md:px-8">
+        <div className="mb-8 grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
           {/* About Section */}
           <div>
             <img
@@ -51,7 +51,7 @@ export function Footer({ onNavigate }: FooterProps) {
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-display font-medium text-accent dark:text-primary text-[16px] mb-3">{t('footer.quickLinks')}</h3>
+            <h3 className="font-display font-medium text-accent dark:text-white text-[16px] mb-3">{t('footer.quickLinks')}</h3>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.page}>
@@ -61,14 +61,14 @@ export function Footer({ onNavigate }: FooterProps) {
                         onNavigate(link.page);
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                       }}
-                      className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-foreground/70 hover:text-accent dark:hover:text-primary transition-colors duration-200 text-left"
+                      className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-white hover:text-accent dark:hover:text-white transition-colors duration-200 text-left"
                     >
                       {link.name}
                     </button>
                   ) : (
                     <a
                       href={`#${link.page}`}
-                      className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-foreground/70 hover:text-accent dark:hover:text-primary transition-colors duration-200"
+                      className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-white hover:text-accent dark:hover:text-white transition-colors duration-200"
                     >
                       {link.name}
                     </a>
@@ -80,45 +80,39 @@ export function Footer({ onNavigate }: FooterProps) {
 
           {/* Contact Info */}
           <div>
-            <h3 className="font-display font-medium text-accent dark:text-primary text-[16px] mb-3">{t('footer.connect')}</h3>
+            <h3 className="font-display font-medium text-accent dark:text-white text-[16px] mb-3">{t('footer.connect')}</h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-2">
-                <Mail className="w-5 h-5 mt-0.5 flex-shrink-0 text-accent dark:text-primary" />
-                <a href="mailto:iqrapay2025@gmail.com" className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-foreground/70 hover:text-accent dark:hover:text-primary transition-colors duration-200">
-                  iqrapay2025@gmail.com
+                <Mail className="w-5 h-5 mt-0.5 flex-shrink-0 text-accent dark:text-white" />
+                <a href="mailto:support@iqrapay.com.ng" className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-white hover:text-accent dark:hover:text-white transition-colors duration-200">
+                  support@iqrapay.com.ng
                 </a>
               </li>
               <li className="flex items-start gap-2">
-                <Phone className="w-5 h-5 mt-0.5 flex-shrink-0 text-accent dark:text-primary" />
-                <a href="tel:+2348155956187" className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-foreground/70 hover:text-accent dark:hover:text-primary transition-colors duration-200">
+                <Phone className="w-5 h-5 mt-0.5 flex-shrink-0 text-accent dark:text-white" />
+                <a href="tel:+2348155956187" className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-white hover:text-accent dark:hover:text-white transition-colors duration-200">
                   +234 815 595 6187
                 </a>
               </li>
               <li className="flex items-start gap-2">
-                <MapPin className="w-5 h-5 mt-0.5 flex-shrink-0 text-accent dark:text-primary" />
-                <span className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-foreground/70">Ibadan, Nigeria</span>
+                <MapPin className="w-5 h-5 mt-0.5 flex-shrink-0 text-accent dark:text-white" />
+                <span className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/80 dark:text-white">Ibadan, Nigeria</span>
               </li>
             </ul>
-          </div>
-
-          {/* Social & Newsletter */}
-          <div>
-            <h3 className="font-display font-medium text-accent dark:text-primary text-[16px] mb-3">{t('footer.connect')}</h3>
-            <div className="flex gap-3 mb-6">
+            <div className="flex gap-3 mt-5">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
                   aria-label={social.label}
-                  className="w-10 h-10 rounded-full bg-secondary-foreground/10 dark:bg-muted hover:bg-accent dark:hover:bg-primary hover:text-secondary dark:hover:text-primary-foreground flex items-center justify-center transition-all duration-200"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-10 w-10 items-center justify-center rounded-sm bg-secondary-foreground/10 text-secondary-foreground transition-colors duration-200 hover:bg-accent hover:text-accent-foreground dark:bg-muted dark:text-white dark:hover:bg-primary dark:hover:text-white"
                 >
-                  <i className={`${social.icon} text-xl`}></i>
+                  <i className={`${social.icon} text-xl text-inherit`} aria-hidden="true"></i>
                 </a>
               ))}
             </div>
-            <p className="font-sans text-[15px] sm:text-[16px] text-secondary-foreground/60 dark:text-muted-foreground">
-              {t('footer.description')}
-            </p>
           </div>
         </div>
 

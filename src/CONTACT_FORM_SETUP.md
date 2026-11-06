@@ -1,20 +1,20 @@
-# 📧 Contact Form Setup — direct to iqrapay2025@gmail.com
+# Contact Form Setup — direct to support@iqrapay.com.ng
 
-The contact and newsletter forms email **directly** to `iqrapay2025@gmail.com`.
+The contact and newsletter forms email **directly** to `support@iqrapay.com.ng`.
 
 There are **two delivery paths**:
 
 | | When | How | Trade-off |
 |---|---|---|---|
 | **Google Apps Script** (preferred) | `VITE_CONTACT_ENDPOINT` is set | Sends via `GmailApp.sendEmail` → your inbox | Most secure — no API key in the bundle, recipient is hardcoded in the script, spam rejected server-side |
-| **FormSubmit.co** (default fallback) | `VITE_CONTACT_ENDPOINT` is empty | POSTs a `FormData` payload to `https://formsubmit.co/iqrapay2025@gmail.com` | Works immediately with zero server-side setup (just confirm the email once). The recipient address is already public in the client bundle |
+| **FormSubmit.co** (default fallback) | `VITE_CONTACT_ENDPOINT` is empty | POSTs a `FormData` payload to `https://formsubmit.co/support@iqrapay.com.ng` | Works immediately with zero server-side setup (just confirm the email once). The recipient address is already public in the client bundle |
 
-If both paths fail, a `mailto:iqrapay2025@gmail.com` link is offered so the
+If both paths fail, a `mailto:support@iqrapay.com.ng` link is offered so the
 visitor can always reach the inbox.
 
 ## 1. Create the script (Google Apps Script path)
 
-1. While logged in as **iqrapay2025@gmail.com**, open https://script.google.com.
+1. While logged in to the Google account that will own the deployment, open https://script.google.com.
 2. Start a new project (`+` → **New project**).
 3. Replace the placeholder editor content with the code below.
 4. Save (e.g. as `IqraPay Forms`).
@@ -23,11 +23,11 @@ visitor can always reach the inbox.
 /**
  * IqraPay — contact & newsletter email handler.
  *
- * Sends submissions DIRECTLY to iqrapay2025@gmail.com via GmailApp.
+ * Sends submissions DIRECTLY to support@iqrapay.com.ng via GmailApp.
  * Recipient is fixed in code (cannot be overridden from the client), and all
  * input is validated server-side as a defence-in-depth against spam.
  */
-const RECIPIENT = "iqrapay2025@gmail.com";
+const RECIPIENT = "support@iqrapay.com.ng";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function doPost(e) {
@@ -93,23 +93,21 @@ function doPost(e) {
     console.error("IqraPay form delivery failed:", err);
     return _json({
       success: false,
-      message: "Server error. Please try again later or email us directly at iqrapay2025@gmail.com.",
+      message: "Server error. Please try again later or email us directly at support@iqrapay.com.ng.",
     });
   }
 }
 
 function _json(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj))
-    .setMimeType(ContentService.MimeType.JSON)
-    .setHeader("Access-Control-Allow-Origin", "*")
-    .setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+    .setMimeType(ContentService.MimeType.JSON);
 }
 ```
 
 ## 2. Deploy as a Web App
 
-1. In the Apps Script editor: **Deploy → New deployment**.
-2. Select **Type: Web app**.
+1. To update the existing endpoint, open **Deploy → Manage deployments**, edit the current web app deployment, select **New version**, and click **Deploy**. This keeps the existing URL.
+2. If creating a new deployment instead, select **Type: Web app** and update `VITE_CONTACT_ENDPOINT` with its new URL.
 3. Settings:
    - **Execute as:** `Me`
    - **Who has access:** `Anyone, even anonymous` (enables cross-origin POST)
@@ -134,21 +132,21 @@ npm run dev
 
 The same endpoint handles **both** the Contact page form (`action: "contact"`)
 and the newsletter form (`action: "subscribe"`), and both deliver to
-`iqrapay2025@gmail.com`.
+`support@iqrapay.com.ng`.
 
 ## 4. Safety net
 
 If `VITE_CONTACT_ENDPOINT` is empty, the form does **not** break: it falls back
-to **FormSubmit.co**, which delivers directly to `iqrapay2025@gmail.com` with no
+to **FormSubmit.co**, which delivers directly to `support@iqrapay.com.ng` with no
 API key in the client bundle. The site owner must confirm ownership of the email
-**once** (FormSubmit.co sends a confirmation link to `iqrapay2025@gmail.com`).
-Until confirmed, the form gracefully degrades to a `mailto:iqrapay2025@gmail.com`
+**once** (FormSubmit.co sends a confirmation link to `support@iqrapay.com.ng`).
+Until confirmed, the form gracefully degrades to a `mailto:support@iqrapay.com.ng`
 link that opens the visitor's email client pre-addressed to the inbox.
 
 ## 5. Test
 
 - Fill the Contact form, click **Send Message** → a success toast appears and an
-  email lands in `iqrapay2025@gmail.com` (check Spam if not in Inbox).
+  email lands in `support@iqrapay.com.ng` (check Spam if not in Inbox).
 - Leave the honeypot field blank as a human; the form should accept it.
 - Try submitting with an invalid email → the form shows a validation error
   before any network request is made.

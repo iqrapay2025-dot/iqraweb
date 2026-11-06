@@ -405,7 +405,9 @@ function AppContent() {
           toggleDarkMode={toggleDarkMode}
         />
       )}
-      <main className="flex-1">{renderPage()}</main>
+      <main className={`flex-1${isAdminPage || isLoginPage ? "" : " public-main"}`}>
+        {renderPage()}
+      </main>
       {!isAdminPage && !isLoginPage && <Footer onNavigate={handleNavigate} />}
       {!isAdminPage && !isLoginPage && <ScrollToTop />}
       <WaitlistModal
