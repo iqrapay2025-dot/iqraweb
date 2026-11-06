@@ -104,16 +104,16 @@ export function WaitlistModal({
     // Rate limit: block rapid-fire submissions to the public sheet.
     const nowMs = Date.now();
     if (nowMs - lastSubmitRef.current < RATE_LIMIT_MS) {
-      setError("Please wait a moment before trying again.");
+      setError(t("waitlist.rateLimitError"));
       return;
     }
 
     if (!name.trim()) {
-      setError("Enter your name.");
+      setError(t("waitlist.nameRequired"));
       return;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError("Enter a valid email address.");
+      setError(t("waitlist.emailInvalid"));
       return;
     }
 
@@ -160,13 +160,13 @@ export function WaitlistModal({
       if (response.ok) {
         if (result.result === "duplicate_email") {
           setError(
-            "This email address is already on our waitlist. JazakAllahu khayran — you are already registered. 🌿",
+            t("waitlist.duplicateEmail"),
           );
           return;
         }
         if (result.result === "duplicate_name") {
           setError(
-            "This name is already on our waitlist. If this is you, JazakAllahu khayran — you are already registered. If you are a different person, please contact us at support@iqrapay.com.ng 🌿",
+            `${t("waitlist.duplicateName")} support@iqrapay.com.ng 🌿`,
           );
           return;
         }

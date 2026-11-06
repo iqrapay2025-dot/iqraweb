@@ -34,7 +34,7 @@ export function LanguageSelector() {
           size="icon" 
           className="rounded-lg"
           type="button"
-          onClick={() => console.log('Language selector clicked')}
+          aria-label={currentLanguage?.nativeName ?? t('language.selectLanguage')}
         >
           <Globe className="h-5 w-5" />
           <span className="sr-only">{t('language.selectLanguage')}</span>
@@ -45,8 +45,7 @@ export function LanguageSelector() {
           <DropdownMenuItem
             key={lang.code}
             onClick={() => {
-              console.log('Switching to language:', lang.code);
-              setLanguage(lang.code as any);
+              setLanguage(lang.code);
             }}
             className={`cursor-pointer ${
               language === lang.code ? 'bg-accent' : ''

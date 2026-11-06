@@ -107,6 +107,7 @@ export function Navigation({ currentPage, onNavigate, darkMode, toggleDarkMode }
               size="icon"
               onClick={toggleDarkMode}
               className="rounded-sm"
+              aria-label={t("nav.toggleDarkMode")}
             >
               {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </Button>
@@ -114,7 +115,7 @@ export function Navigation({ currentPage, onNavigate, darkMode, toggleDarkMode }
             <button
               className="md:hidden rounded-sm p-2 transition-colors hover:bg-muted"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-label={mobileMenuOpen ? t("nav.closeMenu") : t("nav.openMenu")}
               aria-expanded={mobileMenuOpen}
               aria-controls="iqrapay-mobile-navigation"
             >

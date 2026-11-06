@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { motion, AnimatePresence } from "motion/react";
+import { useLanguage } from "../contexts/LanguageContext";
 
 interface Testimonial {
   name: string;
@@ -97,6 +98,14 @@ const testimonials: Testimonial[] = [
 ];
 
 export function TestimonialCarousel() {
+  const { t } = useLanguage();
+  const testimonialRoleKeys: Record<string, string> = {
+    Student: "home.testimonialRoleStudent",
+    "Student & Reader": "home.testimonialRoleStudentReader",
+    Reader: "home.testimonialRoleReader",
+    Volunteer: "home.testimonialRoleVolunteer",
+    "A graduate, Teacher and a Reader": "home.testimonialRoleGraduateTeacherReader",
+  };
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
 
@@ -231,7 +240,9 @@ export function TestimonialCarousel() {
                     {testimonials[currentIndex].name}
                   </div>
                   <div className="text-sm text-muted-foreground">
-                    {testimonials[currentIndex].role}
+                    {testimonialRoleKeys[testimonials[currentIndex].role]
+                      ? t(testimonialRoleKeys[testimonials[currentIndex].role])
+                      : testimonials[currentIndex].role}
                   </div>
                   <div className="text-xs text-primary mt-1">
                     {testimonials[currentIndex].location}
@@ -249,7 +260,7 @@ export function TestimonialCarousel() {
           variant="outline"
           size="icon"
           onClick={prevSlide}
-          aria-label="Previous testimonial"
+          aria-label={t("home.previousTestimonial")}
           className="pointer-events-auto bg-background/80 backdrop-blur-sm hover:bg-primary hover:text-primary-foreground transition-all duration-300 shadow-lg border-2 -ml-4 md:-ml-12"
         >
           <ChevronLeft className="h-5 w-5" />
@@ -258,7 +269,7 @@ export function TestimonialCarousel() {
           variant="outline"
           size="icon"
           onClick={nextSlide}
-          aria-label="Next testimonial"
+          aria-label={t("home.nextTestimonial")}
           className="pointer-events-auto bg-background/80 backdrop-blur-sm hover:bg-primary hover:text-primary-foreground transition-all duration-300 shadow-lg border-2 -mr-4 md:-mr-12"
         >
           <ChevronRight className="h-5 w-5" />

@@ -35,7 +35,9 @@ export function NewsletterSubscribe() {
     }
 
     if (!formData.email.trim() || !EMAIL_REGEX.test(formData.email.trim())) {
-      toast.error(t('common.error'), { description: "Please enter a valid email address." });
+      toast.error(t("common.error"), {
+        description: t("newsletter.invalidEmail"),
+      });
       return;
     }
 
@@ -51,7 +53,6 @@ export function NewsletterSubscribe() {
 
     try {
       let success = false;
-      let serverMessage: string | undefined;
 
       // Try Google Apps Script first, then FormSubmit as a safety net so a
       // broken or slow Apps Script endpoint never blocks a subscription.
@@ -76,7 +77,6 @@ export function NewsletterSubscribe() {
             result.success === true ||
             result.success === "true" ||
             result.ok === true;
-          serverMessage = result.message;
         } catch {
           success = false;
         }
@@ -111,8 +111,6 @@ export function NewsletterSubscribe() {
               result.ok === true ||
               result.success === true ||
               result.success === "true";
-            serverMessage =
-              typeof result.message === "string" ? result.message : undefined;
           } catch {
             success = false;
           }
@@ -135,16 +133,16 @@ export function NewsletterSubscribe() {
         // Either backend rejected the submission or wasn't configured.
         // Offer a one-click mailto: fallback so the visitor can still reach us.
         toast.error(t('common.error'), {
-          description: serverMessage || `Could not subscribe right now. You can still email us at ${CONTACT_EMAIL}.`,
+          description: `${t("newsletter.deliveryFailed")} ${CONTACT_EMAIL}.`,
           action: {
-            label: "Open Email",
+            label: t("newsletter.openEmail"),
             onClick: () => { window.location.href = mailtoLink; },
           },
         });
       }
     } catch {
       toast.error(t('common.error'), {
-        description: `Please try again or email us directly at ${CONTACT_EMAIL}.`,
+        description: `${t("newsletter.unexpectedError")} ${CONTACT_EMAIL}.`,
       });
     } finally {
       setIsSubmitting(false);

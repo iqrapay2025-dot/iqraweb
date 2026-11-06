@@ -3,6 +3,7 @@ import { BlogPost } from '../../types/blog';
 import { Card } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 interface BlogCardProps {
   post: BlogPost;
@@ -10,6 +11,15 @@ interface BlogCardProps {
 }
 
 export function BlogCard({ post, onNavigate }: BlogCardProps) {
+  const { language, t } = useLanguage();
+  const categoryKeys: Record<string, string> = {
+    'Quranic Studies': 'blog.categoryQuranicStudies',
+    'Islamic Finance': 'blog.categoryIslamicFinance',
+    'Platform Updates': 'blog.categoryPlatformUpdates',
+    Community: 'blog.categoryCommunity',
+  };
+  const readTime = post.readTime.replace('min read', t('blog.minRead'));
+
   return (
     <Card
       className="group cursor-pointer overflow-hidden border border-border hover:border-primary transition-all duration-300 hover:shadow-lg"
@@ -23,7 +33,7 @@ export function BlogCard({ post, onNavigate }: BlogCardProps) {
         />
         <div className="absolute top-4 left-4">
           <Badge className="bg-primary text-primary-foreground">
-            {post.category}
+            {categoryKeys[post.category] ? t(categoryKeys[post.category]) : post.category}
           </Badge>
         </div>
       </div>
@@ -44,20 +54,20 @@ export function BlogCard({ post, onNavigate }: BlogCardProps) {
           </div>
           <div className="flex items-center gap-1">
             <Calendar className="h-4 w-4" />
-            <span>{new Date(post.publishedAt).toLocaleDateString('en-US', { 
-              month: 'short', 
-              day: 'numeric', 
-              year: 'numeric' 
+            <span>{new Date(post.publishedAt).toLocaleDateString(language, {
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric'
             })}</span>
           </div>
           <div className="flex items-center gap-1">
             <Clock className="h-4 w-4" />
-            <span>{post.readTime}</span>
+            <span>{readTime}</span>
           </div>
         </div>
         
         <button className="text-primary hover:text-primary/80 transition-colors flex items-center gap-2">
-          Read More →
+          {t('blog.readMoreButton')} →
         </button>
       </div>
     </Card>

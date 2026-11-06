@@ -20,6 +20,13 @@ export function BlogListPage({ onNavigate, onNavigateToPost }: BlogListPageProps
   const [searchQuery, setSearchQuery] = useState('');
   const { posts } = useBlog();
   const { t } = useLanguage();
+  const categoryKeys: Record<string, string> = {
+    all: 'blog.categoryAllPosts',
+    'quranic-studies': 'blog.categoryQuranicStudies',
+    'islamic-finance': 'blog.categoryIslamicFinance',
+    'platform-updates': 'blog.categoryPlatformUpdates',
+    community: 'blog.categoryCommunity',
+  };
 
   // Filter only published posts
   const publishedPosts = posts.filter(post => post.status === 'published');
@@ -76,7 +83,9 @@ export function BlogListPage({ onNavigate, onNavigateToPost }: BlogListPageProps
                   }`}
                   onClick={() => setSelectedCategory(category.slug)}
                 >
-                  {category.name}
+                  {categoryKeys[category.slug]
+                    ? t(categoryKeys[category.slug])
+                    : category.name}
                 </Badge>
               ))}
             </div>

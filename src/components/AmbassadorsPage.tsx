@@ -75,7 +75,7 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
     } catch (err) {
       // fallback alert
       // eslint-disable-next-line no-alert
-      alert("Unable to download the PDF. Check the console/network tab for details.");
+      alert(t("ambassadors.downloadError"));
     }
   };
 
@@ -134,7 +134,7 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
           >
             <div className="mb-5 inline-block rounded-sm border border-border bg-background px-3 py-1.5 text-sm">
               <span className="text-foreground">
-                Join Our Mission
+                {t("ambassadors.eyebrow")}
               </span>
             </div>
             <h1 className="mb-5 text-balance text-4xl font-bold leading-[1.18] tracking-tight sm:text-5xl">
@@ -182,9 +182,7 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
               <div className="flex items-center gap-4 p-4 bg-primary/5 rounded-lg border border-primary/20">
                 <Heart className="h-8 w-8 text-primary flex-shrink-0" />
                 <p className="text-sm">
-                  Every person you bring to IqraPay is a soul you've helped on
-                  their journey of knowledge. That's a reward that goes beyond
-                  this world.
+                  {t("ambassadors.journeyQuote")}
                 </p>
               </div>
             </motion.div>
@@ -198,28 +196,28 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
               <div className="relative rounded-2xl overflow-hidden shadow-xl mb-6">
                 <img
                   src={ambassadorImage}
-                  alt="IqraPay Ambassador"
+                  alt={t("ambassadors.imageAlt")}
                   className="w-full h-[400px] object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute bottom-6 left-6 text-white">
-                  <h3 className="text-2xl mb-2">Inspire & Earn</h3>
+                  <h3 className="text-2xl mb-2">{t("ambassadors.imageTitle")}</h3>
                   <p className="text-sm opacity-90">
-                    Become a voice for Islamic education
+                    {t("ambassadors.imageSubtitle")}
                   </p>
                 </div>
               </div>
               <Card className="p-8 bg-gradient-to-br from-primary/5 to-secondary/5">
-                <h3 className="text-2xl mb-6">Program Highlights</h3>
+                <h3 className="text-2xl mb-6">{t("ambassadors.highlightsTitle")}</h3>
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 bg-action rounded-lg flex items-center justify-center flex-shrink-0">
                       <Users className="h-5 w-5 text-action-foreground" />
                     </div>
                     <div>
-                      <h4 className="mb-1">Growing Community</h4>
+                      <h4 className="mb-1">{t("ambassadors.communityHighlightTitle")}</h4>
                       <p className="text-sm text-muted-foreground">
-                        Join 500+ ambassadors worldwide
+                        {t("ambassadors.communityHighlightDesc")}
                       </p>
                     </div>
                   </div>
@@ -228,9 +226,9 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
                       <TrendingUp className="h-5 w-5 text-secondary-foreground" />
                     </div>
                     <div>
-                      <h4 className="mb-1">Generous Commissions</h4>
+                      <h4 className="mb-1">{t("ambassadors.commissionHighlightTitle")}</h4>
                       <p className="text-sm text-muted-foreground">
-                        Earn up to 30% per referral
+                        {t("ambassadors.commissionHighlightDesc")}
                       </p>
                     </div>
                   </div>
@@ -239,9 +237,9 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
                       <Award className="h-5 w-5 text-action-foreground" />
                     </div>
                     <div>
-                      <h4 className="mb-1">Monthly Bonuses</h4>
+                      <h4 className="mb-1">{t("ambassadors.bonusHighlightTitle")}</h4>
                       <p className="text-sm text-muted-foreground">
-                        Extra rewards for top performers
+                        {t("ambassadors.bonusHighlightDesc")}
                       </p>
                     </div>
                   </div>
@@ -452,7 +450,8 @@ export function AmbassadorsPage({ onNavigate }: AmbassadorsPageProps) {
               </Button>
             </div>
                           <p className="text-sm mt-6 opacity-75">
-              Have questions? Contact us at <a href="mailto:support@iqrapay.com.ng" className="text-white underline underline-offset-2">support@iqrapay.com.ng</a>
+              {t("ambassadors.contactPrompt")}{" "}
+              <a href="mailto:support@iqrapay.com.ng" className="text-white underline underline-offset-2">support@iqrapay.com.ng</a>
             </p>
           </motion.div>
         </div>

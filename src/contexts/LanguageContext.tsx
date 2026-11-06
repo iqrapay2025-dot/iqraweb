@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { translations } from '../../translations';
 
-type Language = 'en' | 'ar' | 'fr' | 'es' | 'yo' | 'ig' | 'ha' | 'nl' | 'de' | 'zh';
+export type Language = keyof typeof translations;
 
 interface LanguageContextType {
   language: Language;
@@ -17,7 +17,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     // Check localStorage for saved language preference
     try {
       const saved = localStorage.getItem('iqrapay-language');
-      return (saved as Language) || 'en';
+      return saved && Object.prototype.hasOwnProperty.call(translations, saved)
+        ? (saved as Language)
+        : 'en';
     } catch (error) {
       console.warn('localStorage not available:', error);
       return 'en';
@@ -52,14 +54,14 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const t = (key: string): string => {
     const keys = key.split('.');
 
-    const lookupIn = (source: any): string | undefined => {
+    const lookupIn = (source: unknown): string | undefined => {
       let value = source;
       for (const k of keys) {
         // Only descend when the key actually exists and the parent is an
         // object — otherwise treat the chain as "not found" for a full
         // English fallback.
         if (value && typeof value === 'object' && k in value) {
-          value = value[k];
+          value = (value as Record<string, unknown>)[k];
         } else {
           return undefined;
         }
@@ -91,15 +93,12 @@ export function useLanguage() {
       setLanguage: (_lang: Language) => {},
       t: (key: string): string => {
         const keys = key.split('.');
-        let value: any = translations['en'];
+        let value: unknown = translations.en;
         for (const k of keys) {
-          if (value && typeof value === 'object') {
-            value = value[k];
-          } else {
-            return key;
-          }
+          if (!value || typeof value !== 'object' || !(k in value)) return key;
+          value = (value as Record<string, unknown>)[k];
         }
-        return value || key;
+        return typeof value === 'string' && value.length > 0 ? value : key;
       },
       dir: 'ltr' as const,
     };

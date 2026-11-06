@@ -6,6 +6,7 @@ import {
   CONTACT_EMAIL,
   isContactConfigured,
 } from "../config/contact";
+import { useLanguage } from "../contexts/LanguageContext";
 
 // IqraPay brand palette — matches WaitlistModal.tsx
 const BRAND = {
@@ -30,6 +31,7 @@ interface ContactPageProps {
 }
 
 export function ContactPage({ onNavigate }: ContactPageProps = {}) {
+  const { t } = useLanguage();
   const surface = {
     cardBg: "var(--card)",
     inputBg: "var(--input-background)",
@@ -74,19 +76,19 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
   const contactCards = [
     {
       icon: Mail,
-      label: "Email",
+      label: t("contact.emailLabel"),
       value: CONTACT_EMAIL,
       href: `mailto:${CONTACT_EMAIL}`,
     },
     {
       icon: Phone,
-      label: "Phone",
+      label: t("contact.phoneLabel"),
       value: "+234 815 595 6187",
       href: "tel:+2348155956187",
     },
     {
       icon: MapPin,
-      label: "Location",
+      label: t("contact.addressLabel"),
       value: "Ibadan, Nigeria",
       href: null as string | null,
     },
@@ -97,6 +99,7 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
   const socialLinks = [
     { icon: "fab fa-x-twitter", href: "https://x.com/iqra_pay", label: "X / Twitter" },
     { icon: "fab fa-instagram", href: "https://www.instagram.com/iqra_pay/", label: "Instagram" },
+    { icon: "fi-brands-linkedin", href: "https://www.linkedin.com/company/iqrapay", label: "LinkedIn" },
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -109,28 +112,28 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
     const nowMs = Date.now();
     if (nowMs - lastSubmitRef.current < RATE_LIMIT_MS) {
       setStatus("error");
-      setErrorMessage("Please wait a moment before trying again.");
+      setErrorMessage(t("contact.rateLimitError"));
       return;
     }
 
     if (!name.trim()) {
       setStatus("error");
-      setErrorMessage("Enter your name.");
+      setErrorMessage(t("contact.nameRequired"));
       return;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setStatus("error");
-      setErrorMessage("Enter a valid email address.");
+      setErrorMessage(t("contact.emailInvalid"));
       return;
     }
     if (!subject.trim()) {
       setStatus("error");
-      setErrorMessage("Enter a subject.");
+      setErrorMessage(t("contact.subjectRequired"));
       return;
     }
     if (!message.trim()) {
       setStatus("error");
-      setErrorMessage("Enter a message.");
+      setErrorMessage(t("contact.messageRequired"));
       return;
     }
 
@@ -139,7 +142,6 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
 
     try {
       let delivered = false;
-      let serverMessage = "";
       let appsScriptResponseInvalid = false;
 
       // ---- Helper: try Google Apps Script (preferred path) ----
@@ -177,8 +179,6 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
             delivered = true;
             return true;
           }
-          serverMessage =
-            typeof result.message === "string" ? result.message : "";
           if (!response.ok || appsScriptResponseInvalid) {
             appsScriptResponseInvalid = true;
           }
@@ -221,10 +221,8 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
             ) {
               return true;
             }
-            serverMessage =
-              typeof data.message === "string" ? data.message : "";
           } catch {
-            serverMessage = "";
+            // A non-JSON response is treated as an unsuccessful delivery.
           }
           return false;
         } catch {
@@ -249,20 +247,15 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
         setErrorMessage("");
       } else {
         setStatus("error");
-        const deliveryError =
-          serverMessage ||
-          `We couldn't send that automatically. Please email us directly at ${CONTACT_EMAIL}.`;
         setErrorMessage(
           appsScriptResponseInvalid
-            ? `The configured email service returned an invalid response. Redeploy the Google Apps Script using the updated contact form setup instructions. ${deliveryError}`
-            : deliveryError
+            ? `${t("contact.scriptSetupError")} ${t("contact.deliveryFailed")} ${CONTACT_EMAIL}.`
+            : `${t("contact.deliveryFailed")} ${CONTACT_EMAIL}.`
         );
       }
     } catch (err) {
       setStatus("error");
-      setErrorMessage(
-        `Something went wrong. Please email us directly at ${CONTACT_EMAIL}.`
-      );
+      setErrorMessage(`${t("contact.unexpectedError")} ${CONTACT_EMAIL}.`);
     } finally {
       setIsSubmitting(false);
     }
@@ -306,13 +299,13 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
       <section style={{ padding: "56px 20px 0", textAlign: "center" }}>
         <div style={{ maxWidth: 640, margin: "0 auto" }}>
           <h1 style={{ margin: 0, fontSize: 32, fontWeight: 700, color: surface.ink }}>
-            Get in Touch
+            {t("contact.title")}
           </h1>
           <p style={{ margin: "12px 0 0", fontSize: 15, lineHeight: 1.7, color: surface.muted }}>
-            Have questions or feedback? We'd love to hear from you. Reach out and we'll respond as soon as possible.
+            {t("contact.subtitle")}
           </p>
           <p style={{ margin: "10px 0 0", fontSize: 13.5, color: surface.muted }}>
-            Looking for answers to common questions?{" "}
+            {t("contact.faqPrompt")}{" "}
             <a
               href="/support"
               onClick={(e) => {
@@ -321,7 +314,7 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
               }}
               style={{ color: BRAND.primary, fontWeight: 600, textDecoration: "underline", textUnderlineOffset: 2, cursor: "pointer" }}
             >
-              Check our FAQ
+              {t("contact.faqLink")}
             </a>
           </p>
         </div>
@@ -437,7 +430,7 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
                 marginBottom: 18,
               }}
             >
-              Read. Learn. Earn.
+              {t("home.tagline")}
             </span>
             <h1
               style={{
@@ -448,7 +441,7 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
                 color: "var(--secondary-foreground)",
               }}
             >
-              Get in touch
+              {t("contact.title")}
             </h1>
             <p
               style={{
@@ -459,10 +452,7 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
                 maxWidth: 340,
               }}
             >
-              We're building a platform where Muslims are rewarded for
-              reading and understanding Islamic books — real halal rewards
-              for real knowledge. Whether it's a question, feedback, or a
-              partnership idea, we'd love to hear from you.
+              {t("contact.subtitle")}
             </p>
           </div>
 
@@ -514,10 +504,10 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
                   fontWeight: 700,
                 }}
               >
-                Message sent
+                {t("contact.successTitle")}
               </h2>
               <p style={{ margin: 0, fontSize: 13.5, color: surface.muted }}>
-                JazakAllahu khayran — we'll get back to you soon.
+                {t("contact.successMessage")}
               </p>
               <button
                 type="button"
@@ -534,7 +524,7 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
                   cursor: "pointer",
                 }}
               >
-                Send another message
+                {t("contact.sendAnother")}
               </button>
             </div>
           ) : (
@@ -565,12 +555,12 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
               >
                 <div>
                   <label htmlFor="iqp-c-name" style={labelStyle}>
-                    Name*
+                    {t("contact.name")}*
                   </label>
                   <input
                     id="iqp-c-name"
                     type="text"
-                    placeholder="Your name"
+                    placeholder={t("contact.namePlaceholder")}
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     style={inputStyle}
@@ -580,12 +570,12 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
                 </div>
                 <div>
                   <label htmlFor="iqp-c-email" style={labelStyle}>
-                    Email*
+                    {t("contact.email")}*
                   </label>
                   <input
                     id="iqp-c-email"
                     type="email"
-                    placeholder="Your email address"
+                    placeholder={t("contact.emailPlaceholder")}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     style={inputStyle}
@@ -597,12 +587,12 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
 
               <div style={{ marginBottom: 16 }}>
                 <label htmlFor="iqp-c-subject" style={labelStyle}>
-                  Subject*
+                  {t("contact.subject")}*
                 </label>
                 <input
                   id="iqp-c-subject"
                   type="text"
-                  placeholder="What's this about?"
+                  placeholder={t("contact.subject")}
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
                   style={inputStyle}
@@ -613,11 +603,11 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
 
               <div style={{ marginBottom: errorMessage ? 8 : 20 }}>
                 <label htmlFor="iqp-c-message" style={labelStyle}>
-                  Message*
+                  {t("contact.message")}*
                 </label>
                 <textarea
                   id="iqp-c-message"
-                  placeholder="Your message"
+                  placeholder={t("contact.message")}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   style={{ ...inputStyle, minHeight: 130, resize: "vertical" }}
@@ -636,7 +626,7 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
                 >
                   {errorMessage}{" "}
                   <a href={mailtoFallback} style={{ color: BRAND.error, fontWeight: 600 }}>
-                    Open email instead
+                    {t("contact.openEmail")}
                   </a>
                 </p>
               )}
@@ -662,11 +652,11 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
                 {isSubmitting ? (
                   <>
                     <Loader2 size={16} className="animate-spin" />
-                    Sending…
+                    {t("contact.sending")}
                   </>
                 ) : (
                   <>
-                    Send
+                    {t("contact.send")}
                     <svg
                       width="16"
                       height="16"
@@ -763,10 +753,10 @@ export function ContactPage({ onNavigate }: ContactPageProps = {}) {
       <section style={{ padding: "48px 24px 72px" }}>
         <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
           <h2 style={{ margin: 0, fontSize: 32, fontWeight: 700, color: surface.ink }}>
-            Connect With Us
+            {t("contact.followTitle")}
           </h2>
           <p style={{ margin: "16px 0 0", fontSize: 15, lineHeight: 1.7, color: surface.muted }}>
-            Follow us on social media for updates, inspiration, and community highlights.
+            {t("contact.connectSubtitle")}
           </p>
           <div style={{ marginTop: 24, display: "flex", justifyContent: "center", gap: 16 }}>
             {socialLinks.map((social) => (

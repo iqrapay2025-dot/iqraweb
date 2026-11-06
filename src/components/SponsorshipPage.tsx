@@ -354,9 +354,9 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
   const inputRef = useRef<HTMLInputElement>(null);
 
   const accountDetails = [
-    { label: "ACCOUNT NUMBER", value: "8155956187" },
-    { label: "BANK NAME", value: "OPAY" },
-    { label: "ACCOUNT NAME", value: "MUHAMMED JUMAH" },
+    { label: "accountNumber", labelKey: "sponsorship.accountNumber", value: "8155956187" },
+    { label: "bankName", labelKey: "sponsorship.bankName", value: "OPAY" },
+    { label: "accountName", labelKey: "sponsorship.accountName", value: "MUHAMMED JUMAH" },
   ];
   const isAmountTier = tier.id === "sadaqah" || tier.id === "knowledge";
 
@@ -402,7 +402,7 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
 
       const isValidAmount = /^\d+(\.\d+)?$/.test(amount.trim());
       if (!isValidAmount) {
-        setAmountError("Please enter a valid number");
+        setAmountError(t("sponsorship.invalidAmount"));
         return;
       }
       setAmountError("");
@@ -495,7 +495,7 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
         <button
           type="button"
           onClick={onClose}
-          aria-label="Close"
+          aria-label={t("common.close")}
           onMouseEnter={() => setCloseHover(true)}
           onMouseLeave={() => setCloseHover(false)}
           style={{
@@ -532,7 +532,7 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
           }}
         >
           <div style={{ fontFamily: FONT_BODY, fontSize: 11, fontWeight: 700, color: C.teal, letterSpacing: 0.5, marginBottom: 10 }}>
-            PAYMENT DETAILS
+            {t("sponsorship.paymentDetails")}
           </div>
           {accountDetails.map((detail) => (
             <button
@@ -548,7 +548,7 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
                 padding: "8px 0",
                 background: "none",
                 border: "none",
-                borderBottom: detail.label === "ACCOUNT NAME" ? "none" : "1px solid color-mix(in srgb, var(--primary) 13%, transparent)",
+                borderBottom: detail.label === "accountName" ? "none" : "1px solid color-mix(in srgb, var(--primary) 13%, transparent)",
                 color: theme.ink,
                 cursor: "pointer",
                 textAlign: "left",
@@ -565,7 +565,7 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
             >
               <span>
                 <span style={{ display: "block", fontFamily: FONT_BODY, fontSize: 10, color: theme.inkMuted, letterSpacing: 0.35 }}>
-                  {detail.label}
+                  {t(detail.labelKey)}
                 </span>
                 <span style={{ display: "block", fontFamily: FONT_HEAD, fontSize: 14, fontWeight: 700, marginTop: 2 }}>
                   {detail.value}
@@ -573,10 +573,10 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
               </span>
               <span style={{ fontFamily: FONT_BODY, fontSize: 11, fontWeight: 700, color: C.teal, whiteSpace: "nowrap" }}>
                 {copyError === detail.label
-                  ? <span style={{ color: "var(--destructive)" }}>Could not copy</span>
+                  ? <span style={{ color: "var(--destructive)" }}>{t("sponsorship.copyFailed")}</span>
                   : copiedField === detail.label
-                  ? "Copied"
-                  : "Copy"}
+                  ? t("sponsorship.copied")
+                  : t("sponsorship.copy")}
               </span>
             </button>
           ))}
@@ -591,13 +591,13 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
               color: theme.inkMuted,
             }}
           >
-            <strong style={{ color: C.teal, fontWeight: 700 }}>Note:</strong> We are in the process of registering our CAC so we can open a properly registered business bank account in the company’s name. For now, we are using Opay as displayed above.
+            <strong style={{ color: C.teal, fontWeight: 700 }}>{t("sponsorship.paymentNoteLabel")}</strong> {t("sponsorship.paymentNote")}
           </div>
         </div>
         {isAmountTier ? (
           <>
             <label style={{ fontFamily: FONT_BODY, fontSize: 11, textTransform: "uppercase", letterSpacing: 0.4, color: theme.inkMuted }}>
-              Your name
+              {t("sponsorship.enterName")}
             </label>
             <input
               ref={inputRef}
@@ -605,7 +605,7 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
               onChange={(e) => setName(e.target.value)}
               required
               type="text"
-              placeholder="Enter your name"
+              placeholder={t("sponsorship.modalNamePlaceholder")}
               style={{
                 width: "100%",
                 marginTop: 6,
@@ -621,7 +621,7 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
               }}
             />
             <label style={{ fontFamily: FONT_BODY, fontSize: 11, textTransform: "uppercase", letterSpacing: 0.4, color: theme.inkMuted }}>
-              Amount transferred
+              {t("sponsorship.amountTransferred")}
             </label>
             <input
               value={amount}
@@ -632,7 +632,7 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
               required
               type="text"
               inputMode="decimal"
-              placeholder="How much did you transfer?"
+              placeholder={t("sponsorship.amountPlaceholder")}
               style={{
                 width: "100%",
                 marginTop: 6,
@@ -703,7 +703,7 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
               <circle cx="9" cy="9" r="9" fill={C.teal} opacity="0.12" />
               <path d="M5 9.2L7.5 11.7L13 6" stroke={C.teal} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-            Redirecting to WhatsApp...
+            {t("sponsorship.redirecting")}
           </div>
         )}
 
@@ -716,7 +716,7 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
             marginBottom: 12,
             lineHeight: 1.5,
           }}>
-            WhatsApp did not open. Please message us directly at{" "}
+            {t("sponsorship.whatsappBlocked")}{" "}
             <a
               href={`https://wa.me/${WHATSAPP_NUMBER}`}
               target="_blank"
@@ -749,7 +749,7 @@ function SponsorModal({ tier, onClose, theme, t }: { tier: Tier; onClose: () => 
               transition: "background .2s ease, transform .2s ease, box-shadow .2s ease",
             }}
           >
-            {isAmountTier ? "I have paid" : t("sponsorship.modalContinue")}
+            {isAmountTier ? t("sponsorship.paid") : t("sponsorship.modalContinue")}
           </button>
         )}
       </form>

@@ -98,7 +98,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 </Button>
               </div>
               <p className="mt-4 text-sm text-muted-foreground">
-                Verified learning · Free to join
+                {t("home.trustLine")}
               </p>
             </motion.div>
           </div>
@@ -112,14 +112,14 @@ export function HomePage({ onNavigate }: HomePageProps) {
             <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-primary/15 blur-2xl" />
             <img
               src={heroImage}
-              alt="A learner reading the Quran"
+              alt={t("home.heroImageAlt")}
               className="relative z-10 aspect-[4/3] w-full rounded-2xl object-cover object-center shadow-xl sm:aspect-[4/5]"
               width="570"
               height="760"
             />
             <div className="absolute bottom-5 right-4 z-20 rounded-xl bg-background/95 px-4 py-3 shadow-lg backdrop-blur">
               <div className="text-lg font-bold text-secondary">100%</div>
-              <div className="text-xs text-muted-foreground">Verified skills</div>
+              <div className="text-xs text-muted-foreground">{t("home.halalCertified")}</div>
             </div>
           </motion.div>
         </div>
@@ -212,7 +212,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl font-bold sm:text-4xl">Learner stories</h2>
+            <h2 className="text-3xl font-bold sm:text-4xl">{t("home.testimonialsTitle")}</h2>
           </motion.div>
 
           <motion.div

@@ -158,7 +158,7 @@ export function Footer({ onNavigate }: FooterProps) {
           </div>
           <div className="text-center mt-6">
             <p className="font-sans text-[15px] text-secondary-foreground/50 dark:text-muted-foreground/70 italic">
-              "Read in the name of your Lord who created" - Surah Al-Alaq (96:1)
+              {t("footer.quote")}
             </p>
           </div>
         </div>

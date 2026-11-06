@@ -42,58 +42,51 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
     {
       id: 1,
       name: "Muhammad Jumah",
-      role: "Founder & CEO",
+      role: t("about.member1Role"),
       location: "Ibadan, Nigeria",
-      description:
-        "Visionary student and entrepreneur passionate about merging faith, education, and technology. Currently studying Linguistics at the University of Ilorin.",
+      description: t("about.member1Bio"),
     },
     {
       id: 2,
       name: "Fatiah Badmus",
-      role: "Co-Founder",
+      role: t("about.member2Role"),
       location: "Osun, Nigeria",
-      description:
-        "Muslimah • Writer • WHO-Certified Mental Health Coach. Founder of Soothopedia, merging faith and psychology to inspire healing and wholeness. Advocates mental wellness, healthy love, and purposeful living through her words.",
+      description: t("about.member2Bio"),
     },
     {
       id: 3,
       name: "Yusuf Olosan",
-      role: "Chief Technology Officer (CTO)",
+      role: t("about.member3Role"),
       location: "Ilorin, Nigeria",
-      description:
-        "Backend Engineer with 4+ years of experience building scalable, secure Java Spring Boot systems for fintech, SaaS, and marketplace platforms. Skilled in microservices, cloud integration, and performance optimization. Passionate about solving complex technical problems and delivering reliable business solutions.",
+      description: t("about.member3Bio"),
     },
     {
       id: 4,
       name: "Fasasi Zaynab Adeola",
-      role: "Chief Operations Officer (COO)",
+      role: t("about.member4Role"),
       location: "Oyo, Nigeria",
-      description:
-        "I'm Fasasi Zaynab Adeola, also known as Almubtasimah, a writer, poet, designer, and creative strategist with a strong passion for innovation and problem-solving. My work focuses on creating purposeful and visually engaging content that connects ideas with impact. I combine creativity, communication, and analytical thinking to deliver meaningful results across writing and design projects.",
+      description: t("about.member4Bio"),
     },
     {
       id: 5,
       name: "Najeemdeen Zulqarnain",
-      role: "Chief Shariah Officer (CSO)",
+      role: t("about.member5Role"),
       location: "Medina, Saudi Arabia",
-      description:
-        "Zulqarnain Najeemdeen is a student at Islamic University of Madinah and an entrepreneur from Lagos. His interests include Agricultural Science, Islamic Jurisprudence, and Islamic Economics and Finance, with a focus on entrepreneurship and promoting Islamic financial stability.",
+      description: t("about.member5Bio"),
     },
     {
       id: 6,
       name: "Aderemi Fathia",
-      role: "Chief Marketing Officer (CMO)",
+      role: t("about.member6Role"),
       location: "Ilorin, Nigeria",
-      description:
-        "Digital marketing expert focused on spreading IqraPay's mission across the Muslim world through ethical marketing strategies.",
+      description: t("about.member6Bio"),
     },
     {
       id: 7,
       name: "Sule Jamiu Fātimah",
-      role: "Design Lead",
+      role: t("about.member7Role"),
       location: "Kogi, Nigeria",
-      description:
-        "Meet Oyiza (Sule Jamiu Fātimah) A passionate graphic designer in training and the creative mind behind Estrella Creative Hub . She also enjoys digital Arabic calligraphy as a hobby.Currently studying Optometry at the University of Ilorin and Islamic studies at Ma'had Ibn Rajab , Oyiza finds peace in great design, creativity, books, and poetry — all fueled by her love for learning languages ​​and exploring new horizons.",
+      description: t("about.member7Bio"),
     },
   ];
 
@@ -130,7 +123,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
               <div className="relative rounded-2xl overflow-hidden shadow-xl">
                 <ImageWithFallback
                   src={aboutHeroImage}
-                  alt="Muslim Community"
+                  alt={t("about.heroImageAlt")}
                   className="w-full h-[500px] object-cover"
                 />
               </div>

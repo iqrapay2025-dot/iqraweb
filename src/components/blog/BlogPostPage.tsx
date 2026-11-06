@@ -10,6 +10,7 @@ import { CommentSection } from './CommentSection';
 import { copyToClipboard } from '../../types/clipboard';
 import { openWaitlist } from '../WaitlistModal';
 import { sanitizeHtml } from '@/lib/sanitize';
+import { useLanguage } from "../../contexts/LanguageContext";
 
 interface BlogPostPageProps {
   post: BlogPost;
@@ -18,6 +19,17 @@ interface BlogPostPageProps {
 }
 
 export function BlogPostPage({ post, onNavigate, onBack }: BlogPostPageProps) {
+  const { language, t } = useLanguage();
+  const categoryKeys: Record<string, string> = {
+    'Quranic Studies': 'blog.categoryQuranicStudies',
+    'Islamic Finance': 'blog.categoryIslamicFinance',
+    'Platform Updates': 'blog.categoryPlatformUpdates',
+    Community: 'blog.categoryCommunity',
+  };
+  const category = categoryKeys[post.category]
+    ? t(categoryKeys[post.category])
+    : post.category;
+
   const handleShare = async () => {
     if (navigator.share) {
       try {
@@ -33,9 +45,9 @@ export function BlogPostPage({ post, onNavigate, onBack }: BlogPostPageProps) {
     } else {
       const success = await copyToClipboard(window.location.href);
       if (success) {
-        toast.success('Link copied to clipboard!');
+        toast.success(t("blog.copiedLink"));
       } else {
-        toast.error('Failed to copy link. Please copy manually.');
+        toast.error(t("blog.copyLinkFailed"));
       }
     }
   };
@@ -100,7 +112,7 @@ export function BlogPostPage({ post, onNavigate, onBack }: BlogPostPageProps) {
               className="mb-6 hover:bg-muted"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Blog
+              {t("blog.backToBlog")}
             </Button>
           </div>
         </section>
@@ -110,7 +122,7 @@ export function BlogPostPage({ post, onNavigate, onBack }: BlogPostPageProps) {
           <div className="max-w-4xl mx-auto">
             {/* Category Badge */}
             <Badge className="mb-4 bg-primary text-primary-foreground">
-              {post.category}
+              {category}
             </Badge>
 
             {/* Title */}
@@ -130,7 +142,7 @@ export function BlogPostPage({ post, onNavigate, onBack }: BlogPostPageProps) {
               <div className="flex items-center gap-2 text-muted-foreground">
                 <Calendar className="h-5 w-5" />
                 <span>
-                  {new Date(post.publishedAt).toLocaleDateString('en-US', {
+                  {new Date(post.publishedAt).toLocaleDateString(language, {
                     month: 'long',
                     day: 'numeric',
                     year: 'numeric',
@@ -139,7 +151,7 @@ export function BlogPostPage({ post, onNavigate, onBack }: BlogPostPageProps) {
               </div>
               <div className="flex items-center gap-2 text-muted-foreground">
                 <Clock className="h-5 w-5" />
-                <span>{post.readTime}</span>
+                <span>{post.readTime.replace("min read", t("blog.minRead"))}</span>
               </div>
             </div>
 
@@ -154,13 +166,14 @@ export function BlogPostPage({ post, onNavigate, onBack }: BlogPostPageProps) {
 
             {/* Share Buttons */}
             <div className="flex items-center gap-3 mb-12 pb-8 border-b border-border">
-              <span className="text-muted-foreground">Share:</span>
-              <Button variant="outline" size="icon" onClick={handleShare}>
+              <span className="text-muted-foreground">{t("blog.shareLabel")}</span>
+              <Button variant="outline" size="icon" onClick={handleShare} aria-label={t("blog.shareArticle")}>
                 <Share2 className="h-4 w-4" />
               </Button>
               <Button
                 variant="outline"
                 size="icon"
+                aria-label={t("blog.shareFacebook")}
                 onClick={() => window.open(`https://facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank', 'noopener,noreferrer')}
               >
                 <Facebook className="h-4 w-4" />
@@ -168,6 +181,7 @@ export function BlogPostPage({ post, onNavigate, onBack }: BlogPostPageProps) {
               <Button
                 variant="outline"
                 size="icon"
+                aria-label={t("blog.shareTwitter")}
                 onClick={() => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(post.title)}`, '_blank', 'noopener,noreferrer')}
               >
                 <Twitter className="h-4 w-4" />
@@ -175,6 +189,7 @@ export function BlogPostPage({ post, onNavigate, onBack }: BlogPostPageProps) {
               <Button
                 variant="outline"
                 size="icon"
+                aria-label={t("blog.shareLinkedin")}
                 onClick={() => window.open(`https://linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank', 'noopener,noreferrer')}
               >
                 <Linkedin className="h-4 w-4" />
@@ -186,16 +201,16 @@ export function BlogPostPage({ post, onNavigate, onBack }: BlogPostPageProps) {
 
             {/* Call to Action */}
             <div className="mt-12 p-8 bg-muted rounded-xl text-center">
-              <h3 className="mb-4">Start Your Learning Journey</h3>
+              <h3 className="mb-4">{t("blog.startJourneyTitle")}</h3>
               <p className="text-muted-foreground mb-6">
-                Join thousands of Muslims earning while learning the Qur'an
+                {t("blog.startJourneyDescription")}
               </p>
               <Button
                 size="lg"
                 className="bg-primary text-primary-foreground hover:bg-primary/90"
                 onClick={() => openWaitlist("blog-post")}
               >
-                Join Waitlist
+                {t("nav.joinWaitlist")}
               </Button>
             </div>
 
